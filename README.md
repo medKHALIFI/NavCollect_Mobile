@@ -1,3 +1,4 @@
 #NavCollect
 App Mobile pour la collect des donnees
-Hanaa KHOJ et Mohamed KHALIFI
+Hanaa KHOJ et Mohamed KHALIFI 
+Test de commitement
