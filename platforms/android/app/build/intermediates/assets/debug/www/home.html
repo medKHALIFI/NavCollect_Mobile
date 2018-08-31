@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Openlayers -->
+    <link rel="stylesheet" href="plugins/ol-3.15.1/ol.css" />
+    <script type="text/javascript" src="plugins/ol-3.15.1/ol.js"></script>
+    <!-- ol-ext -->
+    <link rel="stylesheet" href="plugins/ol-ext/ol-ext.css" />
+    <script type="text/javascript" src="plugins/ol-ext/ol-ext.js"></script>
+    <!-- Opacity LayerSwitcher OL3 -->
+    <link rel="stylesheet" href="plugins/Opacity-slider/ol3-layerswitcher.css" />
+    <script type="text/javascript" src="plugins/Opacity-slider/ol3-layerswitcher.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Bootstrap -->
+    <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- NProgress -->
+    <link href="plugins/nprogress/nprogress.css" rel="stylesheet">
+    <!-- jQuery custom content scroller -->
+    <link href="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+    <!-- Custom Theme Style -->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/map.css" rel="stylesheet">
+
+    <style>
+        #202020 {
+            padding-top: 2%;
+        }
+    </style>
+
+
+</head>
+
+<body class="nav-md ">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col menu_fixed">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.php" class="site_title"></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                        </div>
+                        <div class="profile_info">
+                            <span>Bonjour</span>
+                            <h2> Hanaa KHOJ</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li><a href="index.html"><i class="fas fa-map-marked-alt"></i> Carte <span class="fa fa-chevron-down"></span></a></li>
+                                <li><a><i class="fa fa-edit"></i> Projets<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a>Projet 1</a></li>
+                                        <li><a>Projet 2</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+
+
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+
+                <div class="nav_menu " id="202020">
+
+                    <nav>
+                        <div class="nav toggle">
+                            <a href="syncro.html"><i class="fa fa-bars"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right ">
+
+                            <li class="">
+                                <div class="title_right">
+                                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right ">
+                                        <div class="input-group">
+
+                                            <span class="input-group-btn">
+                                              
+                         <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " data-toggle="modal" data-target="#exampleModal_projet" id="button_projet" onclick="get_projet() "><i class="fas fa-folder-open"></i></button></div>
+
+                         <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " data-toggle="modal" data-target="#exampleModal_zone" id="button_zone" onclick="get_zone() "><i class="fas fa-map-marked-alt"></i></button></div>
+
+                         <div class="col-xs-2 col-sm-2 col-lg-2"><button type="button " class="btn btn-circle bg-footer " data-toggle="modal" data-target="#exampleModal_form" id="button_formulaire" onclick="get_formulaire() "><i class="fab fa-wpforms"></i></button></div>
+                        
+                        
+                         <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " id="button_home" onclick="go_home() "><i class="fas fa-home"></i></button></div>
+                         <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " id="button_position" onclick="drawPolygon() "><i class="fas fa-map-marker-alt "></i></button></div>
+                         <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " id="button_camera" onclick="drawPolygon() "><i class="fas fa-camera "></i></button></div>
+                        
+ 
+                        <div id="adressList"></div>
+                      </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="row">
+                <div role="main">
+                    <div class="clearfix"></div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div id="map"></div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /page content -->
+
+            <!-- footer content -->
+
+
+            <footer>
+                <div class="col-sm-12" align="center">
+                    <div class="row">
+
+
+
+
+
+                        <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " id="button_polygon" onclick="drawPolygon() "><i class="fas fa-draw-polygon "></i></button></div>
+                        <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " id="button_lign" onclick="drawPolygon() "><i class="fas fa-angle-up"></i></button></div>
+                        <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " id="button_point" onclick="drawPolygon() "><i class="fas fa-hand-point-up "></i></button></div>
+
+
+
+                        <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " onclick="drawPolygon() "><i class=" "></i></button></div>
+
+                        <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " id="button_tracking" onclick="drawPolygon() "><i class="fas fa-male "></i></button></div>
+
+
+
+                        <div class="col-xs-2 col-sm-2 col-lg-2 "><button type="button " class="btn btn-circle bg-footer " data-toggle="modal" data-target="#exampleModal_save" id="button_save" onclick="save_form() "><i class="fas fa-save "></i></button></div>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal_projet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="exampleModalLabel">choisissez votre projet </h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+                            </div>
+                            <div class="modal-body" id="modal_body_projet">
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type='button' onclick='check_projet()' class='btn btn-primary' data-dismiss="modal">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav child_menu" id="homeSubmenu">
+
+
+                </ul>
+                </li>
+                </ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal_save" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">choisissez votre projet </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+                </div>
+                <div class="modal-body" id="modal_body_save">
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type='button' onclick='saveForm()' class='btn btn-primary' data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav child_menu" id="homeSubmenu">
+
+
+    </ul>
+    </li>
+    </ul>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal_zone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">choisissez votre zone </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+                </div>
+                <div class="modal-body" id="modal_body_zone">
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type='button' onclick='check_zone()' class='btn btn-primary' data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav child_menu" id="homeSubmenu">
+
+
+    </ul>
+    </li>
+    </ul>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">choisissez votre zone </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+                </div>
+                <div class="modal-body" id="modal_body_form">
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type='button' onclick='check_form()' class='btn btn-primary' data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav child_menu" id="homeSubmenu">
+
+
+    </ul>
+    </li>
+    </ul>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </footer>
+    <!-- /footer content -->
+    </div>
+    </div>
+
+    <script type="text/javascript ">
+        //Initialisation des groupes des couches 
+        var overLayGroup = new ol.layer.Group({
+            title: 'Couches',
+            layers: [
+                vector = new ol.layer.Vector({
+                    name: 'vector',
+                    source: new ol.source.Vector()
+                })
+            ]
+        });
+
+        var view = new ol.View({
+            zoom: 5,
+            center: [-788691.20, 3736368.96]
+        });
+
+        // Initialisation de la carte par défaut
+        var map = new ol.Map({
+            target: 'map',
+            view: view,
+            layers: [
+                new ol.layer.Group({
+                    'title': 'Cartes de base',
+                    layers: [
+                        new ol.layer.Tile({
+                            title: 'OSM',
+                            type: 'base',
+                            source: new ol.source.OSM()
+                        }),
+                        new ol.layer.Tile({
+                            title: 'Bing',
+                            type: 'base',
+                            source: new ol.source.BingMaps({
+                                key: 'AuFUqJsfrG-Qgvg9sDChTNlHzN5_ybJA7LOknPz-Y1T6dNONDIIkQrPHvxjOe8To',
+                                imagerySet: 'AerialWithLabels'
+                            })
+                        })
+
+                    ]
+                }),
+                overLayGroup
+            ],
+            controls: ol.control.defaults().extend([
+                new ol.control.ScaleLine()
+            ]),
+        });
+
+        // Ajout pan zoom
+        zoomslider = new ol.control.ZoomSlider();
+        map.addControl(zoomslider);
+        // Ajout de layer switcher
+        var layerSwitcher = new ol.control.LayerSwitcher({
+            enableOpacitySliders: true
+        });
+        map.addControl(layerSwitcher);
+
+        // Ajout de la barre d'échelle
+        var scaleLineControl = new ol.control.ScaleLine();
+        scaleLineControl.setUnits('metric');
+
+        // User's current location (localisation actuelle de l'utilisateur)
+        function getPosition() {
+
+            var options = {
+                enableHighAccuracy: true,
+                maximumAge: 3600000
+            }
+            var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+
+            function onSuccess(position) {
+                var coords = ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]);
+                map.getView().animate({
+                    center: coords,
+                    zoom: 10
+                });
+
+                add_map_point(position.coords.latitude, position.coords.longitude)
+            };
+
+            function onError(error) {
+                console.log('getposition : \n code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+            }
+        }
+
+        function add_map_point(lat, lng) {
+            // Add a marker
+
+            var source = new ol.source.Vector({});
+            var vector = new ol.layer.Vector({
+                source: source,
+                style: new ol.style.Style({
+                    image: new ol.style.Icon({
+                        anchor: [0.5, 0.5],
+                        anchorXUnits: "fraction ",
+                        anchorYUnits: "fraction ",
+                        src: "images/pinMap.png "
+                    })
+                })
+            });
+            map.addLayer(vector);
+
+            // Add animation when the marker appears for the first time
+            var geom = new ol.geom.Point(ol.proj.transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857'));
+            var feature = new ol.Feature(geom);
+            source.addFeature(feature);
+            var duration = 3000;
+
+            function flash(feature) {
+                var start = new Date().getTime();
+                var listenerKey;
+
+                function animate(event) {
+                    var vectorContext = event.vectorContext;
+                    var frameState = event.frameState;
+                    var flashGeom = feature.getGeometry().clone();
+                    var elapsed = frameState.time - start;
+                    var elapsedRatio = elapsed / duration;
+                    // radius will be 5 at start and 30 at end.
+                    var radius = ol.easing.easeOut(elapsedRatio) * 25 + 5;
+                    var opacity = ol.easing.easeOut(1 - elapsedRatio);
+
+                    var style = new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: radius,
+                            snapToPixel: false,
+                            stroke: new ol.style.Stroke({
+                                color: 'rgba(255, 0, 0, ' + opacity + ')',
+                                width: 0.25 + opacity
+                            })
+                        })
+                    });
+
+                    vectorContext.setStyle(style);
+                    vectorContext.drawGeometry(flashGeom);
+                    if (elapsed > duration) {
+                        ol.Observable.unByKey(listenerKey);
+                        return;
+                    }
+                    // tell OpenLayers to continue postcompose animation
+                    map.render();
+                }
+                listenerKey = map.on('postcompose', animate);
+            }
+
+            flash(feature);
+
+        }
+    </script>
+    <!-- mon script  -->
+    <script>
+        function save_form() {
+
+
+
+
+            $("#modal_body_save").html(" ");
+            // alert("form " + id_form);
+
+            var url = "http://localhost/php_mobile/formulaire.php";
+            $.getJSON(url, function(result) {
+                //alert(result);
+
+                $.each(result, function(i, field) {
+                    var id_formulaire = field.id_formulaire;
+
+                    var champs = field.champs;
+                    // alert(champs);
+
+
+                    // alert(id_projet_affect);
+
+                    if (id_formulaire_globale == id_formulaire) {
+                        //  alert(champs);
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        //  console.log("projet  id : " + id_projet);
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+                        $("#modal_body_save").html(champs);
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function get_projet() {
+            $("#modal_body_projet").html(" ");
+            var url = "http://localhost/php_mobile/resuper_nom.php";
+            $.getJSON(url, function(result) {
+                console.log("les ids des projet existes de l'agent 5  ");
+
+                //console.log(result);
+                $.each(result, function(i, field) {
+                    var projet_titre = field.titre;
+
+                    var id_projet = field.id_projet;
+                    var id_agent_affect = field.id_agent_affect;
+
+                    // alert(id_projet_affect);
+
+                    if (id_agent_affect == id_agent_globale) {
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        console.log("projet  id : " + id_projet);
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+
+                        $("#modal_body_projet").append(" <button type='button' onclick='projet(" + id_projet + ")' id='" + id_projet + "'   ><span>" + projet_titre + "</span></button> <br>");
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function get_formulaire() {
+            // suprimer le modale 
+            console.log("le choix du formulaire");
+            $("#modal_body_form").html(" ");
+
+            var url = "http://localhost/php_mobile/recuper_form.php";
+            $.getJSON(url, function(result) {
+                // console.log("les ids des projet existes de l'agent 5  ");
+
+                //console.log(result);
+                $.each(result, function(i, field) {
+
+
+                    var id_projet_affect = field.id_projet_affect;
+                    var id_agent_affect = field.id_agent_affect;
+                    var id_formulaire_affect = field.id_formulaire_affect;
+                    var id_projet_zone = field.id_projet_zone;
+                    var nom_form = field.nom_form;
+                    id_form = id_formulaire_affect;
+
+                    // alert(id_projet_affect);
+
+                    if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale) {
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        //alert("formulaire id : " + id_form);
+                        // alert(champs);
+
+                        $("#modal_body_form").append(" <button type='button' onclick='affect_form(" + id_form + ")' id='" + id_form + "' ><span>" + nom_form + "</span></button> <br>");
+
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+                        //$("#homeSubmenu").append(" <button type='button' onclick='myFunction(" + id_projet + ")' id='" + id_projet + "'  class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong1' ><span>" + projet_titre + "</span></button> <br>");
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function go_home() {
+            // similar behavior as an HTTP redirect
+            window.location.replace("index.html");
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function get_zone() {
+            $("#modal_body_zone").html(" ");
+            var url = "http://localhost/php_mobile/recuper_zone.php";
+            $.getJSON(url, function(result) {
+                // console.log("les ids des projet existes de l'agent 5  ");
+
+                //console.log(result);
+                $.each(result, function(i, field) {
+                    var nom_zone = field.nom_zone;
+
+                    var id_zone = field.id_projet_zone;
+                    var id_agent_affect = field.id_agent_affect
+                    var id_projet_affect = field.id_projet_affect
+
+                    // alert(id_projet_affect);
+
+                    if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale) {
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        // console.log("projet  id : " + id_projet);
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+                        //  $("#zone").append(" <button type='button' onclick='add_zone(" + id_zone + ")' id='" + id_zone + "' ><span>" + nom_zone + "</span></button> <br>");
+                        $("#modal_body_zone").append(" <button type='button' onclick='add_zone(" + id_zone + ")' id='" + id_zone + "' ><span>" + nom_zone + "</span></button> <br>");
+
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function add_zone(id) {
+            //alert(id);
+            id_zone_globale = id;
+            var url = "http://localhost/php_mobile/recupere_zone.php";
+            $.getJSON(url, function(result) {
+                // console.log("les ids des projet existes de l'agent 5  ");
+
+                //console.log(result);
+                $.each(result, function(i, field) {
+                    var id_zone = field.id_zone;
+                    var etendue = field.etendue;
+                    var nom_zone = field.nom;
+
+
+
+                    // alert(id_projet_affect);
+
+                    if (id == id_zone) {
+                        map.removeLayer(geojson_zone);
+
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        // console.log("projet  id : " + id_projet);
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+                        var geojson_zone = new ol.layer.Vector({
+
+                            title: nom_zone,
+                            timeInfo: null,
+                            isSelectable: true,
+                            source: new ol.source.Vector({
+                                features: new ol.format.GeoJSON().readFeatures(etendue)
+                            })
+                        });
+                        //  console.log(geojson_zone);
+                        // console.log(geojson_zone.getSource().getFeatures()[0].getGeometry().getType());
+
+                        map.addLayer(geojson_zone);
+
+                        var extent = geojson_zone.getSource().getExtent();
+                        console.log("extent   " + extent);
+                        console.log("size map" + map.getSize());
+                        map.getView().fit(extent, map.getSize());
+
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+
+        }
+
+        function check_zone() {
+            console.log("zone bien choisi id du zone : " + id_zone_globale);
+            // enable button zone
+            $("#button_formulaire").prop('disabled', false);
+
+
+        }
+
+
+
+        function check_form() {
+            console.log("form  bien choisi id du form : " + id_zone_globale);
+            $("#button_save").prop('disabled', false);
+            // enable button zone
+            // $("#button_formulaire").prop('disabled', false);
+
+        }
+
+
+
+
+        function affect_form(a) {
+            id_formulaire_globale = a;
+            console.log("le formulaire  bien affecter" + id_formulaire_globale);
+
+        }
+
+
+
+
+
+
+
+
+        function projet(a) {
+
+            id_projet_globale = a;
+            console.log("le projet bien affecter" + id_projet_globale);
+
+        }
+
+
+
+
+
+        function check_projet() {
+            console.log("projet bien choisi id du projet : " + id_projet_globale);
+            // enable button zone
+            $("#button_zone").prop('disabled', false);
+
+
+        }
+
+        function disabel() {
+            alert('get projet ');
+            // $('#button_projet').on('click',function() {
+            $("#button_projet ").prop('disabled', true);
+
+            // $('#button_projet').attr("disabled ","disabled ");
+            //});
+        }
+
+        function enable() {
+            $("#button_projet ").prop('disabled', false);
+
+        }
+    </script>
+
+    <script>
+        // les variable globale 
+        var id_projet_globale;
+        var id_zone_globale;
+        var id_formulaire_globale;
+        var id_agent_globale = 5;
+
+        // par defaut les buttons sont disactiver
+        // $("#button_projet ").prop('disabled', true);
+        $("#button_zone ").prop('disabled', true);
+        $("#button_formulaire").prop('disabled', true);
+        $("#button_polygon").prop('disabled', true);
+        $("#button_lign").prop('disabled', true);
+        $("#button_point").prop('disabled', true);
+        $("#button_save").prop('disabled', true);
+    </script>
+
+
+
+
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/dist/js/bootstrap.min.js "></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/lib/fastclick.js "></script>
+    <!-- NProgress -->
+    <script src="plugins/nprogress/nprogress.js "></script>
+    <!-- jQuery custom content scroller -->
+    <script src="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js "></script>
+    <!-- Custom Theme Scripts -->
+    <script src="js/custom.js "></script>
+    <!-- Cordova -->
+    <script src="cordova.js "></script>
+</body>
+
+</html>

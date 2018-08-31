@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Openlayers -->
+    <link rel="stylesheet" href="plugins/ol-3.15.1/ol.css" />
+    <script type="text/javascript" src="plugins/ol-3.15.1/ol.js"></script>
+    <!-- ol-ext -->
+    <link rel="stylesheet" href="plugins/ol-ext/ol-ext.css" />
+    <script type="text/javascript" src="plugins/ol-ext/ol-ext.js"></script>
+    <!-- Opacity LayerSwitcher OL3 -->
+    <link rel="stylesheet" href="plugins/Opacity-slider/ol3-layerswitcher.css" />
+    <script type="text/javascript" src="plugins/Opacity-slider/ol3-layerswitcher.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Bootstrap -->
+    <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- NProgress -->
+    <link href="plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <!-- jQuery custom content scroller -->
+    <link href="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+    <!-- Waves Effect Css -->
+    <link href="plugins/node-waves/waves.css" rel="stylesheet" />
+    <!-- Animation Css -->
+    <link href="plugins/animate-css/animate.css" rel="stylesheet" />
+    <!-- Custom Theme Style -->
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/map.css" rel="stylesheet">
+    <!-- Bootstrap Select Css -->
+    <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <!-- Mcx Dialog Mobile plugin -->
+    <link href="plugins/mcx-dialog-mobile/dist/css/dialog-mobile.css" rel="stylesheet" />
+
+    <!-- sweet alert-->
+
+    <link href="plugins/SweetAlert2/sweetalert2.min.css" rel="stylesheet" />
+    <!-- Sweet Alert 2 Plugin Js -->
+    <script src="plugins/SweetAlert2/sweetalert2.min.js"></script>
+
+
+
+
+    <style>
+        #accuraty {
+            display: block;
+            background: #f00;
+            height: 10px;
+            max-width: 200px;
+        }
+        
+        .options ul {
+            margin: 0;
+        }
+        
+        .options {
+            position: fixed;
+            right: 0;
+            bottom: 70px;
+            margin: 0;
+            font-size: 0.8em;
+            padding: 0 0.3em;
+            background-color: #fff;
+            width: 100%;
+            padding: 10px 30px;
+            border-radius: 4px;
+            border: 3px solid #ededed;
+            text-align: center;
+        }
+        
+        .options button {
+            padding: 0.4em 0.5em;
+            background: #369;
+            color: #fff;
+            border: 0;
+            margin: 0.2em 0;
+        }
+        
+        .info {
+            background: #f5f5f5;
+            padding: 0.5em;
+            margin: 1em 0;
+            position: fixed;
+            z-index: 2;
+            margin: 0.5em 0.5em 0.5em 3em;
+            top: 2em;
+            overflow: auto;
+            max-height: calc(100% - 4em);
+        }
+        
+        .follow {
+            position: fixed;
+            left: 1em;
+            bottom: 1em;
+            background: #369;
+            color: #fff;
+            padding: 0.5em;
+            display: none;
+        }
+        
+        .navheader {
+            position: absolute;
+            background: #ededed;
+            padding: 10px;
+            display: block;
+            top: 0;
+            float: left;
+            width: 100%;
+        }
+        
+        .custom-zoomSlider {
+            position: absolute;
+            background-color: rgba(255, 255, 255, .4);
+            border-radius: 50px;
+            padding: 2px;
+            text-align: center;
+            top: 8em;
+            right: .5em;
+            height: 200px;
+            width: 40px;
+        }
+        
+        .custom-zoomSlider button {
+            position: relative;
+            margin: 1px;
+            padding: 0;
+            color: #fff;
+            font-size: 1.14em;
+            font-weight: 700;
+            text-decoration: none;
+            width: 35px;
+            height: 35px;
+            line-height: .4em;
+            background-color: #2a3f54;
+            border: none;
+            border-radius: 50px;
+        }
+        
+        .custom-zoomSlider button:focus,
+        .custom-zoomSlider button:hover {
+            text-decoration: none;
+            background-color: #1abb9c;
+        }
+    </style>
+    <!-- script device-->
+    <script>
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var imei_globale = 0;
+
+        function onDeviceReady() {
+
+
+            window.plugins.imei.get(
+                function(imei) {
+
+                    //alert("got imei: " + imei);
+                    checkConnection(imei);
+                    imei_globale = imei;
+                },
+                function() {
+                    alert("error loading imei");
+                }
+            );
+
+
+        }
+    </script>
+
+
+
+    <!-- test de conection -->
+
+    <script>
+        function checkConnection(imei) {
+            var networkState = navigator.connection.type;
+
+            var states = {};
+            states[Connection.UNKNOWN] = 'Unknown connection';
+            states[Connection.ETHERNET] = 'Ethernet connection';
+            states[Connection.WIFI] = 'WiFi connection';
+            states[Connection.CELL_2G] = 'Cell 2G connection';
+            states[Connection.CELL_3G] = 'Cell 3G connection';
+            states[Connection.CELL_4G] = 'Cell 4G connection';
+            states[Connection.CELL] = 'Cell generic connection';
+            states[Connection.NONE] = 0; //'No network connection';
+
+            // alert('Connection type: ' + states[networkState]);
+            if (states[networkState] == 0) {
+                /* swal(
+                     'non Internet?',
+                     'veuillez connecter sur internet',
+                     'question'
+                 );*/
+                swal({
+                    title: 'non internet?',
+                    text: "veuillez connecter sur internet",
+                    type: 'question',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'fermer l\'app?!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        navigator.app.exitApp();
+
+                    }
+                })
+
+
+            } else {
+
+
+                // recuperer le nom et l'id_agent_imei
+                ///////////////////////////////////////////////////////////
+                //http://localhost/php_mobile/get_nom_agent_from_imei.php
+
+                var url = "http://192.168.1.99/php_mobile/get_nom_agent_from_imei.php";
+                $.getJSON(url, function(result) {
+
+                    $.each(result, function(i, field) {
+                        var agent_imei = field.imei;
+
+                        if (agent_imei == imei) {
+                            id_agent_globale = field.id_agent;
+                            swal({
+                                position: 'top-end',
+                                type: 'success',
+                                title: 'bienvenue monsieur : ' + field.nom_agent + '\n vous etes connecter sur internet ',
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+
+                        }
+
+                    });
+                });
+
+
+                /////////////////////////
+
+
+
+            }
+
+        }
+    </script>
+
+</head>
+
+<body class="nav-sm ">
+
+    <!-- top navigation -->
+    <div class="navheader">
+        <div class="col-sm-12" align="center">
+            <div class="row">
+                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2"><img src="images/logo.png" alt="Smiley face" width="65" height="40"></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_projet" data-toggle="modal" data-target="#exampleModal_projet" onclick="get_projet() " class="btn btn-circle bg-footer"><i class="fas fa-briefcase"></i></button></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_zone" data-toggle="modal" data-target="#exampleModal_zone" onclick="get_zone() " class="btn btn-circle bg-footer "><i class="fas fas fa-layer-group"></i></button></div>
+                <div class="col-xs-2 col-sm-2  col-md-2 col-lg-2"><button type="button" id="button_formulaire" data-toggle="modal" data-target="#exampleModal_form" onclick="get_formulaire() " class="btn btn-circle bg-footer "><i class="fas fa-list-alt"></i></button></div>
+                <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="button_data" onclick="go_data()"><i class="fas fa-database"></i></button></div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- /top navigation -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal_projet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">choisissez votre projet </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <select class="form-control" id="modal_body_projet">
+                         
+                          
+                          </select>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type='button' onclick='check_projet()' class='btn btn-primary' data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav child_menu" id="homeSubmenu">
+
+
+    </ul>
+    </li>
+    </ul>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal_zone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">choisissez votre zone </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <select class="form-control" id="modal_body_zone">
+                         
+                          
+                          </select>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type='button' onclick='check_zone()' class='btn btn-primary' data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav child_menu" id="homeSubmenu">
+
+
+    </ul>
+    </li>
+    </ul>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">choisissez votre zone </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <select class="form-control" id="modal_body_form">
+                         
+                          
+                          </select>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type='button' onclick='check_form()' class='btn btn-primary' data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav child_menu" id="homeSubmenu">
+
+
+    </ul>
+    </li>
+    </ul>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="clearfix"></div>
+        <div class="col-md-12 col-sm-12 col-md-12 col-xs-12">
+            <div id="map"></div>
+            <div class="options">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4">
+                        <input type="radio" name="type" value="Point" /><label> Point</label>
+                    </div>
+                    <div class="col-xs-4 col-sm-4">
+                        <input type="radio" name="type" value="LineString" /><label> Ligne</label>
+                    </div>
+                    <div class="col-xs-4 col-sm-4">
+                        <input type="radio" name="type" value="Polygon" /><label> Polygone</label>
+                    </div>
+                </div>
+                <div class="row">
+                    Suivi de chemin:
+                    <select onchange="draw.setFollowTrack($(this).val()==='true' ? true : $(this).val());">
+              <option value="true">true (track at zoom)</option>
+              <option value="false">false (don't track)</option>
+              <option value="auto">auto (stop on map move)</option>
+              <option value="position">position (no zoom)</option>
+              <option value="visible">visible (stay on  the map)</option>
+            </select>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4">
+                        <button onclick="draw.start();" class="btn btn-circle bg-green waves-effect waves-circle waves-float"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="col-xs-4 col-sm-4">
+                        <button onclick="draw.pause();" class="btn btn-circle bg-orange waves-effect waves-circle waves-float"><i class="fas fa-pause"></i></button>
+                    </div>
+                    <div class="col-xs-4 col-sm-4">
+                        <button onclick="draw.stop();" class="btn btn-circle bg-red waves-effect waves-circle waves-float"><i class="fas fa-stop"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+
+    <!-- footer content -->
+    <footer>
+        <div class="col-sm-12" align="center">
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="edit-tools" class="btn btn-circle bg-footer"><i class="fas fa-edit"></i></button></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" onclick="getPosition()" id="getPosition"><i class="fas fa-crosshairs"></i></button></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="trackRecord"><i class="fas fa-location-arrow"></i></button></div>
+
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" onclick="recherche()" id="recherche"><i class="fas fa-search"></i></button></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="go_home" onclick="go_home()" class="btn btn-circle bg-footer"><i class="fas fa-sync-alt"></i></button></div>
+
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="drawpoint" onclick="save()"><i class="fas fa-save"></i></button></div>
+            </div>
+        </div>
+    </footer>
+    <!-- /footer content -->
+
+
+
+    <script type="text/javascript">
+        var layer_draw;
+        //Disable area & form buttons
+        $("#button_zone ").prop('disabled', true);
+        $("#button_formulaire").prop('disabled', true);
+        $("#edit-tools").prop('disabled', true);
+
+        //Hidden track menu
+        $(".options").hide();
+
+        //Display the tracking menu
+        $("#trackRecord").click(function() {
+            $(".options").fadeToggle();
+        });
+
+
+        $("#edit-tools").click(function() {
+            // Draw & edit tools (ol-ext3) :
+
+            //  Vector layer
+            layer_draw = new ol.layer.Vector({
+                source: new ol.source.Vector()
+            });
+            map.addLayer(layer_draw);
+            // Control bar to handle interaction activation (Menu bar )
+            var cbar = new ol.control.Bar({
+                toggleOne: true
+            });
+            map.addControl(cbar);
+            cbar.setPosition("bottom");
+
+            if (id_type_geometrie == 1) {
+
+
+                var controls = {};
+                var interactions = {};
+                var t = ["Point", "Select"];
+                var icon = ["fa-map-pin", " fa-pencil-alt"];
+
+                // A control to the bar
+                function addControl(interaction) {
+                    var sbar = new ol.control.Bar();
+                    switch (interaction.getGeometryType()) {
+                        case "Point":
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-check"></i>',
+                                title: "Pointer sur la carte",
+                                handleClick: function(e) {
+                                    interaction.addPoint();
+                                }
+                            }));
+                            break;
+                        case "Select":
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-hand-pointer"></i>',
+                                title: "Modifier",
+                                handleClick: function(e) {
+                                    var select = new ol.interaction.Select({
+                                        layers: [layer_draw],
+                                        hitTolerance: 5
+                                    });
+                                    map.addInteraction(select);
+                                    var modify = new ol.interaction.ModifyTouch({
+                                        // source: vector.getSource(),
+                                        features: select.getFeatures()
+                                    });
+                                    map.addInteraction(modify);
+                                    modify.set('usePopup', true);
+                                    modify.setActive(true);
+
+                                }
+                            }));
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-trash"></i>',
+                                title: "supprimer",
+                                handleClick: function(e) {
+                                    var btn = ["Supprimer tous"];
+                                    mcxDialog.showBottom({
+                                        btn: btn,
+                                        btnClick: function(index) {
+                                            layer_draw.getSource().clear();
+                                            mcxDialog.toast("Tous les éléments sont supprimés !", 2);
+                                        }
+                                    });
+                                }
+                            }));
+                            break;
+                    }
+                    controls[i] = new ol.control.Toggle({
+                        html: '<i class="fas ' + icon[i] + '"></i>',
+                        interaction: interaction,
+                        bar: sbar
+                    });
+                    cbar.addControl(controls[i]);
+                }
+
+                // Create interactions
+                for (var i = 0; i < t.length; i++) {
+                    var type = t[i];
+                    // The interaction
+                    interactions[i] = new ol.interaction.DrawTouch({
+                        source: layer_draw.getSource(),
+                        type: type
+                    });
+                    addControl(interactions[i]);
+                }
+
+                // Add a snap interaction
+                map.addInteraction(new ol.interaction.Snap({
+                    source: layer_draw.getSource(),
+                    pixelTolerance: 15
+                }));
+
+                //Enable the tapping interaction
+                function setTap() {
+                    for (var i in interactions) {
+                        interactions[i].set("tap", true);
+                    }
+                }
+                setTap();
+            }
+            if (id_type_geometrie == 2) {
+
+                var controls = {};
+                var interactions = {};
+                var t = ["LineString", "Select"];
+                var icon = ["fa-share-alt", " fa-pencil-alt"];
+
+                // A control to the bar
+                function addControl(interaction) {
+                    var sbar = new ol.control.Bar();
+                    switch (interaction.getGeometryType()) {
+                        case "LineString":
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-plus"></i>',
+                                title: "Ajouter un point",
+                                handleClick: function(e) {
+                                    interaction.addPoint();
+                                }
+                            }));
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-minus"></i>',
+                                title: "Supprimer le dernier point",
+                                handleClick: function(e) {
+                                    interaction.removeLastPoint();
+                                }
+                            }));
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fa fa-check"></i>',
+                                title: "Terminer la digitalisation",
+                                handleClick: function(e) {
+                                    interaction.finishDrawing();
+                                }
+                            }));
+                            break;
+                        case "Select":
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-hand-pointer"></i>',
+                                title: "Modifier",
+                                handleClick: function(e) {
+                                    var select = new ol.interaction.Select({
+                                        layers: [layer_draw],
+                                        hitTolerance: 5
+                                    });
+                                    map.addInteraction(select);
+                                    var modify = new ol.interaction.ModifyTouch({
+                                        // source: vector.getSource(),
+                                        features: select.getFeatures()
+                                    });
+                                    map.addInteraction(modify);
+                                    modify.set('usePopup', true);
+                                    modify.setActive(true);
+
+                                }
+                            }));
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-trash"></i>',
+                                title: "supprimer",
+                                handleClick: function(e) {
+                                    var btn = ["Supprimer tous"];
+                                    mcxDialog.showBottom({
+                                        btn: btn,
+                                        btnClick: function(index) {
+                                            layer_draw.getSource().clear();
+                                            mcxDialog.toast("Tous les éléments sont supprimés !", 2);
+                                        }
+                                    });
+                                }
+                            }));
+                            break;
+                    }
+                    controls[i] = new ol.control.Toggle({
+                        html: '<i class="fas ' + icon[i] + '"></i>',
+                        interaction: interaction,
+                        bar: sbar
+                    });
+                    cbar.addControl(controls[i]);
+                }
+
+                // Create interactions
+                for (var i = 0; i < t.length; i++) {
+                    var type = t[i];
+                    // The interaction
+                    interactions[i] = new ol.interaction.DrawTouch({
+                        source: layer_draw.getSource(),
+                        type: type
+                    });
+                    addControl(interactions[i]);
+                }
+
+                // Add a snap interaction
+                map.addInteraction(new ol.interaction.Snap({
+                    source: layer_draw.getSource(),
+                    pixelTolerance: 15
+                }));
+
+                //Enable the tapping interaction
+                function setTap() {
+                    for (var i in interactions) {
+                        interactions[i].set("tap", true);
+                    }
+                }
+                setTap();
+            }
+
+            if (id_type_geometrie == 3) {
+
+                var controls = {};
+                var interactions = {};
+                var t = ["Polygon", "Select"];
+                var icon = ["fa-draw-polygon", " fa-pencil-alt"];
+
+                // A control to the bar
+                function addControl(interaction) {
+                    var sbar = new ol.control.Bar();
+                    switch (interaction.getGeometryType()) {
+                        case "Polygon":
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-plus"></i>',
+                                title: "Ajouter un point",
+                                handleClick: function(e) {
+                                    interaction.addPoint();
+                                }
+                            }));
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-minus"></i>',
+                                title: "Supprimer le dernier point",
+                                handleClick: function(e) {
+                                    interaction.removeLastPoint();
+                                }
+                            }));
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fa fa-check"></i>',
+                                title: "Terminer la digitalisation",
+                                handleClick: function(e) {
+                                    interaction.finishDrawing();
+                                }
+                            }));
+                            break;
+                        case "Select":
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-hand-pointer"></i>',
+                                title: "Modifier",
+                                handleClick: function(e) {
+                                    var select = new ol.interaction.Select({
+                                        layers: [layer_draw],
+                                        hitTolerance: 5
+                                    });
+                                    map.addInteraction(select);
+                                    var modify = new ol.interaction.ModifyTouch({
+                                        // source: vector.getSource(),
+                                        features: select.getFeatures()
+                                    });
+                                    map.addInteraction(modify);
+                                    modify.set('usePopup', true);
+                                    modify.setActive(true);
+
+                                }
+                            }));
+                            sbar.addControl(new ol.control.Button({
+                                html: '<i class="fas fa-trash"></i>',
+                                title: "supprimer",
+                                handleClick: function(e) {
+                                    var btn = ["Supprimer tous"];
+                                    mcxDialog.showBottom({
+                                        btn: btn,
+                                        btnClick: function(index) {
+                                            layer_draw.getSource().clear();
+                                            mcxDialog.toast("Tous les éléments sont supprimés !", 2);
+                                        }
+                                    });
+                                }
+                            }));
+                            break;
+                    }
+                    controls[i] = new ol.control.Toggle({
+                        html: '<i class="fas ' + icon[i] + '"></i>',
+                        interaction: interaction,
+                        bar: sbar
+                    });
+                    cbar.addControl(controls[i]);
+                }
+
+                // Create interactions
+                for (var i = 0; i < t.length; i++) {
+                    var type = t[i];
+                    // The interaction
+                    interactions[i] = new ol.interaction.DrawTouch({
+                        source: layer_draw.getSource(),
+                        type: type
+                    });
+                    addControl(interactions[i]);
+                }
+
+                // Add a snap interaction
+                map.addInteraction(new ol.interaction.Snap({
+                    source: layer_draw.getSource(),
+                    pixelTolerance: 15
+                }));
+
+                //Enable the tapping interaction
+                function setTap() {
+                    for (var i in interactions) {
+                        interactions[i].set("tap", true);
+                    }
+                }
+                setTap();
+            }
+
+        });
+
+        //Intialise groupe layer 
+        var overLayGroup = new ol.layer.Group({
+            title: 'Couches',
+            layers: [
+                vector = new ol.layer.Vector({
+                    name: 'vector',
+                    source: new ol.source.Vector()
+                })
+            ]
+        });
+
+        var view = new ol.View({
+            zoom: 5,
+            center: [-788691.20, 3736368.96]
+        });
+
+        // Initialisation de la carte par défaut
+        var map = new ol.Map({
+            target: 'map',
+            view: view,
+            layers: [
+                new ol.layer.Group({
+                    'title': 'Cartes de base',
+                    layers: [
+                        new ol.layer.Tile({
+                            title: 'OSM',
+                            type: 'base',
+                            source: new ol.source.OSM()
+                        }),
+                        new ol.layer.Tile({
+                            title: 'Bing',
+                            type: 'base',
+                            source: new ol.source.BingMaps({
+                                key: 'AuFUqJsfrG-Qgvg9sDChTNlHzN5_ybJA7LOknPz-Y1T6dNONDIIkQrPHvxjOe8To',
+                                imagerySet: 'AerialWithLabels'
+                            })
+                        })
+
+                    ]
+                }),
+                overLayGroup
+            ],
+            controls: ol.control.defaults({
+                attribution: false,
+                zoom: false
+            }),
+        });
+
+        // Ajout pan zoom
+        zoomslider = new ol.control.ZoomSlider({
+            className: 'custom-zoomSlider'
+        });
+        map.addControl(zoomslider);
+        // Ajout de layer switcher
+        var layerSwitcher = new ol.control.LayerSwitcher({
+            enableOpacitySliders: true
+        });
+        map.addControl(layerSwitcher);
+
+        // Ajout de la barre d'échelle
+        var scaleLineControl = new ol.control.ScaleLine();
+        scaleLineControl.setUnits('metric');
+
+        // User's current location (localisation actuelle de l'utilisateur)
+        function getPosition() {
+            var options = {
+                enableHighAccuracy: true,
+                maximumAge: 3600000
+            }
+            var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+
+            function onSuccess(position) {
+                var coords = ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]);
+                map.getView().animate({
+                    center: coords,
+                    zoom: 10
+                });
+
+                add_map_point(position.coords.latitude, position.coords.longitude)
+            };
+
+            function onError(error) {
+                console.log('getposition : \n code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+            }
+        }
+
+        function add_map_point(lat, lng) {
+            // Add a marker
+
+            var source = new ol.source.Vector({});
+            var vector_current_loc = new ol.layer.Vector({
+                source: source,
+                style: new ol.style.Style({
+                    image: new ol.style.Icon({
+                        anchor: [0.5, 0.5],
+                        anchorXUnits: "fraction",
+                        anchorYUnits: "fraction",
+                        src: "images/pinMap.png"
+                    })
+                })
+            });
+            map.addLayer(vector_current_loc);
+
+            // Add animation when the marker appears for the first time
+            var geom = new ol.geom.Point(ol.proj.transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857'));
+            var feature = new ol.Feature(geom);
+            source.addFeature(feature);
+            var duration = 3000;
+
+            function flash(feature) {
+                var start = new Date().getTime();
+                var listenerKey;
+
+                function animate(event) {
+                    var vectorContext = event.vectorContext;
+                    var frameState = event.frameState;
+                    var flashGeom = feature.getGeometry().clone();
+                    var elapsed = frameState.time - start;
+                    var elapsedRatio = elapsed / duration;
+                    // radius will be 5 at start and 30 at end.
+                    var radius = ol.easing.easeOut(elapsedRatio) * 25 + 5;
+                    var opacity = ol.easing.easeOut(1 - elapsedRatio);
+
+                    var style = new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: radius,
+                            snapToPixel: false,
+                            stroke: new ol.style.Stroke({
+                                color: 'rgba(255, 0, 0, ' + opacity + ')',
+                                width: 0.25 + opacity
+                            })
+                        })
+                    });
+
+                    vectorContext.setStyle(style);
+                    vectorContext.drawGeometry(flashGeom);
+                    if (elapsed > duration) {
+                        ol.Observable.unByKey(listenerKey);
+                        return;
+                    }
+                    // tell OpenLayers to continue postcompose animation
+                    map.render();
+                }
+                listenerKey = map.on('postcompose', animate);
+            }
+
+            flash(feature);
+
+        }
+    </script>
+
+    <script type="text/javascript">
+        // Tracking 
+        $("label").click(function() {
+            $(this).prev().click();
+        })
+        $('input[name=type]').on('change', function() {
+            draw.set("type", $(this).val());
+        });
+
+        // New vector layer
+        var vector_track = new ol.layer.Vector({
+            name: 'Vecteur',
+            source: new ol.source.Vector(),
+        });
+        map.addLayer(vector_track);
+
+        var style_track = new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 0.5],
+                    anchorXUnits: "fraction",
+                    anchorYUnits: "fraction",
+                    src: "images/marker.png"
+                })
+            })
+            // Draw interaction
+        var draw = new ol.interaction.GeolocationDraw({
+            source: vector_track.getSource(),
+            zoom: 16,
+            minAccuracy: 10000,
+            style: style_track
+        });
+        map.addInteraction(draw);
+
+        draw.on('follow', function(e) {
+            if (e.following) $(".follow").hide();
+            else $(".follow").show();
+        });
+
+        draw.on("drawstart", function(e) {});
+        draw.on("drawend", function(e) {
+            $(".follow").hide();
+        });
+    </script>
+
+    <!-- declaration des variable global-->
+    <script>
+        // les variable globale 
+        var id_projet_globale;
+        var id_zone_globale;
+        var id_formulaire_globale;
+        var id_agent_globale;
+        var id_type_geometrie;
+
+        // par defaut les buttons sont disactiver
+        // $("#button_projet ").prop('disabled', true);
+        /*$("#button_zone ").prop('disabled', true);
+        $("#button_formulaire").prop('disabled', true);
+        $("#button_polygon").prop('disabled', true);
+        $("#button_lign").prop('disabled', true);
+        $("#button_point").prop('disabled', true);
+        $("#button_save").prop('disabled', true);*/
+    </script>
+
+
+
+    <!--script pour la gesion des forms et projet et zone -->
+    <script>
+        function get_formulaire() {
+            // suprimer le modale 
+            $("#modal_body_form").html("<option selected disabled value=''>Sélectionnez une form </option> ");
+
+            var url = "http://192.168.1.99/php_mobile/recuper_form.php";
+            $.getJSON(url, function(result) {
+                // console.log("les ids des projet existes de l'agent 5  ");
+
+                //console.log(result);
+                $.each(result, function(i, field) {
+
+
+                    var id_projet_affect = field.id_projet_affect;
+                    var id_agent_affect = field.id_agent_affect;
+                    var id_formulaire_affect = field.id_formulaire_affect;
+                    var id_projet_zone = field.id_projet_zone;
+                    var nom_form = field.nom_form;
+                    id_form = id_formulaire_affect;
+
+                    // alert(id_projet_affect);
+
+                    if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale) {
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        //alert("formulaire id : " + id_form);
+                        // alert(champs);
+
+                        //  $("#modal_body_form").append(" <button type='button' onclick='affect_form(" + id_form + ")' id='" + id_form + "' ><span>" + nom_form + "</span></button> <br>");
+                        $("#modal_body_form").append(" <option id='" + id_form + "' value='" + id_form + "'>" + nom_form + " </option>");
+
+                        //   id_type_geometrie = field.id_geom_affect;
+                        // alert("id geom affect : " + id_type_geometrie);
+
+
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+                        //$("#homeSubmenu").append(" <button type='button' onclick='myFunction(" + id_projet + ")' id='" + id_projet + "'  class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong1' ><span>" + projet_titre + "</span></button> <br>");
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function go_data() {
+            // similar behavior as an HTTP redirect
+            url = 'data.html';
+            location.replace(url);
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function get_zone() {
+            $("#modal_body_zone").html("<option selected disabled value=''>Sélectionnez une zone </option> ");
+            var url = "http://192.168.1.99/php_mobile/recuper_zone.php";
+            $.getJSON(url, function(result) {
+                // console.log("les ids des projet existes de l'agent 5  ");
+
+                //console.log(result);
+                $.each(result, function(i, field) {
+                    var nom_zone = field.nom_zone;
+
+                    var id_zone = field.id_projet_zone;
+                    var id_agent_affect = field.id_agent_affect
+                    var id_projet_affect = field.id_projet_affect
+
+                    // alert(id_projet_affect);
+
+                    if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale) {
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        // console.log("projet  id : " + id_projet);
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+                        //  $("#zone").append(" <button type='button' onclick='add_zone(" + id_zone + ")' id='" + id_zone + "' ><span>" + nom_zone + "</span></button> <br>");
+                        // $("#modal_body_zone").append(" <button type='button' onclick='add_zone(" + id_zone + ")' id='" + id_zone + "' ><span>" + nom_zone + "</span></button> <br>");
+                        $("#modal_body_zone").append(" <option id='" + id_zone + "' value='" + id_zone + "'>" + nom_zone + " </option>");
+
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function recherche() {
+            alert("i need the API please ");
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        function check_zone() {
+
+
+            id_zone_globale = $("#modal_body_zone").children(":selected").attr("id");
+            add_zone();
+
+            console.log("zone bien choisi id du zone : " + id_zone_globale);
+            // enable button zone
+            $("#button_formulaire").prop('disabled', false);
+            swal({
+                position: 'end-end',
+                type: 'success',
+                title: 'la zone bien enregistrer ',
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function add_zone() {
+            //alert(id);
+
+            var url = "http://192.168.1.99/php_mobile/recupere_zone.php";
+            $.getJSON(url, function(result) {
+                // console.log("les ids des projet existes de l'agent 5  ");
+
+                //console.log(result);
+                $.each(result, function(i, field) {
+                    var id_zone = field.id_zone;
+                    var etendue = field.etendue;
+                    var nom_zone = field.nom;
+
+
+
+                    // alert(id_projet_affect);
+
+                    if (id_zone_globale == id_zone) {
+                        map.removeLayer(geojson_zone);
+
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        // console.log("projet  id : " + id_projet);
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+                        var geojson_zone = new ol.layer.Vector({
+
+                            title: nom_zone,
+                            timeInfo: null,
+                            isSelectable: true,
+                            source: new ol.source.Vector({
+                                features: new ol.format.GeoJSON().readFeatures(etendue)
+                            })
+                        });
+                        //  console.log(geojson_zone);
+                        // console.log(geojson_zone.getSource().getFeatures()[0].getGeometry().getType());
+
+                        map.addLayer(geojson_zone);
+
+                        var extent = geojson_zone.getSource().getExtent();
+                        console.log("extent   " + extent);
+                        console.log("size map" + map.getSize());
+                        map.getView().fit(extent, map.getSize());
+
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function go_home() {
+            url = 'index.html';
+
+            location.replace(url);
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function get_projet() {
+
+
+            $("#modal_body_projet").html("<option selected disabled value=''>Sélectionnez un projet </option> ");
+            var url = "http://192.168.1.99/php_mobile/resuper_nom.php";
+            $.getJSON(url, function(result) {
+                // console.log("les ids des projet existes de l'agent 5  ");
+
+                //console.log(result);
+                $.each(result, function(i, field) {
+                    var projet_titre = field.titre;
+
+                    var id_projet = field.id_projet;
+                    var id_agent_affect = field.id_agent_affect;
+
+                    // alert(id_projet_affect);
+
+                    if (id_agent_affect == id_agent_globale) {
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        console.log("projet  id : " + id_projet);
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+
+                        // $("#modal_body_projet").append(" <button type='button' onclick='projet(" + id_projet + ")' id='" + id_projet + "'   ><span>" + projet_titre + "</span></button> <br>");
+                        //$("#modal_body_projet").append("<div class='radio'><label><input type='radio' name='optradio' onclick='projet(" + id_projet + ")'id='" + id_projet + "' >" + projet_titre + "</label> </div>");
+                        $("#modal_body_projet").append(" <option id='" + id_projet + "' value='" + id_projet + "'>" + projet_titre + " </option>");
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //in exploitable
+        function projet(a) {
+
+            id_projet_globale = a;
+            console.log("le projet bien affecter" + id_projet_globale);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function check_projet() {
+
+            id_projet_globale = $("#modal_body_projet").children(":selected").attr("id");
+
+            // id_projet_globale = a;
+            console.log("le projet bien affecter" + id_projet_globale);
+            console.log("projet bien choisi id du projet : " + id_projet_globale);
+            // enable button zone
+
+            $("#button_zone").prop('disabled', false);
+            swal({
+                position: 'end-end',
+                type: 'success',
+                title: 'le projet bien enregistrer ',
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+
+        }
+
+
+
+
+
+        function check_form() {
+
+            id_formulaire_globale = $("#modal_body_form").children(":selected").attr("id");
+
+            console.log("form  bien choisi id du form : " + id_formulaire_globale);
+            $("#edit-tools").prop('disabled', false);
+            // enable button zone
+            // $("#button_formulaire").prop('disabled', false);
+            swal({
+                position: 'end-end',
+                type: 'success',
+                title: 'le formulaire bien enregistrer ',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            var url = "http://192.168.1.99/php_mobile/recuper_form.php";
+            $.getJSON(url, function(result) {
+                // console.log("les ids des projet existes de l'agent 5  ");
+
+                //console.log(result);
+                $.each(result, function(i, field) {
+
+
+                    var id_projet_affect = field.id_projet_affect;
+                    var id_agent_affect = field.id_agent_affect;
+                    var id_formulaire_affect = field.id_formulaire_affect;
+                    var id_projet_zone = field.id_projet_zone;
+                    // var nom_form = field.nom_form;
+                    // id_form = id_formulaire_affect;
+
+                    // alert(id_projet_affect);
+
+                    if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale && id_formulaire_affect == id_formulaire_globale) {
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        //alert("formulaire id : " + id_form);
+                        // alert(champs);
+
+                        //  $("#modal_body_form").append(" <button type='button' onclick='affect_form(" + id_form + ")' id='" + id_form + "' ><span>" + nom_form + "</span></button> <br>");
+                        //$("#modal_body_form").append(" <option id='" + id_form + "' value='" + id_form + "'>" + nom_form + " </option>");
+
+                        id_type_geometrie = field.id_geom_affect;
+                        //alert("id geom affect : " + id_type_geometrie);
+
+
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+                        //$("#homeSubmenu").append(" <button type='button' onclick='myFunction(" + id_projet + ")' id='" + id_projet + "'  class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong1' ><span>" + projet_titre + "</span></button> <br>");
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+
+
+
+
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- get corrunt location -->
+    <script>
+        // User's current location (localisation actuelle de l'utilisateur)
+        function getPosition() {
+            var options = {
+                enableHighAccuracy: true,
+                maximumAge: 3600000
+            }
+            var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+
+
+
+            /* var options = {
+                maximumAge: 3600000000,
+                timeout: 1000,
+                enableHighAccuracy: true,
+            }
+            var watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+*/
+            function onSuccess(position) {
+                var coords = ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]);
+                map.getView().animate({
+                    center: coords,
+                    zoom: 10
+                });
+
+                add_map_point(position.coords.latitude, position.coords.longitude)
+            };
+
+            function onError(error) {
+                swal({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: error.message,
+                    footer: '<a href>Why do I have this issue?</a>'
+                });
+                // console.log('getposition : \n code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+            }
+        }
+
+
+
+
+
+
+        function add_map_point(lat, lng) {
+            // Add a marker
+
+            var source = new ol.source.Vector({});
+            var vector = new ol.layer.Vector({
+                source: source,
+                style: new ol.style.Style({
+                    image: new ol.style.Icon({
+                        anchor: [0.5, 0.5],
+                        anchorXUnits: "fraction ",
+                        anchorYUnits: "fraction ",
+                        src: "images/RedDot.svg"
+                    })
+                })
+            });
+            map.addLayer(vector);
+
+            // Add animation when the marker appears for the first time
+            var geom = new ol.geom.Point(ol.proj.transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857'));
+            var feature = new ol.Feature(geom);
+            source.addFeature(feature);
+            var duration = 3000;
+
+            function flash(feature) {
+                var start = new Date().getTime();
+                var listenerKey;
+
+                function animate(event) {
+                    var vectorContext = event.vectorContext;
+                    var frameState = event.frameState;
+                    var flashGeom = feature.getGeometry().clone();
+                    var elapsed = frameState.time - start;
+                    var elapsedRatio = elapsed / duration;
+                    // radius will be 5 at start and 30 at end.
+                    var radius = ol.easing.easeOut(elapsedRatio) * 25 + 5;
+                    var opacity = ol.easing.easeOut(1 - elapsedRatio);
+
+                    var style = new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: radius,
+                            snapToPixel: false,
+                            stroke: new ol.style.Stroke({
+                                color: 'rgba(255, 0, 0, ' + opacity + ')',
+                                width: 0.25 + opacity
+                            })
+                        })
+                    });
+
+                    vectorContext.setStyle(style);
+                    vectorContext.drawGeometry(flashGeom);
+                    if (elapsed > duration) {
+                        ol.Observable.unByKey(listenerKey);
+                        return;
+                    }
+                    // tell OpenLayers to continue postcompose animation
+                    map.render();
+                }
+                listenerKey = map.on('postcompose', animate);
+            }
+
+            flash(feature);
+
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        function save() {
+            //Get the geojson format of the layer
+            var geojson = new ol.format.GeoJSON().writeFeatures(layer_draw.getSource().getFeatures());
+            console.log(geojson);
+            // url = 'save.html';
+            url = 'save.html?id_projet=' + id_projet_globale + "&id_agent=" + id_agent_globale + "&id_zone=" + id_zone_globale + "&id_form=" + id_formulaire_globale + "&geojson=" + geojson;
+
+            location.replace(url);
+            //Send the layer to database (SQLite)
+            /** code here **/
+
+        }
+    </script>
+
+
+
+
+
+
+
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="plugins/nprogress/nprogress.js"></script>
+    <!-- jQuery custom content scroller -->
+    <script src="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="js/custom.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="plugins/node-waves/waves.js"></script>
+    <!-- Select Plugin Js -->
+    <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <!-- Cordova -->
+    <script src="cordova.js"></script>
+    <!-- Mcx Dialog Mobile plugin -->
+    <script src="plugins/mcx-dialog-mobile/dist/mcx-dialog.js"></script>
+    <!-- SweetAlert2 js plugin -->
+    <script>
+    </script>
+
+    <!-- test de la conection -->
+    <script>
+        $(document).ready(function() {
+
+            var myDB;
+            //Open Database Connection
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            function onDeviceReady() {
+                //  checkConnection();
+
+                // test de gps silest ouvert 
+                cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled) {
+                    alert("GPS location is " + (enabled ? "enabled" : "disabled"));
+                }, function(error) {
+                    alert("The following error occurred: " + error);
+                });
+
+            }
+        });
+    </script>
+</body>
+
+</html>

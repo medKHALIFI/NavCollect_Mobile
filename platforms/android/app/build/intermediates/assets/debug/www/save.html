@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+
+    <!-- Google Fonts & Materialize icon  -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Bootstrap -->
+    <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- NProgress -->
+    <link href="plugins/nprogress/nprogress.css" rel="stylesheet">
+    <!-- jQuery custom content scroller -->
+    <link href="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+    <!-- Waves Effect Css -->
+    <link href="plugins/node-waves/waves.css" rel="stylesheet" />
+    <!-- Animation Css -->
+    <link href="plugins/animate-css/animate.css" rel="stylesheet" />
+
+
+    <link href="plugins/SweetAlert2/sweetalert2.min.css" rel="stylesheet" />
+    <!-- Sweet Alert 2 Plugin Js -->
+    <script src="plugins/SweetAlert2/sweetalert2.min.js"></script>
+    <!-- Datatables -->
+    <link href="plugins/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="css/custom_data.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+
+</head>
+
+<body class="nav-md ">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col menu_fixed">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="#" class="site_title"></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                        </div>
+                        <div class="profile_info">
+                            <span>Bonjour</span>
+                            <h2> Hanaa KHOJ</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li><a href="index.html"><i class="fas fa-map-marked-alt"></i> Carte</a></li>
+                                <li><a href="data.html"><i class="fa fa-database"></i> Données</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+
+
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fas fa-home"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <!--  id="insert"              onclick="saveForm()" -->
+                                <a class="user-profile"> <button id="121212">save</button></a>
+                                <script>
+                                    function save() {
+                                        console.log("projet ;" + id_projet_globale + " agent " + id_agent_globale + " zone " + id_zone_globale + " form " + id_zone_globale);
+
+                                        console.log("projet ;" + nom_projet + " agent " + nom_agent + " zone " + nom_zone + " form " + nom_form);
+                                        swal({
+                                            title: 'vous etes sur des donnes?',
+                                            text: "You won't be able to revert this!",
+                                            type: 'success',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Yes, save it!'
+                                        }).then((result) => {
+                                            if (result.value) {
+                                                swal({
+                                                    position: 'top-end',
+                                                    type: 'success',
+                                                    title: 'Your work has been saved',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                })
+                                                setTimeout(
+                                                    function() {
+
+                                                        alert("quitte");
+
+                                                        // url = 'index.html';
+
+                                                        // location.replace(url);
+                                                    }, 1000);
+                                            }
+                                        })
+
+
+
+
+
+
+                                    }
+                                </script>
+
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="page-title">
+
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+
+                                <div class="x_title">
+                                    <!--  <button id="121212">save</button> -->
+                                    <h5>sauvgardez votre donnes</h5>
+                                    <div class="clearfix"></div>
+                                </div>
+
+
+                                <div class="x_content" id="form_contenu">
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        function save_form() {
+
+
+
+
+            $("#form_contenu").html(" ");
+            // alert("form " + id_form);
+
+            var url = "http://192.168.1.99/php_mobile/formulaire.php";
+            $.getJSON(url, function(result) {
+                //alert(result);
+
+                $.each(result, function(i, field) {
+                    var id_formulaire = field.id_formulaire;
+
+                    var champs = field.champs;
+                    // alert(champs);
+
+
+                    // alert(id_projet_affect);
+
+                    if (id_form_globale == id_formulaire) {
+                        //  alert(champs);
+                        //  alert(html);
+                        // alert("remble");
+                        //$("#form_user").append(html);
+                        //  console.log("projet  id : " + id_projet);
+                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+                        $("#form_contenu").html(champs);
+                    }
+                    /* var duration = field.duration;
+                                    var price = field.price;
+                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                                */
+                });
+            });
+
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- get url-->
+    <script type="text/javascript" src="js/geturi.js"></script>
+    <script type="text/javascript">
+        // les variable globale 
+        var nom_agent;
+        var nom_projet;
+        var nom_zone;
+        var nom_form;
+        var data;
+        var zone;
+        var id_projet_globale = decodeURI(getUrlVars()["id_projet"]);
+        var id_agent_globale = decodeURI(getUrlVars()["id_agent"]);
+        var id_zone_globale = decodeURI(getUrlVars()["id_zone"]);
+        var id_form_globale = decodeURI(getUrlVars()["id_form"]);
+        var geojson = decodeURI(getUrlVars()["geojson"]);
+
+        var url = "http://192.168.1.99/php_mobile/recuper_form.php";
+        $.getJSON(url, function(result) {
+            // console.log("les ids des projet existes de l'agent 5  ");
+
+            //console.log(result);
+            $.each(result, function(i, field) {
+
+
+                var id_projet_affect = field.id_projet_affect;
+                var id_agent_affect = field.id_agent_affect;
+                var id_formulaire_affect = field.id_formulaire_affect;
+                var id_projet_zone = field.id_projet_zone;
+                // var nom_form = field.nom_form;
+                // id_form = id_formulaire_affect;
+
+                // alert(id_projet_affect);
+
+                if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale && id_formulaire_affect == id_form_globale) {
+                    //  alert(html);
+                    // alert("remble");
+                    //$("#form_user").append(html);
+                    //alert("formulaire id : " + id_form);
+                    // alert(champs);
+
+                    //  $("#modal_body_form").append(" <button type='button' onclick='affect_form(" + id_form + ")' id='" + id_form + "' ><span>" + nom_form + "</span></button> <br>");
+                    //$("#modal_body_form").append(" <option id='" + id_form + "' value='" + id_form + "'>" + nom_form + " </option>");
+                    nom_agent = field.nom_agent;
+                    nom_projet = field.titre;
+                    nom_zone = field.nom_zone;
+                    nom_form = field.nom_form;
+
+                    // console.log("agent : " + nom_agent + " projet " + nom_projet);
+
+
+                    //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                    // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
+                    // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
+                    //$("#homeSubmenu").append(" <button type='button' onclick='myFunction(" + id_projet + ")' id='" + id_projet + "'  class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong1' ><span>" + projet_titre + "</span></button> <br>");
+                }
+                /* var duration = field.duration;
+                                var price = field.price;
+                                $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
+                            */
+            });
+        });
+
+        //console.log("projet : " + id_projet_globale + "\nagent : " + id_agent_globale + "\nzone : " + id_zone_globale + "\nform : " + id_form_globale + "\ngeojson : " + geojson);
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--save form-->
+    <script>
+        function saveForm() {
+            console.log("resultat du formulaise sous form geojson");
+            console.log(JSON.stringify($("#idform").serializeArray()));
+            var data = JSON.stringify($("#idform").serializeArray());
+            console.log("geojson de la couche : ", geojson)
+                //   insert(nom_projet, nom_agent, nom_zone, nom_form, data, geojson);
+            alert(nom_projet + "\n " + nom_agent + "\n " + nom_zone + "\n " + nom_form + "\n " + data + "\n " + geojson);
+            //insert();
+            save();
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Datatables -->
+    <script src="plugins/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="plugins/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="plugins/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="plugins/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="plugins/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="plugins/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="plugins/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="plugins/jszip/dist/jszip.min.js"></script>
+    <script src="plugins/pdfmake/build/pdfmake.min.js"></script>
+    <script src="plugins/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="plugins/nprogress/nprogress.js"></script>
+    <!-- jQuery custom content scroller -->
+    <script src="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="js/custom.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="plugins/node-waves/waves.js"></script>
+    <!-- Select Plugin Js -->
+    <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <!-- Sweet Alert 2 Plugin Js
+    <script src="plugins/SweetAlert2/sweetalert2.min.js"></script> -->
+    <!-- Cordova -->
+    <script src="cordova.js"></script>
+
+    <!-- sqlite -->
+    <script>
+        $(document).ready(function() {
+            $("#121212").click(function() {
+                //var title = $("#title").val();
+                //   alert(nom_projet + "\n " + nom_agent + "\n " + nom_zone + "\n " + nom_form + "\n " + data + "\n " + geojson);
+
+                // alert("test : "+ title);
+
+                // le traitement 
+                console.log("resultat du formulaise sous form geojson");
+                console.log(JSON.stringify($("#idform").serializeArray()));
+                data = JSON.stringify($("#idform").serializeArray());
+                // console.log("geojson de la couche : ", geojson)
+                //   insert(nom_projet, nom_agent, nom_zone, nom_form, data, geojson);
+                // alert(nom_projet + "\n " + nom_agent + "\n " + nom_zone + "\n " + nom_form + "\n " + data + "\n " + geojson);
+                //insert();
+
+
+                swal({
+                    title: 'vous etes sur des donnes?',
+                    text: "You won't be able to revert this!",
+                    type: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, save it!'
+                }).then((result) => {
+                    if (result.value) {
+                        //                  alert("quitte" + nom_agent);
+                        // save dans la base de donnees
+                        myDB.transaction(function(transaction) {
+                            var executeQuery = "INSERT INTO data (nom_projet,nom_agent,nom_zone ,nom_form ,data  ,zone ) VALUES (?,?,?,?,?,?)";
+                            transaction.executeSql(executeQuery, [nom_projet, nom_agent, nom_zone, nom_form, data, geojson], function(tx, result) {
+                                    //  alert('Inserted');
+                                    swal({
+                                        position: 'top-end',
+                                        type: 'success',
+                                        title: 'Your work has been saved',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    $("#121212").prop('disabled', true);
+                                },
+                                function(error) {
+                                    alert('Error occurred');
+                                });
+                        });
+
+                        setTimeout(
+                            function() {
+
+
+
+
+                                url = 'data.html';
+
+                                location.replace(url);
+                            }, 1500);
+                    }
+                })
+
+
+
+
+
+
+            });
+
+
+
+
+            var myDB;
+            //Open Database Connection
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            function onDeviceReady() {
+                myDB = window.sqlitePlugin.openDatabase({
+                    name: "mySQLite.db",
+                    location: 'default'
+                });
+
+                // alert(nom_projet + "\n " + nom_agent + "\n " + nom_zone + "\n " + nom_form + "\n " + data + "\n " + geojson);
+
+                //creation de la table 
+                myDB.transaction(function(transaction) {
+                    // transaction.executeSql('CREATE TABLE IF NOT EXISTS phonegap_pro (id integer primary key, title text, desc text)', [],
+                    transaction.executeSql('CREATE TABLE IF NOT EXISTS data (id integer primary key,nom_projet text,nom_agent text,nom_zone text,nom_form text,data json ,zone json)', [],
+
+                        function(tx, result) {
+                            //  alert("la table bien cree");
+                        },
+                        function(error) {
+                            alert("Error occurred while creating the table.");
+                        });
+                });
+
+
+
+                // var desc = $("#desc").val();
+                // var data = '{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-761007.0536072147,4029148.6349682105],[-765058.2161063291,4025632.5316670923],[-756573.7059666745,4022651.4875639705],[-755044.965400971,4028307.8276570733],[-761007.0536072147,4029148.6349682105],[-761007.0536072147,4029148.6349682105]]]},"properties":null}]}'
+                //var zone = '{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-761007.0536072147,4029148.6349682105],[-765058.2161063291,4025632.5316670923],[-756573.7059666745,4022651.4875639705],[-755044.965400971,4028307.8276570733],[-761007.0536072147,4029148.6349682105],[-761007.0536072147,4029148.6349682105]]]},"properties":null}]}'
+
+
+                // insert(1, 1, 1, 1, data, zone);
+                // remplir_table();
+                // seulement pour le teste 
+                //$("#data_collect").append("<tr><td> projt_test </td><td> agent_test </td><td> zone_test </td><td>form_test </td><td> data_test </td><td>zone_test</td></tr>");
+                //$("#insert").click(insert());
+
+                // alert("projet : " + id_projet_globale + "\nagent : " + id_agent_globale + "\nzone : " + id_zone_globale + "\nform : " + id_form_globale + "\ngeojson : " + geojson);
+
+
+
+                // alert(nom_projet + "\n " + nom_agent + "\n " + nom_zone + "\n " + nom_form + "\n " + data + "\n " + geojson);
+
+
+
+                /*       myDB.transaction(function(transaction) {
+                           var executeQuery = "INSERT INTO data (nom_projet,nom_agent,nom_zone ,nom_form ,data  ,zone ) VALUES (?,?,?,?,?,?)";
+                           transaction.executeSql(executeQuery, [nom_projet, nom_agent, nom_zone, nom_form, data, zone], function(tx, result) {
+                                   alert('Inserted');
+                               },
+                               function(error) {
+                                   alert('Error occurred');
+                               });
+                       });*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+            //  function insert(nom_projet, nom_agent, nom_zone, nom_form, data, zone) {
+            //Insert New Data
+            //$("#insert").click(function() {
+            //function insert() {
+            //Insert New Data
+            /*$("#insert").click(function() {
+
+                myDB.transaction(function(transaction) {
+                    var executeQuery = "INSERT INTO data (nom_projet,nom_agent,nom_zone ,nom_form ,data  ,zone ) VALUES (?,?,?,?,?,?)";
+                    transaction.executeSql(executeQuery, [nom_projet, nom_agent, nom_zone, nom_form, data, zone], function(tx, result) {
+                            alert('Inserted');
+                        },
+                        function(error) {
+                            alert('Error occurred');
+                        });
+                });
+                //});
+            });*/
+            //  }
+        });
+    </script>
+
+    <script>
+        save_form();
+    </script>
+    <script>
+        swal({
+            position: 'top-end',
+            type: 'success',
+            title: 'bienvenu dans l\'espace d\'enregistrement ',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    </script>
+</body>
+
+</html>
