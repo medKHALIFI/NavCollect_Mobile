@@ -201,8 +201,8 @@
                      'question'
                  );*/
                 swal({
-                    title: 'non internet?',
-                    text: "veuillez connecter sur internet",
+                    title: 'Pas d\'internet?',
+                    text: "Veuillez connecter à une connexion internet !",
                     type: 'question',
                     showCancelButton: false,
                     confirmButtonColor: '#3085d6',
@@ -235,7 +235,7 @@
                             swal({
                                 position: 'top-end',
                                 type: 'success',
-                                title: 'bienvenue monsieur : ' + field.nom_agent + '\n vous etes connecter sur internet ',
+                                title: 'Bienvenue M./Mme. ' + field.nom_agent + '\n , Vous êtes connecté! ',
                                 showConfirmButton: false,
                                 timer: 2000
                             });
@@ -320,7 +320,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">choisissez votre projet </h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Choisir un projet </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
@@ -337,7 +337,7 @@
                 </div>
                 <div class="modal-footer">
 
-                    <button type='button' onclick='check_projet()' class='btn btn-primary' data-dismiss="modal">Save</button>
+                    <button type='button' onclick='check_projet()' class='btn btn-primary' data-dismiss="modal">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -412,7 +412,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">choisissez votre zone </h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Choisir une zone </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
@@ -429,7 +429,7 @@
                 </div>
                 <div class="modal-footer">
 
-                    <button type='button' onclick='check_zone()' class='btn btn-primary' data-dismiss="modal">Save</button>
+                    <button type='button' onclick='check_zone()' class='btn btn-primary' data-dismiss="modal">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -481,7 +481,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">choisissez votre form </h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Choisir un formulaire </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
@@ -498,7 +498,7 @@
                 </div>
                 <div class="modal-footer">
 
-                    <button type='button' onclick='check_form()' class='btn btn-primary' data-dismiss="modal">Save</button>
+                    <button type='button' onclick='check_form()' class='btn btn-primary' data-dismiss="modal">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -577,7 +577,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    Suivi de chemin:
+                    Suivi de chemin :
                     <select onchange="draw.setFollowTrack($(this).val()==='true' ? true : $(this).val());">
               <option value="true">true (track at zoom)</option>
               <option value="false">false (don't track)</option>
@@ -1172,7 +1172,7 @@
     <script>
         function get_formulaire() {
             // suprimer le modale 
-            $("#modal_body_form").html("<option selected disabled value=''>Sélectionnez une form </option> ");
+            $("#modal_body_form").html("<option selected disabled value=''>Sélectionnez un formulaire </option> ");
 
             var url = "http://192.168.1.99/php_mobile/recuper_form.php";
             $.getJSON(url, function(result) {
@@ -1318,7 +1318,7 @@
 
 
         function recherche() {
-            alert("i need the API please ");
+            alert("Il faut avoir une API ! ");
 
         }
 
@@ -1345,7 +1345,7 @@
             swal({
                 position: 'end-end',
                 type: 'success',
-                title: 'la zone bien enregistrer ',
+                title: 'la zone est bien enregistrée ',
                 showConfirmButton: false,
                 timer: 1500
             })
@@ -1382,7 +1382,7 @@
 
             var url = "http://192.168.1.99/php_mobile/recupere_zone.php";
             $.getJSON(url, function(result) {
-                // console.log("les ids des projet existes de l'agent 5  ");
+                // console.log("les ids des projet existants de l'agent 5  ");
 
                 //console.log(result);
                 $.each(result, function(i, field) {
@@ -1526,7 +1526,7 @@
             $("#modal_body_projet").html("<option selected disabled value=''>Sélectionnez un projet </option> ");
             var url = "http://192.168.1.99/php_mobile/resuper_nom.php";
             $.getJSON(url, function(result) {
-                // console.log("les ids des projet existes de l'agent 5  ");
+                // console.log("les ids des projet existants de l'agent 5  ");
 
                 //console.log(result);
                 $.each(result, function(i, field) {
@@ -1631,7 +1631,7 @@
             id_projet_globale = $("#modal_body_projet").children(":selected").attr("id");
 
             // id_projet_globale = a;
-            console.log("le projet bien affecter" + id_projet_globale);
+            console.log("le projet est bien affecté" + id_projet_globale);
             console.log("projet bien choisi id du projet : " + id_projet_globale);
             // enable button zone
 
@@ -1639,7 +1639,7 @@
             swal({
                 position: 'end-end',
                 type: 'success',
-                title: 'le projet bien enregistrer ',
+                title: 'le projet est bien enregistré ',
                 showConfirmButton: false,
                 timer: 1500
             })
@@ -1662,13 +1662,13 @@
             swal({
                 position: 'end-end',
                 type: 'success',
-                title: 'le formulaire bien enregistrer ',
+                title: 'le formulaire est bien enregistré ',
                 showConfirmButton: false,
                 timer: 1500
             });
             var url = "http://192.168.1.99/php_mobile/recuper_form.php";
             $.getJSON(url, function(result) {
-                // console.log("les ids des projet existes de l'agent 5  ");
+                // console.log("les ids des projet existants de l'agent 5  ");
 
                 //console.log(result);
                 $.each(result, function(i, field) {

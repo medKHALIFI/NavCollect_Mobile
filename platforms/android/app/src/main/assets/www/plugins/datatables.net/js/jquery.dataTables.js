@@ -1733,7 +1733,7 @@
 		 * sZeroRecords - assuming that is given.
 		 */
 		if ( ! lang.sEmptyTable && zeroRecords &&
-			defaults.sEmptyTable === "No data available in table" )
+			defaults.sEmptyTable === "Aucune donnée disponible" )
 		{
 			_fnMap( lang, lang, 'sZeroRecords', 'sEmptyTable' );
 		}
@@ -11349,7 +11349,8 @@
 			 * parameter - if it is not given, the value of `zeroRecords` will be used
 			 * instead (either the default or given value).
 			 *  @type string
-			 *  @default No data available in table
+			 *  @default Aucune donnée disponible
+
 			 *
 			 *  @dtopt Language
 			 *  @name DataTable.defaults.language.emptyTable
@@ -11358,12 +11359,13 @@
 			 *    $(document).ready( function() {
 			 *      $('#example').dataTable( {
 			 *        "language": {
-			 *          "emptyTable": "No data available in table"
+			 *          "emptyTable": "Aucune donnée disponible
+"
 			 *        }
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "No data available in table",
+			"sEmptyTable": "Aucune donnée disponible",
 	
 	
 			/**
@@ -11556,7 +11558,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Affichage de _MENU_ des entrées",
+			"sLengthMenu": " Nombre des entrées à afficher :  _MENU_ ",
 	
 	
 			/**
@@ -11636,7 +11638,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Chercher:",
+			"sSearch": "Chercher :",
 	
 	
 			/**
