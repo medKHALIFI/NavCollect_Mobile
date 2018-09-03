@@ -988,6 +988,20 @@
                                 key: 'AuFUqJsfrG-Qgvg9sDChTNlHzN5_ybJA7LOknPz-Y1T6dNONDIIkQrPHvxjOe8To',
                                 imagerySet: 'AerialWithLabels'
                             })
+                        }),
+                        new ol.layer.Tile({
+                            title: 'Navcities Maps',
+                            type: "base",
+                            visible: true,
+                            preload: Infinity,
+                            source: new ol.source.XYZ({
+                                attributions: [new ol.Attribution({
+                                    html: 'Tiles © <a href="https://www.navcities.com">Navcities</a>'
+                                })],
+                                url: "http://www.navcities.com/mapcache/tms/1.0.0/lintermediaire@NavG/{z}/{x}/{-y}.png",
+                                crossOrigin: 'Anonymous'
+
+                            })
                         })
 
                     ]
