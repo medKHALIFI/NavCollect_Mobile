@@ -265,11 +265,13 @@
     <div class="navheader">
         <div class="col-sm-12" align="center">
             <div class="row">
-                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2"><img src="images/logo.png" alt="Smiley face" width="65" height="40"></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><img src="images/logo.png" alt="Smiley face" width="65" height="40"></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_projet" data-toggle="modal" data-target="#exampleModal_projet" onclick="get_projet() " class="btn btn-circle bg-footer"><i class="fas fa-briefcase"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_zone" data-toggle="modal" data-target="#exampleModal_zone" onclick="get_zone() " class="btn btn-circle bg-footer "><i class="fas fas fa-layer-group"></i></button></div>
                 <div class="col-xs-2 col-sm-2  col-md-2 col-lg-2"><button type="button" id="button_formulaire" data-toggle="modal" data-target="#exampleModal_form" onclick="get_formulaire() " class="btn btn-circle bg-footer "><i class="fas fa-list-alt"></i></button></div>
-                <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="go_home" onclick="go_home()" class="btn btn-circle bg-footer"><i class="fas fa-home"></i></button></div>
+
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="button_data" onclick="go_data()"><i class="fas fa-database"></i></button></div>
 
             </div>
@@ -982,6 +984,20 @@
                             source: new ol.source.OSM()
                         }),
                         new ol.layer.Tile({
+                            title: 'Navcities Maps',
+                            type: "base",
+                            visible: true,
+                            preload: Infinity,
+                            source: new ol.source.XYZ({
+                                attributions: [new ol.Attribution({
+                                    html: 'Tiles © <a href="https://www.navcities.com">Navcities</a>'
+                                })],
+                                url: "http://www.navcities.com/mapcache/tms/1.0.0/lintermediaire@NavG/{z}/{x}/{-y}.png",
+                                crossOrigin: 'Anonymous'
+
+                            })
+                        }),
+                        new ol.layer.Tile({
                             title: 'Bing',
                             type: 'base',
                             source: new ol.source.BingMaps({
@@ -989,6 +1005,7 @@
                                 imagerySet: 'AerialWithLabels'
                             })
                         })
+
 
                     ]
                 }),
