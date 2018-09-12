@@ -11,6 +11,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "cordova-android": "^7.0.0",
+        "cordova-ios": "^4.5.5",
         "cordova-plugin-android-imei": "^1.0.0",
         "cordova-plugin-geolocation": "^4.0.1",
         "cordova-plugin-imei": "^1.1.0",
@@ -28,7 +29,8 @@
             "cordova-plugin-imei": {}
         },
         "platforms": [
-            "android"
+            "android",
+            "ios"
         ]
     }
 }

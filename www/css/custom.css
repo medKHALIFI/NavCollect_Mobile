@@ -516,7 +516,7 @@ body .container.body .right_col {
     background: #D9DEE4
 }
 body {
-    color: #73879C;
+    color: #333;
     font-weight: 400;
     line-height: 1.471;
     font-size:13px;
@@ -1333,7 +1333,7 @@ table.jambo_table {
 }
 table.jambo_table thead {
     background: rgba(52, 73, 94, 0.94);
-    color: #ECF0F1
+    color: #fff
 }
 table.jambo_table tbody tr:hover td {
     background: rgba(38, 185, 154, 0.07);
@@ -4262,7 +4262,7 @@ ul.notifications {
     font-size: 12px;
     border-bottom: 1px solid #ddd; }
     .dataTables_wrapper input[type="search"]:focus, .dataTables_wrapper input[type="search"]:active {
-      border-bottom: 2px solid #1f91f3; }
+      border-bottom: 2px solid #1abb9c; }
   .dataTables_wrapper .dt-buttons {
     float: left; }
     .dataTables_wrapper .dt-buttons a.dt-button {
@@ -4960,21 +4960,20 @@ html.ie11 .bs-searchbox .form-control {
 
 .bg-footer {
   background-color: #2a3f54 !important;
-  color: #e7e7e7; }
+  color: #fff; }
   .bg-footer .content .text,
   .bg-footer .content .number {
-    color: #e7e7e7 !important; }
+    color: #fff !important; }
 
-.bg-footer:focus,
 .bg-footer:active,
-.bg-footer.active,
+.bg-footer:hover,
 .open .dropdown-toggle.bg-footer {
     background-color: #26B99A !important;
-  color: #e7e7e7; }
+  color: #ffffff; }
   .bg-footer .content .text,
   .bg-footer .content .number {
-    color: #e7e7e7 !important; }
-}
+    color: #ffffff !important; }
+
 
 
 
@@ -5077,9 +5076,6 @@ html.ie11 .bs-searchbox .form-control {
   color: #fff; }
 
 
-
-
-
 .sb-search {
     position: relative;
     margin-top: 10px;
@@ -5091,7 +5087,6 @@ html.ie11 .bs-searchbox .form-control {
     -webkit-transition: width 0.3s;
     -moz-transition: width 0.3s;
     transition: width 0.3s;
-    -webkit-backface-visibility: hidden;
 }
 
 .sb-search-input {
@@ -5159,7 +5154,6 @@ html.ie11 .bs-searchbox .form-control {
     z-index: 90;
     font-size: 22px;
     font-family: 'icomoon';
-    speak: none;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
@@ -5189,3 +5183,113 @@ html.ie11 .bs-searchbox .form-control {
     z-index: 90;
 }
 
+#accuraty {
+    display: block;
+    background: #f00;
+    height: 10px;
+    max-width: 200px;
+}
+
+.options ul {
+    margin: 0;
+}
+
+.options {
+    position: fixed;
+    right: 0;
+    bottom: 70px;
+    margin: 0;
+    font-size: 0.8em;
+    padding: 0 0.3em;
+    background-color: #fff;
+    width: 100%;
+    padding: 10px 30px;
+    border-radius: 4px;
+    border: 3px solid #ededed;
+    text-align: center;
+}
+
+.options button {
+    padding: 0.4em 0.5em;
+    background: #369;
+    color: #fff;
+    border: 0;
+    margin: 0.2em 0;
+}
+
+.info {
+    background: #f5f5f5;
+    padding: 0.5em;
+    margin: 1em 0;
+    position: fixed;
+    z-index: 2;
+    margin: 0.5em 0.5em 0.5em 3em;
+    top: 2em;
+    overflow: auto;
+    max-height: calc(100% - 4em);
+}
+
+.follow {
+    position: fixed;
+    left: 1em;
+    bottom: 1em;
+    background: #369;
+    color: #fff;
+    padding: 0.5em;
+    display: none;
+}
+
+.navheader {
+    position: absolute;
+    background: #ededed;
+    padding: 10px 0px 0px 0px;
+    display: block;
+    top: 0;
+    float: left;
+    width: 100%;
+}
+
+.custom-zoomSlider {
+    position: absolute;
+    background-color: rgba(255, 255, 255, .4);
+    border-radius: 50px;
+    padding: 2px;
+    text-align: center;
+    top: 8em;
+    right: .5em;
+    height: 200px;
+    width: 40px;
+}
+
+.custom-zoomSlider button {
+    position: relative;
+    margin: 1px;
+    padding: 0;
+    color: #fff;
+    font-size: 1.14em;
+    font-weight: 700;
+    text-decoration: none;
+    width: 35px;
+    height: 35px;
+    line-height: .4em;
+    background-color: #2a3f54;
+    border: none;
+    border-radius: 50px;
+}
+
+.custom-zoomSlider button:active,
+.custom-zoomSlider button:hover {
+    text-decoration: none;
+    background-color: #1abb9c;
+}
+/******Chercher une position******/
+  #address-bar {
+    position: fixed;
+    z-index:100;
+    list-style-type: none;
+    padding: 0px;
+    margin-top:45px;
+    max-height:100px;
+    margin-left:15px;
+    margin-right:55px;
+  }

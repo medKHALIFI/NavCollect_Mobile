@@ -2449,7 +2449,7 @@ table th[class*="col-"] {
     margin-bottom: 15px;
     overflow-y: hidden;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-    border: 1px solid #ddd;
+    
   }
   .table-responsive > .table {
     margin-bottom: 0;
@@ -3033,7 +3033,7 @@ select[multiple].input-lg {
 .btn:hover,
 .btn:focus,
 .btn.focus {
-  color: #333;
+  color: rgb(255, 255, 255);
   text-decoration: none;
 }
 .btn:active,

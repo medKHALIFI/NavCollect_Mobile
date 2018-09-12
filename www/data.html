@@ -3,18 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-
-    <!-- Google Fonts & Materialize icon  -->
+    <!-- Google Fonts  -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
     <!-- Bootstrap -->
-    <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!-- NProgress -->
     <link href="plugins/nprogress/nprogress.css" rel="stylesheet">
     <!-- jQuery custom content scroller -->
@@ -28,82 +24,39 @@
     <!-- Sweet Alert 2 Plugin Js -->
     <script src="plugins/SweetAlert2/sweetalert2.min.js"></script>
     <!-- Datatables -->
-    <link href="plugins/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/datatables.net-bs/css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="plugins/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="plugins/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="plugins/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="plugins/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="css/custom_data.css" rel="stylesheet">
-
-
+    <link href="css/custom.css" rel="stylesheet">
+    
 </head>
 
 <body class="nav-md ">
     <div class="container body">
         <div class="main_container">
-            <div class="col-md-3 left_col menu_fixed">
-                <div class="left_col scroll-view">
-                    <div class="navbar nav_title" style="border: 0;">
-                        <a href="#" class="site_title"></a>
-                    </div>
-
-                    <div class="clearfix"></div>
-
-                    <!-- menu profile quick info -->
-                    <div class="profile clearfix">
-                        <div class="profile_pic">
-                        </div>
-                        <div class="profile_info">
-                            <span>Bonjour</span>
-                            <h2> khalifi</h2>
-                        </div>
-                    </div>
-                    <!-- /menu profile quick info -->
-
-                    <br />
-
-                    <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                        <div class="menu_section">
-                            <ul class="nav side-menu">
-                                <li><a href="index.html"><i class="fas fa-map-marked-alt"></i> Carte</a></li>
-                                <li><a href="data.html"><i class="fa fa-database"></i> Données</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /sidebar menu -->
-
-
-                </div>
-            </div>
-
             <!-- top navigation -->
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <nav>
-                        <div class="nav toggle">
-                            <a id="menu_toggle"><i class="fas fa-home"></i></a>
-                        </div>
-
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="">
-
-                                <a class="user-profile"> <button id="syncroniser">Sync</button></a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+            <div class="navheader">
+                <div class="col-sm-12" align="center">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-bottom: 10px"><img src="images/logo.png" alt="logo" style="width:110px; height:40px"></div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="syncroniser" class="btn btn-circle bg-footer "><i class="fas fa-share-square"></i></button></div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" onclick="go_home()"><i class="fas fa-map-marked-alt"></i></button></div>
+                    </div>
+                </div>  
             </div>
-            <!-- /top navigation -->
+            <br>
+            <!-- /top navigation -->            
 
             <!-- page content -->
             <div class="right_col" role="main">
                 <div class="">
                     <div class="page-title">
-
                     </div>
-
                     <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -117,29 +70,43 @@
 
                                     </p>
                                     <div class="table-responsive">
-                                        <table id="20202020" class="table table-bordered">
+                                        <table id="20202020" class="table table-bordered table-striped table-hover dt-responsive display nowrap jambo_table">
                                             <thead>
                                                 <tr>
-                                                    <tr>
-                                                        <th>Projet</th>
-                                                        <th>Agent </th>
-                                                        <th>Zone</th>
-                                                        <th>Formulaire</th>
-                                                        <th>Donnée</th>
-                                                        <th>Zone</th>
-
-                                                    </tr>
-
+                                                    <th>Projet</th>
+                                                    <th>Agent </th>
+                                                    <th>Zone</th>
+                                                    <th>Formulaire</th>
+                                                    <th>Données</th>
+                                                    <th>Zone</th>
+                                                    <th>Supprimer</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="table_id">
-
+                                                <tr>
+                                                    <td>Hanaa</td>
+                                                    <td>Hanaa</td>
+                                                    <td>Hanaa</td>
+                                                    <td>Hanaa</td>
+                                                    <td><button type="button" id="preview_zone" class="btn btn-circle bg-footer"><i class="fas fa-map"></i></button></td>
+                                                    <td><button type="button" id="preview_data" class="btn btn-circle bg-footer"><i class="fas fa-clipboard-list"></i></button></td>
+                                                    <td><button type="button" id="delete_row" class="btn btn-circle bg-footer"><i class="fas fa-trash"></i></button></td>
+                                                </tr>
                                             </tbody>
-
                                         </table>
-
                                     </div>
-                                    <button id="121212">Supprimer</button>
+                                    <div class="row clearfix">
+                                        <div class=".col-md-4 .col-md-offset-4">
+                                            <div class="btn-group btn-group-justified" role="group" aria-label="..." >
+                                                <div class="btn-group" role="group">
+                                                    <button id="delete_data" class="float-right btn bg-red" type="button"><i class="fas fa-trash"></i> &nbsp; Supprimer tous</button>
+                                                </div>
+                                                <div class="btn-group" role="group">
+                                                    <button id="syncroniser" class="float-left btn bg-green" type="button"><i class="fas fa-share-square"></i>&nbsp; Synchroniser</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -160,16 +127,11 @@
     <script src="plugins/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
     <script src="plugins/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="plugins/datatables.net-buttons/js/buttons.print.min.js"></script>
     <script src="plugins/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
     <script src="plugins/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
     <script src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="plugins/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="plugins/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="plugins/jszip/dist/jszip.min.js"></script>
-    <script src="plugins/pdfmake/build/pdfmake.min.js"></script>
     <script src="plugins/pdfmake/build/vfs_fonts.js"></script>
     <!-- Bootstrap -->
     <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -202,6 +164,10 @@
 
     <!-- recuperation des donnees dans la base de donnees -->
     <script>
+        function go_home() {
+            url = 'index.html';
+            location.replace(url);
+        }
         $(document).ready(function() {
             setTimeout(function() {
                 //alert("Hello");
@@ -232,7 +198,7 @@
             }
 
 
-            $("#121212").click(function() {
+            $("#delete_data").click(function() {
 
                 myDB.transaction(function(transaction) {
                     var executeQuery = "DROP TABLE  IF EXISTS data";

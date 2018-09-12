@@ -35,65 +35,34 @@
     <link href="plugins/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="css/custom_data.css" rel="stylesheet">
-
-
 </head>
 
 <body class="nav-md ">
     <div class="container body">
         <div class="main_container">
-            <div class="col-md-3 left_col menu_fixed">
-                <div class="left_col scroll-view">
-                    <div class="navbar nav_title" style="border: 0;">
-                        <a href="#" class="site_title"></a>
-                    </div>
-
-                    <div class="clearfix"></div>
-
-                    <!-- menu profile quick info -->
-                    <div class="profile clearfix">
-                        <div class="profile_pic">
-                        </div>
-                        <div class="profile_info">
-                            <span>Bonjour</span>
-                            <h2> khalifi</h2>
-                        </div>
-                    </div>
-                    <!-- /menu profile quick info -->
-
-                    <br />
-
-                    <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                        <div class="menu_section">
-                            <ul class="nav side-menu">
-                                <li><a href="index.html"><i class="fas fa-map-marked-alt"></i> Carte</a></li>
-                                <li><a href="data.html"><i class="fa fa-database"></i> Données</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /sidebar menu -->
-
-
-                </div>
-            </div>
-
             <!-- top navigation -->
             <div class="top_nav">
                 <div class="nav_menu">
                     <nav>
                         <div class="nav toggle">
-                            <a id="menu_toggle"><i class="fas fa-home"></i></a>
+                            <a id="menu_toggle"><i class="fas fa-map"></i></a>
                         </div>
-
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="">
-
-                                <a class="user-profile"> <button id="syncroniser">Sync</button></a>
-                            </li>
-                        </ul>
+                        <div class="nav navbar-nav navbar-right">
+                            <button id="syncroniser" class="btn bg-footer"><i class="fas fa-share-square"></i></button>
+                            
+                        </div>
                     </nav>
                 </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- top navigation -->
+            <div class="navheader">
+                <div class="col-sm-12" align="center">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left"></div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right"><button type="button" id="button_projet" data-toggle="modal" data-target="#exampleModal_projet" onclick="get_projet()" class="btn btn-circle bg-footer"><i class="fas fa-briefcase"></i></button></div>
+                    </div>
+                </div>  
             </div>
             <!-- /top navigation -->
 

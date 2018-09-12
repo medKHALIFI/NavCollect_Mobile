@@ -5,12 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
     <!-- jQuery -->
     <script src="plugins/jquery/dist/jquery.min.js"></script>
     <!-- Openlayers -->
-    <link rel="stylesheet" href="plugins/ol-3.15.1/ol.css" />
-    <script type="text/javascript" src="plugins/ol-3.15.1/ol.js"></script>
+    <link rel="stylesheet" href="plugins/ol/ol.css" />
+    <script type="text/javascript" src="plugins/ol/ol.js"></script>
     <!-- ol-ext -->
     <link rel="stylesheet" href="plugins/ol-ext/ol-ext.css" />
     <script type="text/javascript" src="plugins/ol-ext/ol-ext.js"></script>
@@ -40,149 +39,15 @@
     <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
     <!-- Mcx Dialog Mobile plugin -->
     <link href="plugins/mcx-dialog-mobile/dist/css/dialog-mobile.css" rel="stylesheet" />
-
-    <!-- sweet alert-->
-
+    <!-- Sweet Alert 2 Plugin CSS & JS-->
     <link href="plugins/SweetAlert2/sweetalert2.min.css" rel="stylesheet" />
-    <!-- Sweet Alert 2 Plugin Js -->
     <script src="plugins/SweetAlert2/sweetalert2.min.js"></script>
-
-
-
-
-    <style>
-        #accuraty {
-            display: block;
-            background: #f00;
-            height: 10px;
-            max-width: 200px;
-        }
-        
-        .options ul {
-            margin: 0;
-        }
-        
-        .options {
-            position: fixed;
-            right: 0;
-            bottom: 70px;
-            margin: 0;
-            font-size: 0.8em;
-            padding: 0 0.3em;
-            background-color: #fff;
-            width: 100%;
-            padding: 10px 30px;
-            border-radius: 4px;
-            border: 3px solid #ededed;
-            text-align: center;
-        }
-        
-        .options button {
-            padding: 0.4em 0.5em;
-            background: #369;
-            color: #fff;
-            border: 0;
-            margin: 0.2em 0;
-        }
-        
-        .info {
-            background: #f5f5f5;
-            padding: 0.5em;
-            margin: 1em 0;
-            position: fixed;
-            z-index: 2;
-            margin: 0.5em 0.5em 0.5em 3em;
-            top: 2em;
-            overflow: auto;
-            max-height: calc(100% - 4em);
-        }
-        
-        .follow {
-            position: fixed;
-            left: 1em;
-            bottom: 1em;
-            background: #369;
-            color: #fff;
-            padding: 0.5em;
-            display: none;
-        }
-        
-        .navheader {
-            position: absolute;
-            background: #ededed;
-            padding: 10px;
-            display: block;
-            top: 0;
-            float: left;
-            width: 100%;
-        }
-        
-        .custom-zoomSlider {
-            position: absolute;
-            background-color: rgba(255, 255, 255, .4);
-            border-radius: 50px;
-            padding: 2px;
-            text-align: center;
-            top: 8em;
-            right: .5em;
-            height: 200px;
-            width: 40px;
-        }
-        
-        .custom-zoomSlider button {
-            position: relative;
-            margin: 1px;
-            padding: 0;
-            color: #fff;
-            font-size: 1.14em;
-            font-weight: 700;
-            text-decoration: none;
-            width: 35px;
-            height: 35px;
-            line-height: .4em;
-            background-color: #2a3f54;
-            border: none;
-            border-radius: 50px;
-        }
-        
-        .custom-zoomSlider button:focus,
-        .custom-zoomSlider button:hover {
-            text-decoration: none;
-            background-color: #1abb9c;
-        }
-    </style>
-    <!-- script device-->
+    
     <script>
-        document.addEventListener("deviceready", onDeviceReady, false);
-        var imei_globale = 0;
-
-        function onDeviceReady() {
-
-
-            window.plugins.imei.get(
-                function(imei) {
-
-                    //alert("got imei: " + imei);
-                    checkConnection(imei);
-                    imei_globale = imei;
-                },
-                function() {
-                    alert("error loading imei");
-                }
-            );
-
-
-        }
-    </script>
-
-
-
-    <!-- test de conection -->
-
-    <script>
+        // Internet connection test using Cordova 
         function checkConnection(imei) {
-            var networkState = navigator.connection.type;
 
+            var networkState = navigator.connection.type;
             var states = {};
             states[Connection.UNKNOWN] = 'Unknown connection';
             states[Connection.ETHERNET] = 'Ethernet connection';
@@ -192,375 +57,166 @@
             states[Connection.CELL_4G] = 'Cell 4G connection';
             states[Connection.CELL] = 'Cell generic connection';
             states[Connection.NONE] = 0; //'No network connection';
-
-            // alert('Connection type: ' + states[networkState]);
             if (states[networkState] == 0) {
-                /* swal(
-                     'non Internet?',
-                     'veuillez connecter sur internet',
-                     'question'
-                 );*/
+                //No internet
                 swal({
-                    title: 'Pas d\'internet?',
+                    title: 'Pas de connexion internet',
                     text: "Veuillez connecter à une connexion internet !",
-                    type: 'question',
+                    type: 'error',
                     showCancelButton: false,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'fermer l\'app?!'
+                    confirmButtonText: 'Fermer l\'application?!',
+                    cancelButtonText: 'Annuler',
                 }).then((result) => {
                     if (result.value) {
-
                         navigator.app.exitApp();
-
                     }
                 })
-
-
             } else {
+                // Get the user's imei
+                var url = "http://192.168.1.102:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/get_agent_info.php";
+                alert("base de données");
 
-
-                // recuperer le nom et l'id_agent_imei
-                ///////////////////////////////////////////////////////////
-                //http://localhost/php_mobile/get_nom_agent_from_imei.php
-
-                var url = "http://192.168.1.99/php_mobile/get_nom_agent_from_imei.php";
                 $.getJSON(url, function(result) {
-
+                    alert(result);
                     $.each(result, function(i, field) {
                         var agent_imei = field.imei;
-
+                        alert("agent imei "+agent_imei);
                         if (agent_imei == imei) {
                             id_agent_globale = field.id_agent;
                             swal({
-                                position: 'top-end',
+                                position: 'center',
                                 type: 'success',
                                 title: 'Bienvenue M./Mme. ' + field.nom_agent + '\n , Vous êtes connecté! ',
                                 showConfirmButton: false,
-                                timer: 2000
+                                timer: 5000
                             });
-
                         }
-
+                        else{
+                            swal({
+                                position: 'center',
+                                type: 'error',
+                                title: 'Vous n\'êtes pas un agent',
+                                showConfirmButton: false,
+                                timer: 5000
+                            });
+                        }
                     });
                 });
-
-
-                /////////////////////////
-
-
-
             }
 
         }
+        
+        //Get the device IMEI using Cordova
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var imei_globale = 0;
+
+        function onDeviceReady() {
+            window.plugins.imei.get(
+                function(imei) {
+                    alert("IMEI DETECTED");
+                    checkConnection(imei);
+                    imei_globale = imei;
+                    swal({
+                        position: 'center',
+                        type: 'success',
+                        title: 'Bienvenue M./Mme. ' + field.nom_agent + '\n , Vous êtes connecté! ',
+                        confirmButtonColor: '#e7e7e7',
+                    });
+                },
+                function() {
+                    alert("error loading imei");
+                }
+            );
+
+        }
+        
     </script>
-
-
-
 </head>
 
-<body class="nav-sm ">
-
+<body class="nav-sm">
     <!-- top navigation -->
     <div class="navheader">
         <div class="col-sm-12" align="center">
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><img src="images/logo.png" alt="Smiley face" width="65" height="40"></div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_projet" data-toggle="modal" data-target="#exampleModal_projet" onclick="get_projet() " class="btn btn-circle bg-footer"><i class="fas fa-briefcase"></i></button></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_projet" data-toggle="modal" data-target="#exampleModal_projet" onclick="get_projet()" class="btn btn-circle bg-footer"><i class="fas fa-briefcase"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_zone" data-toggle="modal" data-target="#exampleModal_zone" onclick="get_zone() " class="btn btn-circle bg-footer "><i class="fas fas fa-layer-group"></i></button></div>
-                <div class="col-xs-2 col-sm-2  col-md-2 col-lg-2"><button type="button" id="button_formulaire" data-toggle="modal" data-target="#exampleModal_form" onclick="get_formulaire() " class="btn btn-circle bg-footer "><i class="fas fa-list-alt"></i></button></div>
-
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_formulaire" data-toggle="modal" data-target="#exampleModal_form" onclick="get_formulaire() " class="btn btn-circle bg-footer "><i class="fas fa-list-alt"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="go_home" onclick="go_home()" class="btn btn-circle bg-footer"><i class="fas fa-home"></i></button></div>
-
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="button_data" onclick="go_data()"><i class="fas fa-database"></i></button></div>
-
             </div>
-        </div>
+        </div>  
     </div>
-
     <!-- /top navigation -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Modal -->
+    <!-- Projects' list -->
     <div class="modal fade" id="exampleModal_projet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="exampleModalLabel">Choisir un projet </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <select class="form-control" id="modal_body_projet">
-                         
-                          
-                          </select>
-
+                        <select class="form-control" id="modal_body_projet"></select>
                     </form>
-
                 </div>
                 <div class="modal-footer">
-
                     <button type='button' onclick='check_projet()' class='btn btn-primary' data-dismiss="modal">Enregistrer</button>
                 </div>
             </div>
         </div>
     </div>
-    <ul class="nav child_menu" id="homeSubmenu">
 
-
-    </ul>
-    </li>
-    </ul>
-    </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Modal -->
+    <!-- Areas' list -->
     <div class="modal fade" id="exampleModal_zone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="exampleModalLabel">Choisir une zone </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <select class="form-control" id="modal_body_zone">
-                         
-                          
-                          </select>
-
+                        <select class="form-control" id="modal_body_zone"></select>
                     </form>
-
                 </div>
                 <div class="modal-footer">
-
                     <button type='button' onclick='check_zone()' class='btn btn-primary' data-dismiss="modal">Enregistrer</button>
                 </div>
             </div>
         </div>
     </div>
-    <ul class="nav child_menu" id="homeSubmenu">
 
-
-    </ul>
-    </li>
-    </ul>
-    </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Modal -->
+    <!-- Forms' list -->
     <div class="modal fade" id="exampleModal_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="exampleModalLabel">Choisir un formulaire </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <select class="form-control" id="modal_body_form">
-                         
-                          
-                          </select>
-
+                        <select class="form-control" id="modal_body_form"></select>
                     </form>
-
                 </div>
                 <div class="modal-footer">
-
                     <button type='button' onclick='check_form()' class='btn btn-primary' data-dismiss="modal">Enregistrer</button>
                 </div>
             </div>
         </div>
     </div>
-    <ul class="nav child_menu" id="homeSubmenu">
-
-
-    </ul>
-    </li>
-    </ul>
-    </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     <!-- page content -->
     <div class="right_col" role="main">
         <div class="clearfix"></div>
@@ -578,16 +234,18 @@
                         <input type="radio" name="type" value="Polygon" /><label> Polygone</label>
                     </div>
                 </div>
+                <br>
                 <div class="row">
                     Suivi de chemin :
                     <select onchange="draw.setFollowTrack($(this).val()==='true' ? true : $(this).val());">
-              <option value="true">true (track at zoom)</option>
-              <option value="false">false (don't track)</option>
-              <option value="auto">auto (stop on map move)</option>
-              <option value="position">position (no zoom)</option>
-              <option value="visible">visible (stay on  the map)</option>
-            </select>
+                        <option value="true">true (track at zoom)</option>
+                        <option value="false">false (don't track)</option>
+                        <option value="auto">auto (stop on map move)</option>
+                        <option value="position">position (no zoom)</option>
+                        <option value="visible">visible (stay on  the map)</option>
+                    </select>
                 </div>
+                <br>
                 <div class="row">
                     <div class="col-xs-4 col-sm-4">
                         <button onclick="draw.start();" class="btn btn-circle bg-green waves-effect waves-circle waves-float"><i class="fas fa-play"></i></button>
@@ -611,19 +269,16 @@
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="edit-tools" class="btn btn-circle bg-footer"><i class="fas fa-edit"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" onclick="getPosition()" id="getPosition"><i class="fas fa-crosshairs"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="trackRecord"><i class="fas fa-location-arrow"></i></button></div>
-
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" onclick="recherche()" id="recherche"><i class="fas fa-search"></i></button></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" onclick="searchLocation()" id="searchLocation"><i class="fas fa-search"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="go_home" onclick="go_home()" class="btn btn-circle bg-footer"><i class="fas fa-sync-alt"></i></button></div>
-
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="drawpoint" onclick="save()"><i class="fas fa-save"></i></button></div>
             </div>
         </div>
     </footer>
     <!-- /footer content -->
 
-
-
     <script type="text/javascript">
+
         var layer_draw;
         //Disable area & form buttons
         $("#button_zone ").prop('disabled', true);
@@ -637,7 +292,6 @@
         $("#trackRecord").click(function() {
             $(".options").fadeToggle();
         });
-
 
         $("#edit-tools").click(function() {
             // Draw & edit tools (ol-ext3) :
@@ -979,11 +633,6 @@
                     'title': 'Cartes de base',
                     layers: [
                         new ol.layer.Tile({
-                            title: 'OSM',
-                            type: 'base',
-                            source: new ol.source.OSM()
-                        }),
-                        new ol.layer.Tile({
                             title: 'Navcities Maps',
                             type: "base",
                             visible: true,
@@ -996,6 +645,11 @@
                                 crossOrigin: 'Anonymous'
 
                             })
+                        }),
+                        new ol.layer.Tile({
+                            title: 'OSM',
+                            type: 'base',
+                            source: new ol.source.OSM()
                         }),
                         new ol.layer.Tile({
                             title: 'Bing',
@@ -1049,7 +703,6 @@
 
                 add_map_point(position.coords.latitude, position.coords.longitude)
             };
-
             function onError(error) {
                 console.log('getposition : \n code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
             }
@@ -1147,7 +800,7 @@
             // Draw interaction
         var draw = new ol.interaction.GeolocationDraw({
             source: vector_track.getSource(),
-            zoom: 16,
+            zoom: 20,
             minAccuracy: 10000,
             style: style_track
         });
@@ -1166,36 +819,19 @@
 
     <!-- declaration des variable global-->
     <script>
-        // les variable globale 
         var id_projet_globale;
         var id_zone_globale;
         var id_formulaire_globale;
         var id_agent_globale;
         var id_type_geometrie;
-
-        // par defaut les buttons sont disactiver
-        // $("#button_projet ").prop('disabled', true);
-        /*$("#button_zone ").prop('disabled', true);
-        $("#button_formulaire").prop('disabled', true);
-        $("#button_polygon").prop('disabled', true);
-        $("#button_lign").prop('disabled', true);
-        $("#button_point").prop('disabled', true);
-        $("#button_save").prop('disabled', true);*/
     </script>
 
-
-
-    <!--script pour la gesion des forms et projet et zone -->
     <script>
         function get_formulaire() {
-            // suprimer le modale 
             $("#modal_body_form").html("<option selected disabled value=''>Sélectionnez un formulaire </option> ");
 
             var url = "http://192.168.1.99/php_mobile/recuper_form.php";
             $.getJSON(url, function(result) {
-                // console.log("les ids des projet existes de l'agent 5  ");
-
-                //console.log(result);
                 $.each(result, function(i, field) {
 
 
@@ -1206,82 +842,25 @@
                     var nom_form = field.nom_form;
                     id_form = id_formulaire_affect;
 
-                    // alert(id_projet_affect);
 
                     if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale) {
-                        //  alert(html);
-                        // alert("remble");
-                        //$("#form_user").append(html);
-                        //alert("formulaire id : " + id_form);
-                        // alert(champs);
-
-                        //  $("#modal_body_form").append(" <button type='button' onclick='affect_form(" + id_form + ")' id='" + id_form + "' ><span>" + nom_form + "</span></button> <br>");
+      
                         $("#modal_body_form").append(" <option id='" + id_form + "' value='" + id_form + "'>" + nom_form + " </option>");
-
-                        //   id_type_geometrie = field.id_geom_affect;
-                        // alert("id geom affect : " + id_type_geometrie);
-
-
-                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
-                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
-                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
-                        //$("#homeSubmenu").append(" <button type='button' onclick='myFunction(" + id_projet + ")' id='" + id_projet + "'  class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong1' ><span>" + projet_titre + "</span></button> <br>");
                     }
-                    /* var duration = field.duration;
-                                    var price = field.price;
-                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
-                                */
                 });
             });
-
-
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         function go_data() {
-            // similar behavior as an HTTP redirect
             url = 'data.html';
             location.replace(url);
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
         function get_zone() {
             $("#modal_body_zone").html("<option selected disabled value=''>Sélectionnez une zone </option> ");
             var url = "http://192.168.1.99/php_mobile/recuper_zone.php";
             $.getJSON(url, function(result) {
-                // console.log("les ids des projet existes de l'agent 5  ");
-
-                //console.log(result);
+                
                 $.each(result, function(i, field) {
                     var nom_zone = field.nom_zone;
 
@@ -1289,75 +868,54 @@
                     var id_agent_affect = field.id_agent_affect
                     var id_projet_affect = field.id_projet_affect
 
-                    // alert(id_projet_affect);
-
                     if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale) {
-                        //  alert(html);
-                        // alert("remble");
-                        //$("#form_user").append(html);
-                        // console.log("projet  id : " + id_projet);
-                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
-                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
-                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
-                        //  $("#zone").append(" <button type='button' onclick='add_zone(" + id_zone + ")' id='" + id_zone + "' ><span>" + nom_zone + "</span></button> <br>");
-                        // $("#modal_body_zone").append(" <button type='button' onclick='add_zone(" + id_zone + ")' id='" + id_zone + "' ><span>" + nom_zone + "</span></button> <br>");
                         $("#modal_body_zone").append(" <option id='" + id_zone + "' value='" + id_zone + "'>" + nom_zone + " </option>");
 
                     }
-                    /* var duration = field.duration;
-                                    var price = field.price;
-                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
-                                */
                 });
             });
+        }
+        
+        function searchLocation() {
+            swal({
+                title: 'Chercher une addresse',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Go!',
+                showLoaderOnConfirm: true,
+                preConfirm: (login) => {
+                    return fetch(`//api.github.com/users/${login}`)
+                    .then(response => {
+                        if (!response.ok) {
+                        throw new Error(response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .catch(error => {
+                        swal.showValidationError(
+                        `Request failed: ${error}`
+                        )
+                    })
+                },
+                allowOutsideClick: () => !swal.isLoading()
+                }).then((result) => {
+                if (result.value) {
+                    swal({
+                    title: `${result.value.login}'s avatar`,
+                    imageUrl: result.value.avatar_url
+                    })
+                }
+                })
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        function recherche() {
-            alert("Il faut avoir une API ! ");
-
-        }
-
-
-
-
-
-
-
-
-
-
-
 
         function check_zone() {
 
-
             id_zone_globale = $("#modal_body_zone").children(":selected").attr("id");
             add_zone();
-
-            console.log("zone bien choisi id du zone : " + id_zone_globale);
-            // enable button zone
             $("#button_formulaire").prop('disabled', false);
             swal({
                 position: 'end-end',
@@ -1366,63 +924,20 @@
                 showConfirmButton: false,
                 timer: 1500
             })
-
-
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         function add_zone() {
-            //alert(id);
-
             var url = "http://192.168.1.99/php_mobile/recupere_zone.php";
             $.getJSON(url, function(result) {
-                // console.log("les ids des projet existants de l'agent 5  ");
-
-                //console.log(result);
+              
                 $.each(result, function(i, field) {
                     var id_zone = field.id_zone;
                     var etendue = field.etendue;
                     var nom_zone = field.nom;
 
-
-
-                    // alert(id_projet_affect);
-
                     if (id_zone_globale == id_zone) {
                         map.removeLayer(geojson_zone);
-
-                        //  alert(html);
-                        // alert("remble");
-                        //$("#form_user").append(html);
-                        // console.log("projet  id : " + id_projet);
-                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
-                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
-                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
                         var geojson_zone = new ol.layer.Vector({
-
                             title: nom_zone,
                             timeInfo: null,
                             isSelectable: true,
@@ -1430,193 +945,41 @@
                                 features: new ol.format.GeoJSON().readFeatures(etendue)
                             })
                         });
-                        //  console.log(geojson_zone);
-                        // console.log(geojson_zone.getSource().getFeatures()[0].getGeometry().getType());
-
                         map.addLayer(geojson_zone);
 
                         var extent = geojson_zone.getSource().getExtent();
-                        console.log("extent   " + extent);
-                        console.log("size map" + map.getSize());
                         map.getView().fit(extent, map.getSize());
 
                     }
-                    /* var duration = field.duration;
-                                    var price = field.price;
-                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
-                                */
+                    
                 });
             });
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         function go_home() {
             url = 'index.html';
-
             location.replace(url);
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         function get_projet() {
-
-
+            // Liste déroulante qui va contenir les projets d'agent
             $("#modal_body_projet").html("<option selected disabled value=''>Sélectionnez un projet </option> ");
-            var url = "http://192.168.1.99/php_mobile/resuper_nom.php";
+            var url = "http://192.168.1.102:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/get_projects.php";
             $.getJSON(url, function(result) {
-                // console.log("les ids des projet existants de l'agent 5  ");
-
-                //console.log(result);
+                
                 $.each(result, function(i, field) {
                     var projet_titre = field.titre;
 
                     var id_projet = field.id_projet;
                     var id_agent_affect = field.id_agent_affect;
 
-                    // alert(id_projet_affect);
-
                     if (id_agent_affect == id_agent_globale) {
-                        //  alert(html);
-                        // alert("remble");
-                        //$("#form_user").append(html);
-                        console.log("projet  id : " + id_projet);
-                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
-                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
-                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
-
-                        // $("#modal_body_projet").append(" <button type='button' onclick='projet(" + id_projet + ")' id='" + id_projet + "'   ><span>" + projet_titre + "</span></button> <br>");
-                        //$("#modal_body_projet").append("<div class='radio'><label><input type='radio' name='optradio' onclick='projet(" + id_projet + ")'id='" + id_projet + "' >" + projet_titre + "</label> </div>");
+                        //Remplissage de la liste par les projets
                         $("#modal_body_projet").append(" <option id='" + id_projet + "' value='" + id_projet + "'>" + projet_titre + " </option>");
                     }
-                    /* var duration = field.duration;
-                                    var price = field.price;
-                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
-                                */
                 });
             });
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //in exploitable
         function projet(a) {
@@ -1625,32 +988,10 @@
             console.log("le projet bien affecter" + id_projet_globale);
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         function check_projet() {
 
             id_projet_globale = $("#modal_body_projet").children(":selected").attr("id");
-
-            // id_projet_globale = a;
-            console.log("le projet est bien affecté" + id_projet_globale);
-            console.log("projet bien choisi id du projet : " + id_projet_globale);
-            // enable button zone
 
             $("#button_zone").prop('disabled', false);
             swal({
@@ -1660,22 +1001,12 @@
                 showConfirmButton: false,
                 timer: 1500
             })
-
-
         }
-
-
-
-
 
         function check_form() {
 
             id_formulaire_globale = $("#modal_body_form").children(":selected").attr("id");
-
-            console.log("form  bien choisi id du form : " + id_formulaire_globale);
             $("#edit-tools").prop('disabled', false);
-            // enable button zone
-            // $("#button_formulaire").prop('disabled', false);
             swal({
                 position: 'end-end',
                 type: 'success',
@@ -1685,9 +1016,7 @@
             });
             var url = "http://192.168.1.99/php_mobile/recuper_form.php";
             $.getJSON(url, function(result) {
-                // console.log("les ids des projet existants de l'agent 5  ");
-
-                //console.log(result);
+                
                 $.each(result, function(i, field) {
 
 
@@ -1695,58 +1024,17 @@
                     var id_agent_affect = field.id_agent_affect;
                     var id_formulaire_affect = field.id_formulaire_affect;
                     var id_projet_zone = field.id_projet_zone;
-                    // var nom_form = field.nom_form;
-                    // id_form = id_formulaire_affect;
-
-                    // alert(id_projet_affect);
 
                     if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale && id_formulaire_affect == id_formulaire_globale) {
-                        //  alert(html);
-                        // alert("remble");
-                        //$("#form_user").append(html);
-                        //alert("formulaire id : " + id_form);
-                        // alert(champs);
-
-                        //  $("#modal_body_form").append(" <button type='button' onclick='affect_form(" + id_form + ")' id='" + id_form + "' ><span>" + nom_form + "</span></button> <br>");
-                        //$("#modal_body_form").append(" <option id='" + id_form + "' value='" + id_form + "'>" + nom_form + " </option>");
 
                         id_type_geometrie = field.id_geom_affect;
-                        //alert("id geom affect : " + id_type_geometrie);
-
-
-                        //  $("#homeSubmenu").append(" <li><a href='<a href='#'>#'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
-                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + ">" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></a></li>");
-                        // $("#homeSubmenu").append(" <li id='" + id_projet_affect + "'>" + id_projet_affect + "<i class='fa fa-refresh fa-spin' ></i></li>");
-                        //$("#homeSubmenu").append(" <button type='button' onclick='myFunction(" + id_projet + ")' id='" + id_projet + "'  class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong1' ><span>" + projet_titre + "</span></button> <br>");
+                       
                     }
-                    /* var duration = field.duration;
-                                    var price = field.price;
-                                    $("#listview").append("<a class='item' href='form.html?id=" + id + "&title=" + title + "&duration=" + duration + "&price=" + price + "'><span class='item-note'>$" + price + "</span><h2>" + title + " </h2><p>" + duration + "</p></a>");
-                                */
                 });
             });
-
-
-
-
         }
     </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- get corrunt location -->
+    <!-- get current location -->
     <script>
         // User's current location (localisation actuelle de l'utilisateur)
         function getPosition() {
@@ -1756,15 +1044,6 @@
             }
             var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 
-
-
-            /* var options = {
-                maximumAge: 3600000000,
-                timeout: 1000,
-                enableHighAccuracy: true,
-            }
-            var watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
-*/
             function onSuccess(position) {
                 var coords = ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]);
                 map.getView().animate({
@@ -1782,14 +1061,8 @@
                     text: error.message,
                     footer: '<a href>Why do I have this issue?</a>'
                 });
-                // console.log('getposition : \n code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
             }
         }
-
-
-
-
-
 
         function add_map_point(lat, lng) {
             // Add a marker
@@ -1802,12 +1075,11 @@
                         anchor: [0.5, 0.5],
                         anchorXUnits: "fraction ",
                         anchorYUnits: "fraction ",
-                        src: "images/RedDot.svg"
+                        src: "images/marker.png"
                     })
                 })
             });
             map.addLayer(vector);
-
             // Add animation when the marker appears for the first time
             var geom = new ol.geom.Point(ol.proj.transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857'));
             var feature = new ol.Feature(geom);
@@ -1850,45 +1122,15 @@
                 }
                 listenerKey = map.on('postcompose', animate);
             }
-
             flash(feature);
-
         }
-    </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script>
         function save() {
             //Get the geojson format of the layer
             var geojson = new ol.format.GeoJSON().writeFeatures(layer_draw.getSource().getFeatures());
-            console.log(geojson);
-            // url = 'save.html';
             url = 'save.html?id_projet=' + id_projet_globale + "&id_agent=" + id_agent_globale + "&id_zone=" + id_zone_globale + "&id_form=" + id_formulaire_globale + "&geojson=" + geojson;
-
             location.replace(url);
-            //Send the layer to database (SQLite)
-            /** code here **/
-
         }
     </script>
-
-
-
-
-
-
 
     <!-- Bootstrap -->
     <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -1908,8 +1150,7 @@
     <script src="cordova.js"></script>
     <!-- Mcx Dialog Mobile plugin -->
     <script src="plugins/mcx-dialog-mobile/dist/mcx-dialog.js"></script>
-    <!-- SweetAlert2 js plugin -->
-    <script>
+    
     </script>
 
     <!-- test de la conection -->

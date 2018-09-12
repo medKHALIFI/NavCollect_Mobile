@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+
+    <!-- Google Fonts & Materialize icon  -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Bootstrap -->
+    <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- NProgress -->
+    <link href="plugins/nprogress/nprogress.css" rel="stylesheet">
+    <!-- jQuery custom content scroller -->
+    <link href="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+    <!-- Waves Effect Css -->
+    <link href="plugins/node-waves/waves.css" rel="stylesheet" />
+    <!-- Animation Css -->
+    <link href="plugins/animate-css/animate.css" rel="stylesheet" />
+    <!-- Sweet Alert 2 Plugin Js -->
+    <link href="plugins/SweetAlert2/sweetalert2.min.css" rel="stylesheet" />
+    <!-- Sweet Alert 2 Plugin Js -->
+    <script src="plugins/SweetAlert2/sweetalert2.min.js"></script>
+    <!-- Datatables -->
+    <link href="plugins/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="css/custom_data.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-md ">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col menu_fixed">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="#" class="site_title"></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li><a href="index.html"><i class="fas fa-map-marked-alt"></i> Carte</a></li>
+                                <li><a href="data.html"><i class="fa fa-database"></i> Données</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+
+
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fas fa-home"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+
+                                <a class="user-profile"> <button id="syncroniser">Sync</button></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="page-title">
+
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    Données collectées :
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <p class="text-muted font-13 m-b-30">
+
+                                    </p>
+                                    <div class="table-responsive">
+                                        <table id="20202020" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <tr>
+                                                        <th>Projet</th>
+                                                        <th>Agent </th>
+                                                        <th>Zone</th>
+                                                        <th>Formulaire</th>
+                                                        <th>Donnée</th>
+                                                        <th>Zone</th>
+
+                                                    </tr>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table_id">
+
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                    <button id="121212">Supprimer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /page content -->
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    </script>
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Datatables-->
+    <script src="plugins/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="plugins/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="plugins/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="plugins/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="plugins/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="plugins/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="plugins/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="plugins/jszip/dist/jszip.min.js"></script>
+    <script src="plugins/pdfmake/build/pdfmake.min.js"></script>
+    <script src="plugins/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="plugins/nprogress/nprogress.js"></script>
+    <!-- jQuery custom content scroller -->
+    <script src="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="js/custom.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="plugins/node-waves/waves.js"></script>
+    <!-- Select Plugin Js -->
+    <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <!-- Sweet Alert 2 Plugin Js -->
+    <script src="plugins/SweetAlert2/sweetalert2.min.js"></script>
+    <!-- Cordova -->
+    <script src="cordova.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            //   $('#example').DataTable();
+        });
+    </script>
+
+    <!-- ouvrir la base de donnee-->
+    <!-- sqlite 
+    <script src="js/sqlite.js"></script>-->
+
+    <!-- recuperation des donnees dans la base de donnees -->
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                //alert("Hello");
+                $('#20202020').DataTable();
+            }, 800);
+
+            var myDB;
+            //Open Database Connection
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            function onDeviceReady() {
+                myDB = window.sqlitePlugin.openDatabase({
+                    name: "mySQLite.db",
+                    location: 'default'
+                });
+
+                $("#table_id").html("");
+                myDB.transaction(function(transaction) {
+                    transaction.executeSql('SELECT * FROM data', [], function(tx, results) {
+                        var len = results.rows.length,
+                            i;
+                        // $("#rowCount").html(len);
+                        for (i = 0; i < len; i++) {
+                            $("#table_id").append("<tr><td>" + results.rows.item(i).nom_projet + "</td><td>" + results.rows.item(i).nom_agent + "</td><td>" + results.rows.item(i).nom_zone + "</td><td>" + results.rows.item(i).nom_form + "</td><td>" + results.rows.item(i).data + "</td><td>" + results.rows.item(i).zone + "</td></tr>");
+                        }
+                    }, null);
+                });
+            }
+
+
+            $("#121212").click(function() {
+
+                myDB.transaction(function(transaction) {
+                    var executeQuery = "DROP TABLE  IF EXISTS data";
+                    transaction.executeSql(executeQuery, [],
+                        function(tx, result) {
+                            swal({
+                                position: 'top-end',
+                                type: 'success',
+                                title: 'Table deleted successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        },
+                        function(error) {
+                            alert('Error occurred while droping the table.');
+                        }
+                    );
+                });
+                setTimeout(function() {
+
+                    url = 'data.html';
+
+                    location.replace(url);
+
+                }, 500);
+
+            });
+
+            $("#syncroniser").click(function() {
+                myDB.transaction(function(transaction) {
+                    transaction.executeSql('SELECT * FROM data', [], function(tx, results) {
+                        var len = results.rows.length,
+                            i;
+                        var id;
+                        var supprimer_sqlite = [];
+                        // $("#rowCount").html(len);
+                        for (i = 0; i < len; i++) {
+                            //alert("id " + results.rows.item(i).id + "\n projet " + results.rows.item(i).nom_projet + "\n agent " + results.rows.item(i).nom_agent + "\n zone" + results.rows.item(i).nom_zone + "\n form " + results.rows.item(i).nom_form + "\n data " + results.rows.item(i).data + "\n zone" + results.rows.item(i).zone + "");
+                            id = results.rows.item(i).id;
+                            $.ajax({
+                                type: 'POST',
+                                async: false,
+
+
+                                url: 'http://192.168.1.99/php_mobile/add_data.php',
+                                data: {
+                                    'nom_projet': results.rows.item(i).nom_projet,
+                                    'nom_agent': results.rows.item(i).nom_agent,
+                                    'nom_zone': results.rows.item(i).nom_zone,
+                                    'nom_form': results.rows.item(i).nom_form,
+                                    'data': results.rows.item(i).data,
+                                    'zone': results.rows.item(i).zone
+                                },
+                                beforeSend: function() {
+                                    // alert("befor send");
+
+                                },
+                                success: function(response) {
+                                    if (response == 2) {
+
+                                        // alert("succes" + id);
+                                        supprimer_sqlite.push(id);
+                                        /* myDB.transaction(function(transaction) {
+                                             var executeQuery = "DELETE FROM data where id=?";
+                                             transaction.executeSql(executeQuery, [id],
+                                                 //On Success
+                                                 function(tx, result) {
+                                                     alert('Delete successfully');
+                                                 },
+                                                 //On Error
+                                                 function(error) {
+                                                     alert('Something went Wrong');
+                                                 });
+                                         });*/
+
+
+
+
+
+
+                                        // swal("Done !", "Un nouveau agent est ajouté avec succés", "success");
+                                        /* $("#form_add_user").trigger("reset");
+                        $("#submitButton_add").html('Ajouter un autre');
+                        $("#agent").html('Ajouter un autre agent');
+*/
+
+                                    } else {
+                                        alert("erreur");
+                                        //swal("ERREUUUUUUR", "Ajouter un autre agent", "error");
+                                        //$("#submitButton_add").html('Sauvegarder');
+                                    }
+                                }
+
+                            });
+
+
+
+                        }
+
+                        // for (i = 1; i < supprimer_sqlite.length; i++) {
+                        supprimer_sqlite.forEach(function(i) {
+                            // alert("element " + i + "\n");
+                            var idx = i;
+
+                            myDB.transaction(function(transaction) {
+                                var executeQuery = "DELETE FROM data where id=?";
+                                transaction.executeSql(executeQuery, [idx],
+                                    //On Success
+                                    function(tx, result) {
+
+                                        //  alert('Delete successfully' + idx);
+                                    },
+                                    //On Error
+                                    function(error) {
+                                        alert('Something went Wrong');
+                                    });
+                            });
+
+                        })
+
+                        // }
+
+
+                    }, null);
+                });
+
+                /*swal({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'vos donnes bien syncroniser ',
+                    showConfirmButton: false,
+                    timer: 1500
+                });*/
+                swal({
+                    title: 'Syncronisation',
+                    text: "Vos données sont bien syncronisées !",
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'oky!'
+                }).then((result) => {
+                    if (result.value) {
+
+
+                        setTimeout(
+                            function() {
+
+
+                                url = 'data.html';
+
+                                location.replace(url);
+                            }, 100);
+                    }
+                })
+
+
+            });
+
+        });
+    </script>
+
+
+
+
+
+    <script>
+    </script>
+
+</body>
+
+</html>

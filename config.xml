@@ -29,4 +29,5 @@
     <plugin name="cordova-plugin-android-imei" spec="^1.0.0" />
     <plugin name="cordova-plugin-imei" spec="^1.1.0" />
     <engine name="android" spec="^7.0.0" />
+    <engine name="ios" spec="^4.5.5" />
 </widget>
