@@ -17,10 +17,8 @@ while ($row = pg_fetch_object($result)) {
 
 echo json_encode($data);
 
-// Libère le résultat
 pg_free_result($result);
 
-// Ferme la connexion
 pg_close($dbconn);
 
 ?>
