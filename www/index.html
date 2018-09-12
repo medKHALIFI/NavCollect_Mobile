@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -41,114 +42,127 @@
     <script src="plugins/SweetAlert2/sweetalert2.min.js"></script>
 
     <style>
-        
         .vertical-alignment-helper {
-            display:table;
+            display: table;
             height: 100%;
             width: 95%;
-            margin-left:10px;
+            margin-left: 10px;
         }
+        
         .vertical-align-center {
             /* To center vertically */
             display: table-cell;
             vertical-align: middle;
         }
+        
         .close {
-            color: #f27474; 
+            color: #f27474;
             opacity: 1;
         }
-        .modal-title{
+        
+        .modal-title {
             color: #333;
         }
-        .search-form .form-group1 input.form-control1::-webkit-input-placeholder{
-            display:none;
+        
+        .search-form .form-group1 input.form-control1::-webkit-input-placeholder {
+            display: none;
         }
-        .search-form .form-group1 input.form-control1::-moz-placeholder{
-            display:none;
+        
+        .search-form .form-group1 input.form-control1::-moz-placeholder {
+            display: none;
         }
-        .form-group1{
-            position:relative;
-            width:0%;
-            min-width:45px;
-            height:45px;
-            overflow:hidden;
+        
+        .form-group1 {
+            position: relative;
+            width: 0%;
+            min-width: 45px;
+            height: 45px;
+            overflow: hidden;
             transition: width 1s;
-            backface-visibility:hidden;
+            backface-visibility: hidden;
         }
-        .form-group1 input.form-control1{
-            position:absolute;
-            top:0;
-            right:0;
-            outline:none;
-            width:100%;
-            height:45px;
-            margin:0;
-            z-index:10;
-            padding-left:10px;
+        
+        .form-group1 input.form-control1 {
+            position: absolute;
+            top: 0;
+            right: 0;
+            outline: none;
+            width: 100%;
+            height: 45px;
+            margin: 0;
+            z-index: 10;
+            padding-left: 10px;
         }
-        input[type="text"].form-control1{
-            -webkit-appearence:none;
-            -webkit-border-radius:0;
+        
+        input[type="text"].form-control1 {
+            -webkit-appearence: none;
+            -webkit-border-radius: 0;
         }
+        
         .form-control-submit,
-        .search-label{
-            width:45px;
-            height:45px;
-            position:absolute;
-            right:0;
-            top:0;
-            padding:0;
-            margin:0;
-            text-align:center;
-            cursor:pointer;
-            line-height:45px;
-            background:#2a3f54;
-            font-weight:700;
+        .search-label {
+            width: 45px;
+            height: 45px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            cursor: pointer;
+            line-height: 45px;
+            background: #2a3f54;
+            font-weight: 700;
             font-size: 1.70em;
-            border-radius:50%;
+            border-radius: 50%;
         }
-        .form-control-submit{
-            background:#fff; /*stupid IE*/
+        
+        .form-control-submit {
+            background: #fff;
+            /*stupid IE*/
             opacity: 0;
-            color:transparent;
-            border:none;
-            outline:none;
-            z-index:-1;
+            color: transparent;
+            border: none;
+            outline: none;
+            z-index: -1;
         }
-        .search-label{
-            z-index:90;
+        
+        .search-label {
+            z-index: 90;
         }
+        
         .form-group1.sb-search-open,
-        .no-js .sb-search-open{
-            width:100%;
+        .no-js .sb-search-open {
+            width: 100%;
         }
+        
         .form-group1.sb-search-open .search-label,
         .no-js .sb-search .search-label {
             background: #1abb9c;
             color: #fff;
             z-index: 11;
         }
+        
         .form-group1.sb-search-open .form-control-submit,
         .no-js .form-control1 .form-control-submit {
             z-index: 90;
         }
-
+        
         #address-bar {
             position: fixed;
-            z-index:100;
+            z-index: 100;
             list-style-type: none;
             padding: 0px;
-            margin-top:45px;
-            max-height:100px;
-            margin-left:15px;
-            margin-right:55px;
+            margin-top: 45px;
+            max-height: 100px;
+            margin-left: 15px;
+            margin-right: 55px;
         }
-
     </style>
-    
+
     <script>
         // Internet connection test using Cordova 
-        /*function checkConnection(imei) {
+        function checkConnection(imei) {
 
             var networkState = navigator.connection.type;
             var states = {};
@@ -178,79 +192,51 @@
                 })
             } else {
                 // Get the user's imei
-                var url = "http://192.168.1.102:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/get_agent_info.php";
+                var url = "http://192.168.0.118/php/get_agent_info.php";
 
                 $.getJSON(url, function(result) {
                     $.each(result, function(i, field) {
                         var agent_imei = field.imei;
-                        alert("agent imei "+agent_imei);
+                        //  alert("agent imei data base " + agent_imei + "mobile : " + imei);
                         if (agent_imei == imei) {
                             id_agent_globale = field.id_agent;
                             swal({
                                 position: 'center',
-                                type: 'success',
-                                title: 'Bienvenue M./Mme. ' + field.nom_agent + '\n , Vous êtes connecté! ',
-                                showConfirmButton: false,
-                                timer: 5000
+                                imageUrl: 'images/logo.png',
+                                html: 'Bienvenue M./Mme. ' + field.prenom_agent + ' ' + field.nom_agent + '\n , Vous êtes connecté(e)s! ',
+                                showConfirmButton: true,
+                                confirmButtonText: 'Accès à l\'application',
+                                confirmButtonColor: '#1ABB9C',
+                                animation: false,
+                                customClass: 'animated fadeInDown'
                             });
-                        }
-                        else{
+                        } else {
                             swal({
-                                position: 'center',
-                                type: 'error',
                                 title: 'Vous n\'êtes pas un agent',
-                                showConfirmButton: false,
-                                timer: 5000
-                            });
+                                type: 'error',
+                                showCancelButton: true,
+                                confirmButtonColor: '#f27474',
+                                confirmButtonText: 'Fermer l\'application?!',
+                                cancelButtonText: 'Annuler',
+                                animation: false,
+                                customClass: 'animated shake'
+                            }).then((result) => {
+                                if (result.value) {
+                                    navigator.app.exitApp();
+                                }
+                            })
                         }
                     });
                 });
             }
 
-        }*/
-        $(document).ready(function(){
-            var url = "http://localhost:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/get_agent_info.php";
-            var imei_globale=355612088907616;
-            $.getJSON(url, function(result) {
-                $.each(result, function(i, field) {
-                    var agent_imei = field.imei;
-                    if (agent_imei == imei_globale) {
-                        id_agent_globale = field.id_agent;
-                        swal({
-                            position: 'center',
-                            imageUrl: 'images/logo.png',
-                            html: 'Bienvenue M./Mme. ' +field.prenom_agent+' ' +field.nom_agent + '\n , Vous êtes connecté(e)s! ',
-                            showConfirmButton: true,
-                            confirmButtonText:'Accès à l\'application',
-                            confirmButtonColor:'#1ABB9C',
-                            animation: false,
-                            customClass: 'animated fadeInDown'
-                        });
-                    }
-                    else{
-                        swal({
-                            title: 'Vous n\'êtes pas un agent',
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#f27474',
-                            confirmButtonText: 'Fermer l\'application?!',
-                            cancelButtonText: 'Annuler',
-                            animation: false,
-                            customClass: 'animated shake'
-                        }).then((result) => {
-                            if (result.value) {
-                                navigator.app.exitApp();
-                            }
-                        })
-                    }
-                });
-            });
-        });
-        
-        
+        }
+
+
+
         //Get the device IMEI using Cordova
-        /*document.addEventListener("deviceready", onDeviceReady, false);
-        var imei_globale = 0;
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var imei_globale;
 
         function onDeviceReady() {
             window.plugins.imei.get(
@@ -263,8 +249,7 @@
                 }
             );
 
-        }*/
-        
+        }
     </script>
 </head>
 
@@ -279,7 +264,7 @@
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_formulaire" data-toggle="modal" data-target="#exampleModal_form" onclick="get_formulaire() " class="btn btn-circle bg-footer "><i class="fas fa-list-alt"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="button_data" onclick="go_data()"><i class="fas fa-database"></i></button></div>
             </div>
-        </div>  
+        </div>
     </div>
     <!-- /top navigation -->
 
@@ -296,7 +281,7 @@
                     </div>
                     <div class="modal-body">
                         <form>
-                            <select class="form-control selectpicker show-tick" data-live-search="true" id="modal_body_projet"></select>
+                            <select class="form-control" id="modal_body_projet"></select>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -320,7 +305,7 @@
                     </div>
                     <div class="modal-body">
                         <form>
-                            <select class="form-control selectpicker show-tick" id="modal_body_zone"></select>
+                            <select class="form-control" id="modal_body_zone"></select>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -344,7 +329,7 @@
                     </div>
                     <div class="modal-body">
                         <form>
-                            <select class="form-control selectpicker show-tick" id="modal_body_form"></select>
+                            <select class="form-control" id="modal_body_form"></select>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -354,7 +339,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- page content -->
     <div class="right_col" role="main">
         <div class="clearfix"></div>
@@ -374,7 +359,7 @@
                 </div>
                 <div class="row">
                     <h6>Suivi de chemin :</h6>
-                    <select onchange="draw.setFollowTrack($(this).val()==='true' ? true : $(this).val());" class="selectpicker show-tick" >
+                    <select onchange="draw.setFollowTrack($(this).val()==='true' ? true : $(this).val());" class="selectpicker show-tick">
                         <option value="true">Suivre au zoom</option>
                         <option value="false">Ne pas suivre</option>
                         <option value="auto">auto (stop on map move)</option>
@@ -406,7 +391,7 @@
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="edit-tools" class="btn btn-circle bg-footer"><i class="fas fa-edit"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" onclick="getPosition()" id="getPosition"><i class="fas fa-crosshairs"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="trackRecord"><i class="fas fa-location-arrow"></i></button></div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" data-toggle="modal" data-target="#searchLocation-modal"  id="searchLocation"><i class="fas fa-search"></i></button></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" data-toggle="modal" data-target="#searchLocation-modal" id="searchLocation"><i class="fas fa-search"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="go_home" onclick="go_home()" class="btn btn-circle bg-footer"><i class="fas fa-sync-alt"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="drawpoint" onclick="save()"><i class="fas fa-save"></i></button></div>
             </div>
@@ -443,7 +428,6 @@
     </div>
 
     <script type="text/javascript">
-
         var layer_draw;
         //Disable area & form buttons
         $("#button_zone ").prop('disabled', true);
@@ -868,6 +852,7 @@
 
                 add_map_point(position.coords.latitude, position.coords.longitude)
             };
+
             function onError(error) {
                 console.log('getposition : \n code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
             }
@@ -995,7 +980,7 @@
         function get_formulaire() {
             $("#modal_body_form").html("<option selected disabled value=''>Sélectionnez un formulaire </option> ");
 
-            var url = "http://localhost:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/get_forms.php";
+            var url = "http://192.168.0.118/php/get_forms.php";
             $.getJSON(url, function(result) {
                 $.each(result, function(i, field) {
 
@@ -1009,7 +994,7 @@
 
 
                     if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale) {
-      
+
                         $("#modal_body_form").append(" <option id='" + id_form + "' value='" + id_form + "'>" + nom_form + " </option>");
                     }
                 });
@@ -1023,9 +1008,9 @@
 
         function get_zone() {
             $("#modal_body_zone").html("<option selected disabled value=''>Sélectionnez une zone </option> ");
-            var url = "http://localhost:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/get_zones.php";
+            var url = "http://192.168.0.118/php/get_zones.php";
             $.getJSON(url, function(result) {
-                
+
                 $.each(result, function(i, field) {
                     var nom_zone = field.nom_zone;
 
@@ -1039,8 +1024,8 @@
                 });
             });
         }
-        
-       
+
+
 
         function check_zone() {
 
@@ -1059,9 +1044,9 @@
         }
 
         function add_zone() {
-            var url = "http://localhost:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/add_zone.php";
+            var url = "http://192.168.0.118/php/add_zone.php";
             $.getJSON(url, function(result) {
-              
+
                 $.each(result, function(i, field) {
                     var id_zone = field.id_zone;
                     var etendue = field.etendue;
@@ -1091,7 +1076,7 @@
                             source: new ol.source.Vector({
                                 features: new ol.format.GeoJSON().readFeatures(etendue)
                             }),
-                            style:style_zone,
+                            style: style_zone,
                         });
                         map.addLayer(geojson_zone);
 
@@ -1099,7 +1084,7 @@
                         map.getView().fit(extent, map.getSize());
 
                     }
-                    
+
                 });
             });
 
@@ -1109,12 +1094,14 @@
             url = 'index.html';
             location.replace(url);
         }
+
         function get_projet() {
             // Liste déroulante qui va contenir les projets d'agent
+            //       alert("test get projet");
             $("#modal_body_projet").html("<option selected disabled value=''>Sélectionnez un projet </option> ");
-            var url = "http://localhost:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/get_projects.php";
+            var url = "http://192.168.0.118/php/get_projects.php";
             $.getJSON(url, function(result) {
-                
+
                 $.each(result, function(i, field) {
                     var projet_titre = field.titre;
 
@@ -1134,7 +1121,7 @@
             id_projet_globale = a;
             console.log("le projet bien affecter" + id_projet_globale);
         }
-        
+
         function check_projet() {
             id_projet_globale = $("#modal_body_projet").children(":selected").attr("id");
             $("#button_zone").prop('disabled', false);
@@ -1146,7 +1133,7 @@
                 timer: 1500,
                 animation: false,
                 customClass: 'animated zoomIn'
-                
+
             })
         }
 
@@ -1163,9 +1150,9 @@
                 animation: false,
                 customClass: 'animated zoomIn'
             });
-            var url = "http://localhost:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/get_forms.php";
+            var url = "http://192.168.0.118/php/get_forms.php";
             $.getJSON(url, function(result) {
-                
+
                 $.each(result, function(i, field) {
 
 
@@ -1177,7 +1164,7 @@
                     if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale && id_formulaire_affect == id_formulaire_globale) {
 
                         id_type_geometrie = field.id_geom_affect;
-                       
+
                     }
                 });
             });
@@ -1273,6 +1260,7 @@
             }
             flash(feature);
         }
+
         function save() {
             //Get the geojson format of the layer
             var geojson = new ol.format.GeoJSON().writeFeatures(layer_draw.getSource().getFeatures());
@@ -1300,9 +1288,9 @@
     <script src="cordova.js"></script>
     <!-- Mcx Dialog Mobile plugin -->
     <script src="plugins/mcx-dialog-mobile/dist/mcx-dialog.js"></script>
-    
-    
-    
+
+
+
     </script>
 
     <!-- test de la conection -->

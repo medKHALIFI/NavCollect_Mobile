@@ -156,7 +156,7 @@
 .ol-control button:focus,
 .ol-control button:hover {
     text-decoration: none;
-    background-color: rgba(0, 60, 136, .7)
+    background-color: #2a3f54
 }
 
 .ol-zoom .ol-zoom-in {

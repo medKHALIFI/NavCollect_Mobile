@@ -1733,7 +1733,7 @@
 		 * sZeroRecords - assuming that is given.
 		 */
 		if ( ! lang.sEmptyTable && zeroRecords &&
-			defaults.sEmptyTable === "Aucune donnée disponible" )
+			defaults.sEmptyTable === "No data available in table" )
 		{
 			_fnMap( lang, lang, 'sZeroRecords', 'sEmptyTable' );
 		}
@@ -11271,7 +11271,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sFirst": "Première",
+				"sFirst": "First",
 	
 	
 				/**
@@ -11294,7 +11294,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sLast": "Dernière",
+				"sLast": "Last",
 	
 	
 				/**
@@ -11317,7 +11317,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Suivante",
+				"sNext": "Suivant",
 	
 	
 				/**
@@ -11340,7 +11340,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Précédente"
+				"sPrevious": "Précédent"
 			},
 	
 			/**
@@ -11349,8 +11349,7 @@
 			 * parameter - if it is not given, the value of `zeroRecords` will be used
 			 * instead (either the default or given value).
 			 *  @type string
-			 *  @default Aucune donnée disponible
-
+			 *  @default No data available in table
 			 *
 			 *  @dtopt Language
 			 *  @name DataTable.defaults.language.emptyTable
@@ -11359,13 +11358,12 @@
 			 *    $(document).ready( function() {
 			 *      $('#example').dataTable( {
 			 *        "language": {
-			 *          "emptyTable": "Aucune donnée disponible
-"
+			 *          "emptyTable": "No data available in table"
 			 *        }
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "Aucune donnée disponible",
+			"sEmptyTable": "Aucune donnée trouvée",
 	
 	
 			/**
@@ -11397,7 +11395,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Affichage de _START_ à _END_ de _TOTAL_ entrées",
+			"sInfo": "Affichage de  _START_ à _END_ de _TOTAL_ entrées",
 	
 	
 			/**
@@ -11420,7 +11418,6 @@
 			 */
 			"sInfoEmpty": "Affichage de 0 à 0 de 0 entrées",
 	
-	
 			/**
 			 * When a user filters the information in a table, this string is appended
 			 * to the information (`info`) to give an idea of how strong the filtering
@@ -11440,7 +11437,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(Filtrée de _MAX_ du maximum des entrées)",
+			"sInfoFiltered": "(Filtré à partir de _MAX_ entrées totales)",
 	
 	
 			/**
@@ -11558,7 +11555,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": " Nombre des entrées à afficher :  _MENU_ ",
+			"sLengthMenu": "Affichage de _MENU_ entrées",
 	
 	
 			/**
@@ -11638,7 +11635,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Chercher :",
+			"sSearch": "Chercher:",
 	
 	
 			/**
@@ -11696,7 +11693,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "Aucun enregistrements correspondants trouvés"
+			"sZeroRecords": "Aucune données correspondantes trouvées"
 		},
 	
 	
@@ -11742,7 +11739,7 @@
 		 *
 		 *  @deprecated 1.10. Please use `ajax` for this functionality now.
 		 */
-		"sAjaxDataProp": "Données",
+		"sAjaxDataProp": "données",
 	
 	
 		/**

@@ -516,7 +516,7 @@ body .container.body .right_col {
     background: #D9DEE4
 }
 body {
-    color: #73879C;
+    color: #333;
     font-weight: 400;
     line-height: 1.471;
     font-size:13px;
@@ -1333,7 +1333,7 @@ table.jambo_table {
 }
 table.jambo_table thead {
     background: rgba(52, 73, 94, 0.94);
-    color: #ECF0F1
+    color: #fff
 }
 table.jambo_table tbody tr:hover td {
     background: rgba(38, 185, 154, 0.07);
@@ -4262,7 +4262,7 @@ ul.notifications {
     font-size: 12px;
     border-bottom: 1px solid #ddd; }
     .dataTables_wrapper input[type="search"]:focus, .dataTables_wrapper input[type="search"]:active {
-      border-bottom: 2px solid #1f91f3; }
+      border-bottom: 2px solid #1abb9c; }
   .dataTables_wrapper .dt-buttons {
     float: left; }
     .dataTables_wrapper .dt-buttons a.dt-button {
@@ -4960,20 +4960,19 @@ html.ie11 .bs-searchbox .form-control {
 
 .bg-footer {
   background-color: #2a3f54 !important;
-  color: #e7e7e7; }
+  color: #fff; }
   .bg-footer .content .text,
   .bg-footer .content .number {
-    color: #e7e7e7 !important; }
+    color: #fff !important; }
 
-.bg-footer:focus,
 .bg-footer:active,
-.bg-footer.active,
+.bg-footer:hover,
 .open .dropdown-toggle.bg-footer {
     background-color: #26B99A !important;
-  color: #e7e7e7; }
+  color: #ffffff; }
   .bg-footer .content .text,
   .bg-footer .content .number {
-    color: #e7e7e7 !important; }
+    color: #ffffff !important; }
 
 
 
@@ -5243,7 +5242,7 @@ html.ie11 .bs-searchbox .form-control {
 .navheader {
     position: absolute;
     background: #ededed;
-    padding: 10px;
+    padding: 10px 0px 0px 0px;
     display: block;
     top: 0;
     float: left;
@@ -5278,8 +5277,19 @@ html.ie11 .bs-searchbox .form-control {
     border-radius: 50px;
 }
 
-.custom-zoomSlider button:focus,
+.custom-zoomSlider button:active,
 .custom-zoomSlider button:hover {
     text-decoration: none;
     background-color: #1abb9c;
 }
+/******Chercher une position******/
+  #address-bar {
+    position: fixed;
+    z-index:100;
+    list-style-type: none;
+    padding: 0px;
+    margin-top:45px;
+    max-height:100px;
+    margin-left:15px;
+    margin-right:55px;
+  }

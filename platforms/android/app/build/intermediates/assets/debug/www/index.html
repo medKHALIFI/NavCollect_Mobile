@@ -18,12 +18,10 @@
     <script type="text/javascript" src="plugins/Opacity-slider/ol3-layerswitcher.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
     <!-- Bootstrap -->
-    <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!-- NProgress -->
     <link href="plugins/nprogress/nprogress.css" rel="stylesheet" />
     <!-- jQuery custom content scroller -->
@@ -42,7 +40,126 @@
     <!-- Sweet Alert 2 Plugin CSS & JS-->
     <link href="plugins/SweetAlert2/sweetalert2.min.css" rel="stylesheet" />
     <script src="plugins/SweetAlert2/sweetalert2.min.js"></script>
-    
+
+    <style>
+        .vertical-alignment-helper {
+            display: table;
+            height: 100%;
+            width: 95%;
+            margin-left: 10px;
+        }
+        
+        .vertical-align-center {
+            /* To center vertically */
+            display: table-cell;
+            vertical-align: middle;
+        }
+        
+        .close {
+            color: #f27474;
+            opacity: 1;
+        }
+        
+        .modal-title {
+            color: #333;
+        }
+        
+        .search-form .form-group1 input.form-control1::-webkit-input-placeholder {
+            display: none;
+        }
+        
+        .search-form .form-group1 input.form-control1::-moz-placeholder {
+            display: none;
+        }
+        
+        .form-group1 {
+            position: relative;
+            width: 0%;
+            min-width: 45px;
+            height: 45px;
+            overflow: hidden;
+            transition: width 1s;
+            backface-visibility: hidden;
+        }
+        
+        .form-group1 input.form-control1 {
+            position: absolute;
+            top: 0;
+            right: 0;
+            outline: none;
+            width: 100%;
+            height: 45px;
+            margin: 0;
+            z-index: 10;
+            padding-left: 10px;
+        }
+        
+        input[type="text"].form-control1 {
+            -webkit-appearence: none;
+            -webkit-border-radius: 0;
+        }
+        
+        .form-control-submit,
+        .search-label {
+            width: 45px;
+            height: 45px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            cursor: pointer;
+            line-height: 45px;
+            background: #2a3f54;
+            font-weight: 700;
+            font-size: 1.70em;
+            border-radius: 50%;
+        }
+        
+        .form-control-submit {
+            background: #fff;
+            /*stupid IE*/
+            opacity: 0;
+            color: transparent;
+            border: none;
+            outline: none;
+            z-index: -1;
+        }
+        
+        .search-label {
+            z-index: 90;
+        }
+        
+        .form-group1.sb-search-open,
+        .no-js .sb-search-open {
+            width: 100%;
+        }
+        
+        .form-group1.sb-search-open .search-label,
+        .no-js .sb-search .search-label {
+            background: #1abb9c;
+            color: #fff;
+            z-index: 11;
+        }
+        
+        .form-group1.sb-search-open .form-control-submit,
+        .no-js .form-control1 .form-control-submit {
+            z-index: 90;
+        }
+        
+        #address-bar {
+            position: fixed;
+            z-index: 100;
+            list-style-type: none;
+            padding: 0px;
+            margin-top: 45px;
+            max-height: 100px;
+            margin-left: 15px;
+            margin-right: 55px;
+        }
+    </style>
+
     <script>
         // Internet connection test using Cordova 
         function checkConnection(imei) {
@@ -75,55 +192,57 @@
                 })
             } else {
                 // Get the user's imei
-                var url = "http://192.168.1.102:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/get_agent_info.php";
-                alert("base de données");
+                var url = "http://192.168.0.118/php/get_agent_info.php";
 
                 $.getJSON(url, function(result) {
-                    alert(result);
                     $.each(result, function(i, field) {
                         var agent_imei = field.imei;
-                        alert("agent imei "+agent_imei);
+                        //  alert("agent imei data base " + agent_imei + "mobile : " + imei);
                         if (agent_imei == imei) {
                             id_agent_globale = field.id_agent;
                             swal({
                                 position: 'center',
-                                type: 'success',
-                                title: 'Bienvenue M./Mme. ' + field.nom_agent + '\n , Vous êtes connecté! ',
-                                showConfirmButton: false,
-                                timer: 5000
+                                imageUrl: 'images/logo.png',
+                                html: 'Bienvenue M./Mme. ' + field.prenom_agent + ' ' + field.nom_agent + '\n , Vous êtes connecté(e)s! ',
+                                showConfirmButton: true,
+                                confirmButtonText: 'Accès à l\'application',
+                                confirmButtonColor: '#1ABB9C',
+                                animation: false,
+                                customClass: 'animated fadeInDown'
                             });
-                        }
-                        else{
+                        } else {
                             swal({
-                                position: 'center',
-                                type: 'error',
                                 title: 'Vous n\'êtes pas un agent',
-                                showConfirmButton: false,
-                                timer: 5000
-                            });
+                                type: 'error',
+                                showCancelButton: true,
+                                confirmButtonColor: '#f27474',
+                                confirmButtonText: 'Fermer l\'application?!',
+                                cancelButtonText: 'Annuler',
+                                animation: false,
+                                customClass: 'animated shake'
+                            }).then((result) => {
+                                if (result.value) {
+                                    navigator.app.exitApp();
+                                }
+                            })
                         }
                     });
                 });
             }
 
         }
-        
+
+
+
         //Get the device IMEI using Cordova
         document.addEventListener("deviceready", onDeviceReady, false);
-        var imei_globale = 0;
+        var imei_globale;
 
         function onDeviceReady() {
             window.plugins.imei.get(
                 function(imei) {
-                    alert("IMEI DETECTED");
                     checkConnection(imei);
                     imei_globale = imei;
-                    swal({
-                        position: 'center',
-                        type: 'success',
-                        title: 'Bienvenue M./Mme. ' + field.nom_agent + '\n , Vous êtes connecté! ',
-                        confirmButtonColor: '#e7e7e7',
-                    });
                 },
                 function() {
                     alert("error loading imei");
@@ -131,7 +250,6 @@
             );
 
         }
-        
     </script>
 </head>
 
@@ -140,56 +258,59 @@
     <div class="navheader">
         <div class="col-sm-12" align="center">
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-bottom: 10px"><img src="images/logo.png" alt="logo" style="width:110px; height:40px"></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_projet" data-toggle="modal" data-target="#exampleModal_projet" onclick="get_projet()" class="btn btn-circle bg-footer"><i class="fas fa-briefcase"></i></button></div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_zone" data-toggle="modal" data-target="#exampleModal_zone" onclick="get_zone() " class="btn btn-circle bg-footer "><i class="fas fas fa-layer-group"></i></button></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_zone" data-toggle="modal" data-target="#exampleModal_zone" onclick="get_zone()" class="btn btn-circle bg-footer "><i class="fas fas fa-layer-group"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="button_formulaire" data-toggle="modal" data-target="#exampleModal_form" onclick="get_formulaire() " class="btn btn-circle bg-footer "><i class="fas fa-list-alt"></i></button></div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="go_home" onclick="go_home()" class="btn btn-circle bg-footer"><i class="fas fa-home"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="button_data" onclick="go_data()"><i class="fas fa-database"></i></button></div>
             </div>
-        </div>  
+        </div>
     </div>
     <!-- /top navigation -->
 
     <!-- Projects' list -->
-    <div class="modal fade" id="exampleModal_projet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Choisir un projet </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <select class="form-control" id="modal_body_projet"></select>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type='button' onclick='check_projet()' class='btn btn-primary' data-dismiss="modal">Enregistrer</button>
+    <div class="modal animated fadeInDown" id="exampleModal_projet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="exampleModalLabel">Choisissez un projet </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <select class="form-control" id="modal_body_projet"></select>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type='button' onclick='check_projet()' class='btn bg-green' data-dismiss="modal">Ajouter</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Areas' list -->
-    <div class="modal fade" id="exampleModal_zone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Choisir une zone </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <select class="form-control" id="modal_body_zone"></select>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type='button' onclick='check_zone()' class='btn btn-primary' data-dismiss="modal">Enregistrer</button>
+    <div class="modal animated fadeInDown" id="exampleModal_zone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="exampleModalLabel">Choisissez une zone </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <select class="form-control" id="modal_body_zone"></select>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type='button' onclick='check_zone()' class='btn bg-green' data-dismiss="modal">Ajouter</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -197,26 +318,28 @@
 
     <!-- Forms' list -->
     <div class="modal fade" id="exampleModal_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Choisir un formulaire </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <select class="form-control" id="modal_body_form"></select>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type='button' onclick='check_form()' class='btn btn-primary' data-dismiss="modal">Enregistrer</button>
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="exampleModalLabel">Choisissez un formulaire </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <select class="form-control" id="modal_body_form"></select>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type='button' onclick='check_form()' class='btn bg-green' data-dismiss="modal">Enregistrer</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- page content -->
     <div class="right_col" role="main">
         <div class="clearfix"></div>
@@ -234,12 +357,11 @@
                         <input type="radio" name="type" value="Polygon" /><label> Polygone</label>
                     </div>
                 </div>
-                <br>
                 <div class="row">
-                    Suivi de chemin :
-                    <select onchange="draw.setFollowTrack($(this).val()==='true' ? true : $(this).val());">
-                        <option value="true">true (track at zoom)</option>
-                        <option value="false">false (don't track)</option>
+                    <h6>Suivi de chemin :</h6>
+                    <select onchange="draw.setFollowTrack($(this).val()==='true' ? true : $(this).val());" class="selectpicker show-tick">
+                        <option value="true">Suivre au zoom</option>
+                        <option value="false">Ne pas suivre</option>
                         <option value="auto">auto (stop on map move)</option>
                         <option value="position">position (no zoom)</option>
                         <option value="visible">visible (stay on  the map)</option>
@@ -269,7 +391,7 @@
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="edit-tools" class="btn btn-circle bg-footer"><i class="fas fa-edit"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" onclick="getPosition()" id="getPosition"><i class="fas fa-crosshairs"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="trackRecord"><i class="fas fa-location-arrow"></i></button></div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" onclick="searchLocation()" id="searchLocation"><i class="fas fa-search"></i></button></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" data-toggle="modal" data-target="#searchLocation-modal" id="searchLocation"><i class="fas fa-search"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="go_home" onclick="go_home()" class="btn btn-circle bg-footer"><i class="fas fa-sync-alt"></i></button></div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" id="drawpoint" onclick="save()"><i class="fas fa-save"></i></button></div>
             </div>
@@ -277,8 +399,35 @@
     </footer>
     <!-- /footer content -->
 
-    <script type="text/javascript">
+    <!-- Forms' list -->
+    <div class="modal animated rollIn" id="searchLocation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="exampleModalLabel">Chercher une addresse </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group1 pull-right sb-search-open" id="search">
+                            <input type="text" class="form-control1" placeholder="Chercher..." id="search-input">
+                            <button type="submit" class="form-control1 form-control-submit"></button>
+                            <span class="search-label"><i class="fas fa-search-location"></i></span>
+                            <div class="container">
+                                <div id="address-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <br> <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script type="text/javascript">
         var layer_draw;
         //Disable area & form buttons
         $("#button_zone ").prop('disabled', true);
@@ -703,6 +852,7 @@
 
                 add_map_point(position.coords.latitude, position.coords.longitude)
             };
+
             function onError(error) {
                 console.log('getposition : \n code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
             }
@@ -830,7 +980,7 @@
         function get_formulaire() {
             $("#modal_body_form").html("<option selected disabled value=''>Sélectionnez un formulaire </option> ");
 
-            var url = "http://192.168.1.99/php_mobile/recuper_form.php";
+            var url = "http://192.168.0.118/php/get_forms.php";
             $.getJSON(url, function(result) {
                 $.each(result, function(i, field) {
 
@@ -844,7 +994,7 @@
 
 
                     if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale) {
-      
+
                         $("#modal_body_form").append(" <option id='" + id_form + "' value='" + id_form + "'>" + nom_form + " </option>");
                     }
                 });
@@ -858,16 +1008,15 @@
 
         function get_zone() {
             $("#modal_body_zone").html("<option selected disabled value=''>Sélectionnez une zone </option> ");
-            var url = "http://192.168.1.99/php_mobile/recuper_zone.php";
+            var url = "http://192.168.0.118/php/get_zones.php";
             $.getJSON(url, function(result) {
-                
+
                 $.each(result, function(i, field) {
                     var nom_zone = field.nom_zone;
 
                     var id_zone = field.id_projet_zone;
                     var id_agent_affect = field.id_agent_affect
                     var id_projet_affect = field.id_projet_affect
-
                     if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale) {
                         $("#modal_body_zone").append(" <option id='" + id_zone + "' value='" + id_zone + "'>" + nom_zone + " </option>");
 
@@ -875,42 +1024,8 @@
                 });
             });
         }
-        
-        function searchLocation() {
-            swal({
-                title: 'Chercher une addresse',
-                input: 'text',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                showCancelButton: true,
-                confirmButtonText: 'Go!',
-                showLoaderOnConfirm: true,
-                preConfirm: (login) => {
-                    return fetch(`//api.github.com/users/${login}`)
-                    .then(response => {
-                        if (!response.ok) {
-                        throw new Error(response.statusText)
-                        }
-                        return response.json()
-                    })
-                    .catch(error => {
-                        swal.showValidationError(
-                        `Request failed: ${error}`
-                        )
-                    })
-                },
-                allowOutsideClick: () => !swal.isLoading()
-                }).then((result) => {
-                if (result.value) {
-                    swal({
-                    title: `${result.value.login}'s avatar`,
-                    imageUrl: result.value.avatar_url
-                    })
-                }
-                })
 
-        }
+
 
         function check_zone() {
 
@@ -918,18 +1033,20 @@
             add_zone();
             $("#button_formulaire").prop('disabled', false);
             swal({
-                position: 'end-end',
+                position: 'center',
                 type: 'success',
-                title: 'la zone est bien enregistrée ',
+                title: 'La zone est bien ajoutée ',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1500,
+                animation: false,
+                customClass: 'animated zoomIn'
             })
         }
 
         function add_zone() {
-            var url = "http://192.168.1.99/php_mobile/recupere_zone.php";
+            var url = "http://192.168.0.118/php/add_zone.php";
             $.getJSON(url, function(result) {
-              
+
                 $.each(result, function(i, field) {
                     var id_zone = field.id_zone;
                     var etendue = field.etendue;
@@ -937,13 +1054,29 @@
 
                     if (id_zone_globale == id_zone) {
                         map.removeLayer(geojson_zone);
+                        var style_zone = new ol.style.Style({
+                            fill: new ol.style.Fill({
+                                color: '#1abb9c54'
+                            }),
+                            stroke: new ol.style.Stroke({
+                                color: '#1ABB9C',
+                                width: 2
+                            }),
+                            image: new ol.style.Circle({
+                                radius: 7,
+                                fill: new ol.style.Fill({
+                                    color: '#1ABB9C'
+                                })
+                            })
+                        });
                         var geojson_zone = new ol.layer.Vector({
                             title: nom_zone,
                             timeInfo: null,
                             isSelectable: true,
                             source: new ol.source.Vector({
                                 features: new ol.format.GeoJSON().readFeatures(etendue)
-                            })
+                            }),
+                            style: style_zone,
                         });
                         map.addLayer(geojson_zone);
 
@@ -951,7 +1084,7 @@
                         map.getView().fit(extent, map.getSize());
 
                     }
-                    
+
                 });
             });
 
@@ -961,12 +1094,14 @@
             url = 'index.html';
             location.replace(url);
         }
+
         function get_projet() {
             // Liste déroulante qui va contenir les projets d'agent
+            //       alert("test get projet");
             $("#modal_body_projet").html("<option selected disabled value=''>Sélectionnez un projet </option> ");
-            var url = "http://192.168.1.102:8090/NavCollect_Mobile/NavCollect_Mobile/www/php/get_projects.php";
+            var url = "http://192.168.0.118/php/get_projects.php";
             $.getJSON(url, function(result) {
-                
+
                 $.each(result, function(i, field) {
                     var projet_titre = field.titre;
 
@@ -983,23 +1118,22 @@
 
         //in exploitable
         function projet(a) {
-
             id_projet_globale = a;
             console.log("le projet bien affecter" + id_projet_globale);
-
         }
-        
+
         function check_projet() {
-
             id_projet_globale = $("#modal_body_projet").children(":selected").attr("id");
-
             $("#button_zone").prop('disabled', false);
             swal({
-                position: 'end-end',
+                position: 'center',
                 type: 'success',
-                title: 'le projet est bien enregistré ',
+                title: 'Le projet est bien ajouté ',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1500,
+                animation: false,
+                customClass: 'animated zoomIn'
+
             })
         }
 
@@ -1010,13 +1144,15 @@
             swal({
                 position: 'end-end',
                 type: 'success',
-                title: 'le formulaire est bien enregistré ',
+                title: 'Le formulaire est bien enregistré ',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1500,
+                animation: false,
+                customClass: 'animated zoomIn'
             });
-            var url = "http://192.168.1.99/php_mobile/recuper_form.php";
+            var url = "http://192.168.0.118/php/get_forms.php";
             $.getJSON(url, function(result) {
-                
+
                 $.each(result, function(i, field) {
 
 
@@ -1028,7 +1164,7 @@
                     if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale && id_formulaire_affect == id_formulaire_globale) {
 
                         id_type_geometrie = field.id_geom_affect;
-                       
+
                     }
                 });
             });
@@ -1124,6 +1260,7 @@
             }
             flash(feature);
         }
+
         function save() {
             //Get the geojson format of the layer
             var geojson = new ol.format.GeoJSON().writeFeatures(layer_draw.getSource().getFeatures());
@@ -1142,6 +1279,7 @@
     <script src="plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="js/custom.js"></script>
+    <script src="js/search-location.js"></script>
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
     <!-- Select Plugin Js -->
@@ -1150,7 +1288,9 @@
     <script src="cordova.js"></script>
     <!-- Mcx Dialog Mobile plugin -->
     <script src="plugins/mcx-dialog-mobile/dist/mcx-dialog.js"></script>
-    
+
+
+
     </script>
 
     <!-- test de la conection -->

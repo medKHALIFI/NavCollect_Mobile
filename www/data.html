@@ -31,7 +31,7 @@
     <link href="plugins/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="css/custom.css" rel="stylesheet">
-    
+
 </head>
 
 <body class="nav-md ">
@@ -47,10 +47,10 @@
                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" id="syncroniser" class="btn btn-circle bg-footer "><i class="fas fa-share-square"></i></button></div>
                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><button type="button" class="btn btn-circle bg-footer" onclick="go_home()"><i class="fas fa-map-marked-alt"></i></button></div>
                     </div>
-                </div>  
+                </div>
             </div>
             <br>
-            <!-- /top navigation -->            
+            <!-- /top navigation -->
 
             <!-- page content -->
             <div class="right_col" role="main">
@@ -70,7 +70,7 @@
 
                                     </p>
                                     <div class="table-responsive">
-                                        <table id="20202020" class="table table-bordered table-striped table-hover dt-responsive display nowrap jambo_table">
+                                        <table id="20202020" class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Projet</th>
@@ -78,26 +78,31 @@
                                                     <th>Zone</th>
                                                     <th>Formulaire</th>
                                                     <th>Données</th>
-                                                    <th>Zone</th>
-                                                    <th>Supprimer</th>
+
+                                                    <th>geojson</th>
+                                                    <th>function</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="table_id">
                                                 <tr>
-                                                    <td>Hanaa</td>
-                                                    <td>Hanaa</td>
-                                                    <td>Hanaa</td>
-                                                    <td>Hanaa</td>
-                                                    <td><button type="button" id="preview_zone" class="btn btn-circle bg-footer"><i class="fas fa-map"></i></button></td>
-                                                    <td><button type="button" id="preview_data" class="btn btn-circle bg-footer"><i class="fas fa-clipboard-list"></i></button></td>
-                                                    <td><button type="button" id="delete_row" class="btn btn-circle bg-footer"><i class="fas fa-trash"></i></button></td>
+
+                                                    <!--   -->
+                                                    <td>projet</td>
+                                                    <td>agnet</td>
+                                                    <td>zone</td>
+                                                    <td>form</td>
+                                                    <td>data</td>
+                                                    <td>geojson</td>
+                                                    <td>function</td>
+
+
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="row clearfix">
                                         <div class=".col-md-4 .col-md-offset-4">
-                                            <div class="btn-group btn-group-justified" role="group" aria-label="..." >
+                                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
                                                 <div class="btn-group" role="group">
                                                     <button id="delete_data" class="float-right btn bg-red" type="button"><i class="fas fa-trash"></i> &nbsp; Supprimer tous</button>
                                                 </div>
@@ -171,8 +176,10 @@
         $(document).ready(function() {
             setTimeout(function() {
                 //alert("Hello");
+
+                $('#20202020').addClass("table-bordered table-striped table-hover dt-responsive display nowrap jambo_table");
                 $('#20202020').DataTable();
-            }, 800);
+            }, 1000);
 
             var myDB;
             //Open Database Connection
@@ -191,7 +198,7 @@
                             i;
                         // $("#rowCount").html(len);
                         for (i = 0; i < len; i++) {
-                            $("#table_id").append("<tr><td>" + results.rows.item(i).nom_projet + "</td><td>" + results.rows.item(i).nom_agent + "</td><td>" + results.rows.item(i).nom_zone + "</td><td>" + results.rows.item(i).nom_form + "</td><td>" + results.rows.item(i).data + "</td><td>" + results.rows.item(i).zone + "</td></tr>");
+                            $("#table_id").append("<tr><td>" + results.rows.item(i).nom_projet + "</td><td>" + results.rows.item(i).nom_agent + "</td><td>" + results.rows.item(i).nom_zone + "</td><td>" + results.rows.item(i).nom_form + "</td><td>" + results.rows.item(i).data + "</td><td>" + results.rows.item(i).zone + "</td>  <td><button type='button' id='preview_zone' class='btn btn-circle bg-footer'><i class='fas fa-map'></i></button><button type='button' id='preview_data' class='btn btn-circle bg-footer'><i class='fas fa-clipboard-list'></i></button><button type='button' id='delete_row' class='btn btn-circle bg-footer'><i class='fas fa-trash'></i></button></td></tr>");
                         }
                     }, null);
                 });
@@ -243,7 +250,7 @@
                                 async: false,
 
 
-                                url: 'http://192.168.1.99/php_mobile/add_data.php',
+                                url: 'http://192.168.0.118/php/add_data.php',
                                 data: {
                                     'nom_projet': results.rows.item(i).nom_projet,
                                     'nom_agent': results.rows.item(i).nom_agent,

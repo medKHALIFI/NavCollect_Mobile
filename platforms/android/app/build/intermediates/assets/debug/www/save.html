@@ -212,7 +212,7 @@
             $("#form_contenu").html(" ");
             // alert("form " + id_form);
 
-            var url = "http://192.168.1.99/php_mobile/formulaire.php";
+            var url = "http://192.168.0.118/php/formulaire.php";
             $.getJSON(url, function(result) {
                 //alert(result);
 
@@ -285,7 +285,7 @@
         var id_form_globale = decodeURI(getUrlVars()["id_form"]);
         var geojson = decodeURI(getUrlVars()["geojson"]);
 
-        var url = "http://192.168.1.99/php_mobile/recuper_form.php";
+        var url = "http://192.168.0.118/php/get_forms.php";
         $.getJSON(url, function(result) {
             // console.log("les ids des projet existes de l'agent 5  ");
 
