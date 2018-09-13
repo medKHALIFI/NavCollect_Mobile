@@ -25,11 +25,19 @@
     <script src="plugins/SweetAlert2/sweetalert2.min.js"></script>
     <!-- Custom Theme Style -->
     <link href="css/custom.css" rel="stylesheet">
+    <style>
+        #form_contenu{
+            background: #ededec; 
+            margin: 0px;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body class="nav-md ">
     <div class="container body">
         <div class="main_container">
+
             <!-- top navigation -->
             <div class="navheader">
                 <div class="col-sm-12" align="center">
@@ -42,40 +50,7 @@
                     </div>
                 </div>
             </div>
-            <br>
-            <script>
-                
-                function save() {
-                    console.log("projet ;" + id_projet_globale + " agent " + id_agent_globale + " zone " + id_zone_globale + " form " + id_zone_globale);
-
-                    console.log("projet ;" + nom_projet + " agent " + nom_agent + " zone " + nom_zone + " form " + nom_form);
-                    swal({
-                        title: 'Êtes-vous sûr des données?',
-                        text: "Vous ne pourrez pas revenir en arrière!",
-                        type: 'success',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Confirmer'
-                    }).then((result) => {
-                        if (result.value) {
-                            swal({
-                                position: 'top-end',
-                                type: 'success',
-                                title: 'Le formulaire est bien remplis',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                            setTimeout(
-                                function() {
-
-                                    alert("quitte");
-                                },
-                            1000);
-                        }
-                    })
-                }
-            </script>
+            <br> 
             <!-- /top navigation -->
 
             <!-- page content -->
@@ -96,6 +71,7 @@
 
                                 <div class="x_content">
                                     <div id="form_contenu"></div>
+                                    <br>
                                     <div class="row clearfix">
                                         <div class=".col-md-4 .col-md-offset-4">
                                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
@@ -114,90 +90,12 @@
                     </div>
                 </div>
             </div>
+            <!-- /page content -->
         </div>
-        <!-- /page content -->
     </div>
-    </div>
-
-    <script type="text/javascript">
-
-        function go_home() {
-            url = 'index.html';
-            location.replace(url);
-        }
-        function go_data() {
-            url = 'data.html';
-            location.replace(url);
-        }
-        function get_form() {
-            $("#form_contenu").html(" ");
-
-            var url = "http://192.168.0.118/php/get_form_html.php";
-            $.getJSON(url, function(result) {
-                //alert(result);
-
-                $.each(result, function(i, field) {
-                    var id_formulaire = field.id_formulaire;
-                    var champs = field.champs;
-                    if (id_form_globale == id_formulaire) {
-                        $("#form_contenu").html(champs);
-                    }
-                });
-            });
-        }
-    </script>
-    <!-- get url-->
+    <!-- Save page JS -->
+    <script type="text/javascript" src="js/save_data.js"></script>
     <script type="text/javascript" src="js/geturi.js"></script>
-    <script type="text/javascript">
-        // les variable globale 
-        var nom_agent;
-        var nom_projet;
-        var nom_zone;
-        var nom_form;
-        var data;
-        var zone;
-        var id_projet_globale = decodeURI(getUrlVars()["id_projet"]);
-        var id_agent_globale = decodeURI(getUrlVars()["id_agent"]);
-        var id_zone_globale = decodeURI(getUrlVars()["id_zone"]);
-        var id_form_globale = decodeURI(getUrlVars()["id_form"]);
-        var geojson = decodeURI(getUrlVars()["geojson"]);
-
-        var url = "http://192.168.0.118/php/get_forms.php";
-        $.getJSON(url, function(result) {
-            
-            $.each(result, function(i, field) {
-
-
-                var id_projet_affect = field.id_projet_affect;
-                var id_agent_affect = field.id_agent_affect;
-                var id_formulaire_affect = field.id_formulaire_affect;
-                var id_projet_zone = field.id_projet_zone;
-
-                if (id_agent_affect == id_agent_globale && id_projet_affect == id_projet_globale && id_projet_zone == id_zone_globale && id_formulaire_affect == id_form_globale) {
-                    nom_agent = field.nom_agent;
-                    nom_projet = field.titre;
-                    nom_zone = field.nom_zone;
-                    nom_form = field.nom_form;
-
-                    
-                }
-            });
-        });
-
-    </script>
-
-    <!--save form-->
-    <script>
-        function saveForm() {
-            console.log("resultat du formulaise sous form geojson");
-            console.log(JSON.stringify($("#idform").serializeArray()));
-            var data = JSON.stringify($("#idform").serializeArray());
-            console.log("geojson de la couche : ", geojson)
-                //   insert(nom_projet, nom_agent, nom_zone, nom_form, data, geojson);
-            alert(nom_projet + "\n " + nom_agent + "\n " + nom_zone + "\n " + nom_form + "\n " + data + "\n " + geojson);
-            save();
-        }
-    </script>
     <!-- Bootstrap -->
     <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
@@ -215,82 +113,6 @@
     <!-- Cordova -->
     <script src="cordova.js"></script>
 
-    <!-- sqlite -->
-    <script>
-        $(document).ready(function() {
-            $("#save_data").click(function() {
-                
-                data = JSON.stringify($("#idform").serializeArray());
-                
-                swal({
-                    title: 'Êtes-vous sûr des données?',
-                    text: "Vous ne pourrez pas revenir en arrière!",
-                    type: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Confirmer',
-                    cancelButtonText:'annuler'
-                }).then((result) => {
-                    if (result.value) {
-                        //Send to SQLIte database
-                        myDB.transaction(function(transaction) {
-                            var executeQuery = "INSERT INTO data (nom_projet,nom_agent,nom_zone ,nom_form ,data  ,zone ) VALUES (?,?,?,?,?,?)";
-                            transaction.executeSql(executeQuery, [nom_projet, nom_agent, nom_zone, nom_form, data, geojson], function(tx, result) {
-                                //  Message de succès
-                                swal({
-                                    position: 'center',
-                                    type: 'success',
-                                    title: 'Votre travail est sauvegardé',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-
-                                $("#save_data").prop('disabled', true);
-                            },
-                            function(error) {
-                                alert('Error occurred');
-                            });
-                        });
-                        setTimeout(function() {
-                            url = 'data.html';
-                            location.replace(url);
-                        }, 1500);
-                    }
-                })
-            });
-
-            $("#save_data").click(function(){
-                $("#form_contenu").trigger("reset");
-            });
-
-            var myDB;
-            //Open Database Connection
-            document.addEventListener("deviceready", onDeviceReady, false);
-
-            function onDeviceReady() {
-                myDB = window.sqlitePlugin.openDatabase({
-                    name: "mySQLite.db",
-                    location: 'default'
-                });
-
-                //creation de la table 
-                myDB.transaction(function(transaction) {
-                    transaction.executeSql('CREATE TABLE IF NOT EXISTS data (id integer primary key,nom_projet text,nom_agent text,nom_zone text,nom_form text,data json ,zone json)', [],
-
-                        function(tx, result) {
-                        },
-                        function(error) {
-                            alert("Error occurred while creating the table.");
-                        });
-                });
-            }
-        });
-    </script>
-
-    <script>
-        get_form();
-    </script>
 </body>
 
 </html>
