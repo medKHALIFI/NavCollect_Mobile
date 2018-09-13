@@ -4,7 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
+    <!-- jQuery -->
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Openlayers -->
+    <link rel="stylesheet" href="plugins/ol/ol.css" />
+    <script type="text/javascript" src="plugins/ol/ol.js"></script>
     <!-- Google Fonts  -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <!-- Bootstrap -->
@@ -70,32 +74,26 @@
 
                                     </p>
                                     <div class="table-responsive">
-                                        <table id="20202020" class="table">
+                                        <table id="table_data" class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Projet</th>
                                                     <th>Agent </th>
-                                                    <th>Zone</th>
+                                                    <th>Zone d'étude</th>
                                                     <th>Formulaire</th>
                                                     <th>Données</th>
-
-                                                    <th>geojson</th>
-                                                    <th>function</th>
+                                                    <th>Zones digitalisées</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="table_id">
                                                 <tr>
-
-                                                    <!--   -->
+                                                    <!-- Valeur par défaut  -->
                                                     <td>projet</td>
                                                     <td>agnet</td>
                                                     <td>zone</td>
                                                     <td>form</td>
                                                     <td>data</td>
                                                     <td>geojson</td>
-                                                    <td>function</td>
-
-
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -122,11 +120,48 @@
         </div>
     </div>
 
+    <!-- Modal : Zone digitalisée -->
+    <div class="modal animated fadeInDown" id="modal-previewZone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="exampleModalLabel">Zone que vous avez digitalisé </h4>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal : visualisation des données collectées -->
+    <div class="modal animated fadeInDown" id="modal-previewData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="exampleModalLabel">Données collectées </h4>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript">
     </script>
 
-    <!-- jQuery -->
-    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    
     <!-- Datatables-->
     <script src="plugins/datatables.net/js/jquery.dataTables.js"></script>
     <script src="plugins/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -175,16 +210,13 @@
         }
         $(document).ready(function() {
             setTimeout(function() {
-                //alert("Hello");
-
-                $('#20202020').addClass("table-bordered table-striped table-hover dt-responsive display nowrap jambo_table");
-                $('#20202020').DataTable();
+                $('#table_data').addClass("table-bordered table-striped table-hover dt-responsive display nowrap jambo_table");
+                $('#table_data').DataTable();
             }, 1000);
 
             var myDB;
             //Open Database Connection
             document.addEventListener("deviceready", onDeviceReady, false);
-
             function onDeviceReady() {
                 myDB = window.sqlitePlugin.openDatabase({
                     name: "mySQLite.db",
@@ -196,14 +228,14 @@
                     transaction.executeSql('SELECT * FROM data', [], function(tx, results) {
                         var len = results.rows.length,
                             i;
-                        // $("#rowCount").html(len);
+                        //results.rows.item(i).data
+                        //results.rows.item(i).zone
                         for (i = 0; i < len; i++) {
-                            $("#table_id").append("<tr><td>" + results.rows.item(i).nom_projet + "</td><td>" + results.rows.item(i).nom_agent + "</td><td>" + results.rows.item(i).nom_zone + "</td><td>" + results.rows.item(i).nom_form + "</td><td>" + results.rows.item(i).data + "</td><td>" + results.rows.item(i).zone + "</td>  <td><button type='button' id='preview_zone' class='btn btn-circle bg-footer'><i class='fas fa-map'></i></button><button type='button' id='preview_data' class='btn btn-circle bg-footer'><i class='fas fa-clipboard-list'></i></button><button type='button' id='delete_row' class='btn btn-circle bg-footer'><i class='fas fa-trash'></i></button></td></tr>");
+                            $("#table_id").append("<tr><td>" + results.rows.item(i).nom_projet + "</td><td>" + results.rows.item(i).nom_agent + "</td><td>" + results.rows.item(i).nom_zone + "</td><td>" + results.rows.item(i).nom_form + "</td><td><button type='button' id='preview_data' data-toggle='modal' data-target='modal-previewData' onclick='preview_data()' class='btn btn-circle bg-footer'><i class='fas fa-clipboard-list'></i></button></td><td><button type='button' id='preview_zone'data-toggle='modal' data-target='modal-previewZone' onclick='preview_zone()' class='btn btn-circle bg-footer'><i class='fas fa-map'></i></button></td> ");
                         }
                     }, null);
                 });
             }
-
 
             $("#delete_data").click(function() {
 
@@ -241,15 +273,11 @@
                             i;
                         var id;
                         var supprimer_sqlite = [];
-                        // $("#rowCount").html(len);
                         for (i = 0; i < len; i++) {
-                            //alert("id " + results.rows.item(i).id + "\n projet " + results.rows.item(i).nom_projet + "\n agent " + results.rows.item(i).nom_agent + "\n zone" + results.rows.item(i).nom_zone + "\n form " + results.rows.item(i).nom_form + "\n data " + results.rows.item(i).data + "\n zone" + results.rows.item(i).zone + "");
                             id = results.rows.item(i).id;
                             $.ajax({
                                 type: 'POST',
                                 async: false,
-
-
                                 url: 'http://192.168.0.118/php/add_data.php',
                                 data: {
                                     'nom_projet': results.rows.item(i).nom_projet,
@@ -260,87 +288,41 @@
                                     'zone': results.rows.item(i).zone
                                 },
                                 beforeSend: function() {
-                                    // alert("befor send");
 
                                 },
                                 success: function(response) {
                                     if (response == 2) {
-
-                                        // alert("succes" + id);
                                         supprimer_sqlite.push(id);
-                                        /* myDB.transaction(function(transaction) {
-                                             var executeQuery = "DELETE FROM data where id=?";
-                                             transaction.executeSql(executeQuery, [id],
-                                                 //On Success
-                                                 function(tx, result) {
-                                                     alert('Delete successfully');
-                                                 },
-                                                 //On Error
-                                                 function(error) {
-                                                     alert('Something went Wrong');
-                                                 });
-                                         });*/
 
-
-
-
-
-
-                                        // swal("Done !", "Un nouveau agent est ajouté avec succés", "success");
-                                        /* $("#form_add_user").trigger("reset");
-                        $("#submitButton_add").html('Ajouter un autre');
-                        $("#agent").html('Ajouter un autre agent');
-*/
 
                                     } else {
                                         alert("erreur");
-                                        //swal("ERREUUUUUUR", "Ajouter un autre agent", "error");
-                                        //$("#submitButton_add").html('Sauvegarder');
                                     }
                                 }
-
                             });
-
-
-
                         }
 
-                        // for (i = 1; i < supprimer_sqlite.length; i++) {
                         supprimer_sqlite.forEach(function(i) {
-                            // alert("element " + i + "\n");
                             var idx = i;
 
                             myDB.transaction(function(transaction) {
                                 var executeQuery = "DELETE FROM data where id=?";
                                 transaction.executeSql(executeQuery, [idx],
-                                    //On Success
                                     function(tx, result) {
 
-                                        //  alert('Delete successfully' + idx);
                                     },
-                                    //On Error
                                     function(error) {
                                         alert('Something went Wrong');
                                     });
                             });
 
                         })
-
-                        // }
-
-
                     }, null);
                 });
 
-                /*swal({
-                    position: 'top-end',
-                    type: 'success',
-                    title: 'vos donnes bien syncroniser ',
-                    showConfirmButton: false,
-                    timer: 1500
-                });*/
+                
                 swal({
-                    title: 'Syncronisation',
+                    title: 'Synchronisation',
                     text: "Vos données sont bien syncronisées !",
                     type: 'success',
                     showCancelButton: false,
@@ -349,16 +331,12 @@
                     confirmButtonText: 'oky!'
                 }).then((result) => {
                     if (result.value) {
-
-
                         setTimeout(
                             function() {
-
-
                                 url = 'data.html';
-
                                 location.replace(url);
-                            }, 100);
+                            }, 
+                        100);
                     }
                 })
 
@@ -366,13 +344,6 @@
             });
 
         });
-    </script>
-
-
-
-
-
-    <script>
     </script>
 
 </body>
