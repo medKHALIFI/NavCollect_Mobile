@@ -59,7 +59,7 @@ $(document).ready(function() {
 
 
 
-                var url = "http://localhost/php_mobile/name_save.php";
+                var url = "http://192.168.0.118/php_mobile/name_save.php";
                 $.getJSON(url, function(result) {
                     console.log("les ids des projet existes de l'agent 5  ");
 

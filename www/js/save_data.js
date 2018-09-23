@@ -13,7 +13,7 @@ $(document).ready(function() {
     var id_form_globale = decodeURI(getUrlVars()["id_form"]);
     var geojson = decodeURI(getUrlVars()["geojson"]);
 
-    var url = "http://192.168.1.112/php/get_forms.php";
+    var url = "http://192.168.0.118/php/get_forms.php";
     $.getJSON(url, function(result) {
         $.each(result, function(i, field) {
 
@@ -33,7 +33,7 @@ $(document).ready(function() {
 
     //GET FORM
     $("#form_contenu").html(" ");
-    var url = "http://192.168.1.112/php/get_form_html.php";
+    var url = "http://192.168.0.118/php/get_form_html.php";
     $.getJSON(url, function(result) {
         //alert(result);
 

@@ -92,8 +92,8 @@
                                                     <td>agnet</td>
                                                     <td>zone</td>
                                                     <td>form</td>
-                                                    <td>data</td>
-                                                    <td>geojson</td>
+                                                    <td><button type="button" id="102030" class="btn btn-circle bg-footer"><i class="fas fa-clipboard-list"></i></button></td>
+                                                    <td><button type="button" onclick="preview_data()" class="btn btn-circle bg-footer"><i class="fas fa-clipboard-list"></i></button></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -202,6 +202,21 @@
     <!-- sqlite 
     <script src="js/sqlite.js"></script>-->
 
+
+
+    <!-- script de test des modals-->
+    <script>
+        function preview_zone() {
+            alert("modal preview zone");
+
+        };
+        /*
+                $("#102030").click(function() {
+                    alert("modal preview zone");
+
+                });*/
+    </script>
+
     <!-- recuperation des donnees dans la base de donnees -->
     <script>
         function go_home() {
@@ -209,12 +224,20 @@
             location.replace(url);
         }
         $(document).ready(function() {
+            console.log("document ready ;) ");
+
+
+
             setTimeout(function() {
                 $('#table_data').addClass("table-bordered table-striped table-hover dt-responsive display nowrap jambo_table");
                 $('#table_data').DataTable();
             }, 1000);
 
             var myDB;
+            /*  $("#102030").click(function() {
+                  alert("modal preview zone");
+
+              });*/
             //Open Database Connection
             document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -232,12 +255,54 @@
                         //results.rows.item(i).data
                         //results.rows.item(i).zone
                         for (i = 0; i < len; i++) {
-                            $("#table_id").append("<tr><td>" + results.rows.item(i).nom_projet + "</td><td>" + results.rows.item(i).nom_agent + "</td><td>" + results.rows.item(i).nom_zone + "</td><td>" + results.rows.item(i).nom_form + "</td><td><button type='button' id='preview_data' data-toggle='modal' data-target='modal-previewData' onclick='preview_data()' class='btn btn-circle bg-footer'><i class='fas fa-clipboard-list'></i></button></td><td><button type='button' id='preview_zone'data-toggle='modal' data-target='modal-previewZone' onclick='preview_zone()' class='btn btn-circle bg-footer'><i class='fas fa-map'></i></button></td> ");
+                            $("#table_id").append("<tr><td>" + results.rows.item(i).nom_projet + "</td><td>" + results.rows.item(i).nom_agent + "</td><td>" + results.rows.item(i).nom_zone + "</td><td>" + results.rows.item(i).nom_form + "</td><td><button type='button' id='" + results.rows.item(i).id + "' class='classe_viewdata btn btn-circle bg-footer'><i class='fas fa-clipboard-list'></i></button></td><td><button type='button'  id='" + results.rows.item(i).id + "' class='classe_viewzone btn btn-circle bg-footer'><i class='fas fa-map'></i></button></td> ");
                         }
                     }, null);
+
                 });
             }
+            //Delete Data from Database
 
+            $(document.body).on('click', '.classe_viewzone', function() {
+                console.log("hellow" + this.id);
+
+                var id = this.id;
+                myDB.transaction(function(transaction) {
+                    transaction.executeSql('SELECT * FROM data', [], function(tx, results) {
+                        var len = results.rows.length,
+                            i;
+                        //results.rows.item(i).data
+                        //results.rows.item(i).zone
+                        for (i = 0; i < len; i++) {
+                            if (id == results.rows.item(i).id) {
+                                alert("zone" + results.rows.item(i).zone);
+                            }
+
+                        }
+                    }, null);
+
+                });
+            });
+            $(document.body).on('click', '.classe_viewdata', function() {
+                console.log("hellow" + this.id);
+
+                var id = this.id;
+                myDB.transaction(function(transaction) {
+                    transaction.executeSql('SELECT * FROM data', [], function(tx, results) {
+                        var len = results.rows.length,
+                            i;
+                        //results.rows.item(i).data
+                        //results.rows.item(i).zone
+                        for (i = 0; i < len; i++) {
+                            if (id == results.rows.item(i).id) {
+                                alert("data" + results.rows.item(i).data);
+                            }
+
+                        }
+                    }, null);
+
+                });
+            });
             $("#delete_data").click(function() {
 
                 myDB.transaction(function(transaction) {
@@ -279,7 +344,7 @@
                             $.ajax({
                                 type: 'POST',
                                 async: false,
-                                url: 'http://192.168.1.112/php/add_data.php',
+                                url: 'http://192.168.0.118/php/add_data.php',
                                 data: {
                                     'nom_projet': results.rows.item(i).nom_projet,
                                     'nom_agent': results.rows.item(i).nom_agent,
@@ -348,5 +413,6 @@
     </script>
 
 </body>
+
 
 </html>

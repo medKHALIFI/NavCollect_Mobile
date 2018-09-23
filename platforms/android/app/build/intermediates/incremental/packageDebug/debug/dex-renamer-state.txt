@@ -1,4 +1,4 @@
-#Fri Sep 14 00:44:23 WEST 2018
+#Sun Sep 23 12:56:19 WEST 2018
 base.0=/home/khalifi/Desktop/workspace/stage_navcities/mobile/NavCollect_github/NavCollect_Mobile/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0
 renamed.0=classes.dex
 file.0=/home/khalifi/Desktop/workspace/stage_navcities/mobile/NavCollect_github/NavCollect_Mobile/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0/classes.dex
