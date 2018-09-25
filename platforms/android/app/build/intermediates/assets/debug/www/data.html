@@ -93,7 +93,7 @@
                                                     <td>zone</td>
                                                     <td>form</td>
                                                     <td><button type="button" id="102030" class="btn btn-circle bg-footer"><i class="fas fa-clipboard-list"></i></button></td>
-                                                    <td><button type="button" onclick="preview_data()" class="btn btn-circle bg-footer"><i class="fas fa-clipboard-list"></i></button></td>
+                                                    <td><button type="button" class="btn btn-circle bg-footer"><i class="fas fa-clipboard-list"></i></button></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -121,7 +121,7 @@
     </div>
 
     <!-- Modal : Zone digitalisée -->
-    <div class="modal animated fadeInDown" id="modal-previewZone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal animated fadeInDown" id="modal-previewZone">
         <div class="vertical-alignment-helper">
             <div class="modal-dialog vertical-align-center" role="document">
                 <div class="modal-content">
@@ -131,7 +131,7 @@
                         </button>
                         <h4 class="modal-title" id="exampleModalLabel">Zone que vous avez digitalisé </h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="modal-body-zone">
 
                     </div>
                 </div>
@@ -140,7 +140,7 @@
     </div>
 
     <!-- Modal : visualisation des données collectées -->
-    <div class="modal animated fadeInDown" id="modal-previewData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal animated fadeInDown" id="modal-previewData" role="dialog">
         <div class="vertical-alignment-helper">
             <div class="modal-dialog vertical-align-center" role="document">
                 <div class="modal-content">
@@ -150,7 +150,8 @@
                         </button>
                         <h4 class="modal-title" id="exampleModalLabel">Données collectées </h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="bodyPreviewform">
+                        <div class="table-responsive" id="table_donnee"></div>
 
                     </div>
                 </div>
@@ -264,7 +265,7 @@
             //Delete Data from Database
 
             $(document.body).on('click', '.classe_viewzone', function() {
-                console.log("hellow" + this.id);
+                //console.log("hellow" + this.id);
 
                 var id = this.id;
                 myDB.transaction(function(transaction) {
@@ -275,7 +276,75 @@
                         //results.rows.item(i).zone
                         for (i = 0; i < len; i++) {
                             if (id == results.rows.item(i).id) {
-                                alert("zone" + results.rows.item(i).zone);
+
+                                // alert("zone" + results.rows.item(i).zone);
+
+                                $("#modal-previewZone").modal();
+                                $('#modal-body-zone').html('<div id="map1" class="map1"></div>');
+
+                                //    $('#modal-body-zone').append(results.rows.item(i).zone);
+
+                                //alert("geojson 1 : " + results.rows.item(i).zone);
+
+
+                                var osm1 = new ol.layer.Tile({
+                                    title: "Open Streets Map",
+                                    baseLayer: true,
+                                    source: new ol.source.OSM(),
+                                    visible: true
+                                });
+
+                                var bing1 = new ol.layer.Tile({
+                                    title: "Bing Sattelite",
+                                    baseLayer: true,
+                                    source: new ol.source.BingMaps({
+                                        key: 'AuFUqJsfrG-Qgvg9sDChTNlHzN5_ybJA7LOknPz-Y1T6dNONDIIkQrPHvxjOe8To',
+                                        imagerySet: 'Aerial'
+                                    }),
+                                    visible: false
+                                });
+
+                                var map1 = new ol.Map({
+                                    layers: [osm1],
+                                    target: 'map1',
+                                    controls: ol.control.defaults({
+                                        attribution: false,
+                                        zoom: false
+                                    }).extend([
+                                        new ol.control.ScaleLine()
+                                    ]),
+
+                                    view: new ol.View({
+                                        center: [0, 0],
+                                        zoom: 2
+                                    })
+
+                                });
+
+                                //alert(results.rows.item(i).zone);
+                                var geojson_zone = new ol.layer.Vector({
+
+                                    title: nom_zone,
+                                    timeInfo: null,
+                                    isSelectable: true,
+                                    source: new ol.source.Vector({
+                                        //    features: new ol.format.GeoJSON().readFeatures(results.rows.item(i).zone)
+                                        features: new ol.format.GeoJSON().readFeatures(results.rows.item(i).zone)
+
+                                    })
+                                });
+                                //alert(map1);
+                                //   alert("geojson 2 : " + results.rows.item(i).zone);
+
+                                // console.log(geojson_zone);
+                                //  console.log(geojson_zone.getSource().getFeatures()[0].getGeometry().getType());
+
+                                map1.addLayer(geojson_zone);
+
+                                var extent = geojson_zone.getSource().getExtent();
+                                map1.getView().fit(extent, map1.getSize());
+
+
                             }
 
                         }
@@ -295,7 +364,72 @@
                         //results.rows.item(i).zone
                         for (i = 0; i < len; i++) {
                             if (id == results.rows.item(i).id) {
-                                alert("data" + results.rows.item(i).data);
+                                // alert("data" + results.rows.item(i).data);
+                                $("#modal-previewData").modal();
+                                $('#bodyPreviewform').html(results.rows.item(i).data);
+
+
+                                $("#bodyPreviewform").on('shown.bs.modal', function() {
+                                    var data = JSON.parse(results.rows.item(i).data);
+
+                                    // CODE DE JSON 2 HTML TABLE:
+                                    document.getElementById('table_donnee').innerHTML = json2table(data, 'table table-bordered table-striped jambo_table table-hover dataTable data');
+                                    ExportTable();
+
+                                    // JSON DATA 2 HTML TABLE
+                                    function json2table(json, classes) {
+                                        var cols = Object.keys(json[0]);
+
+                                        var headerRow = '';
+                                        var bodyRows = '';
+
+                                        classes = classes || '';
+
+                                        function capitalizeFirstLetter(string) {
+                                            return string.charAt(0).toUpperCase() + string.slice(1);
+                                        }
+
+                                        cols.map(function(col) {
+                                            headerRow += '<th>' + capitalizeFirstLetter(col) + '</th>';
+                                        });
+
+                                        json.map(function(row) {
+                                            bodyRows += '<tr>';
+
+                                            cols.map(function(colName) {
+                                                bodyRows += '<td>' + row[colName] + '</td>';
+                                            })
+
+                                            bodyRows += '</tr>';
+                                        });
+
+                                        return '<table class="' +
+                                            classes +
+                                            '"><thead><tr>' +
+                                            headerRow +
+                                            '</tr></thead><tbody>' +
+                                            bodyRows +
+                                            '</tbody></table>';
+                                    }
+
+
+                                    // EXPORT
+                                    function ExportTable() {
+                                        $(".data").tableExport({
+                                            headings: true,
+                                            footers: true,
+                                            formats: ["xls", "csv", "txt"],
+                                            fileName: "id",
+                                            bootstrap: true,
+                                            position: "well",
+                                            ignoreRows: null,
+                                            ignoreCols: null,
+                                            ignoreCSS: ".tableexport-ignore"
+                                        });
+                                    }
+
+
+                                });
                             }
 
                         }
