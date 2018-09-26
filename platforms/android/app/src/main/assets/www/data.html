@@ -284,7 +284,7 @@
 
                                 //    $('#modal-body-zone').append(results.rows.item(i).zone);
 
-                                //alert("geojson 1 : " + results.rows.item(i).zone);
+                                //  alert("geojson  : " + results.rows.item(i).zone);
 
 
                                 var osm1 = new ol.layer.Tile({
@@ -294,15 +294,7 @@
                                     visible: true
                                 });
 
-                                var bing1 = new ol.layer.Tile({
-                                    title: "Bing Sattelite",
-                                    baseLayer: true,
-                                    source: new ol.source.BingMaps({
-                                        key: 'AuFUqJsfrG-Qgvg9sDChTNlHzN5_ybJA7LOknPz-Y1T6dNONDIIkQrPHvxjOe8To',
-                                        imagerySet: 'Aerial'
-                                    }),
-                                    visible: false
-                                });
+
 
                                 var map1 = new ol.Map({
                                     layers: [osm1],
@@ -321,29 +313,20 @@
 
                                 });
 
-                                //alert(results.rows.item(i).zone);
+                                console.log(results.rows.item(i).zone);
                                 var geojson_zone = new ol.layer.Vector({
-
                                     title: nom_zone,
                                     timeInfo: null,
                                     isSelectable: true,
                                     source: new ol.source.Vector({
-                                        //    features: new ol.format.GeoJSON().readFeatures(results.rows.item(i).zone)
                                         features: new ol.format.GeoJSON().readFeatures(results.rows.item(i).zone)
-
-                                    })
+                                    }),
+                                    style: style_zone,
                                 });
-                                //alert(map1);
-                                //   alert("geojson 2 : " + results.rows.item(i).zone);
-
-                                // console.log(geojson_zone);
-                                //  console.log(geojson_zone.getSource().getFeatures()[0].getGeometry().getType());
-
                                 map1.addLayer(geojson_zone);
 
                                 var extent = geojson_zone.getSource().getExtent();
                                 map1.getView().fit(extent, map1.getSize());
-
 
                             }
 
