@@ -192,7 +192,7 @@
                 })
             } else {
                 // Get the user's imei
-                var url = "http://192.168.0.118/php/get_agent_info.php";
+                var url = "http://192.168.1.199/php/get_agent_info.php";
 
                 $.getJSON(url, function(result) {
                     $.each(result, function(i, field) {
@@ -757,16 +757,6 @@
 
         });
 
-        //Intialise groupe layer 
-        var overLayGroup = new ol.layer.Group({
-            title: 'Couches',
-            layers: [
-                vector = new ol.layer.Vector({
-                    name: 'vector',
-                    source: new ol.source.Vector()
-                })
-            ]
-        });
 
         var view = new ol.View({
             zoom: 5,
@@ -811,8 +801,7 @@
 
 
                     ]
-                }),
-                overLayGroup
+                })
             ],
             controls: ol.control.defaults({
                 attribution: false,
@@ -980,7 +969,7 @@
         function get_formulaire() {
             $("#modal_body_form").html("<option selected disabled value=''>Sélectionnez un formulaire </option> ");
 
-            var url = "http://192.168.0.118/php/get_forms.php";
+            var url = "http://192.168.1.199/php/get_forms.php";
             $.getJSON(url, function(result) {
                 $.each(result, function(i, field) {
 
@@ -1008,7 +997,7 @@
 
         function get_zone() {
             $("#modal_body_zone").html("<option selected disabled value=''>Sélectionnez une zone </option> ");
-            var url = "http://192.168.0.118/php/get_zones.php";
+            var url = "http://192.168.1.199/php/get_zones.php";
             $.getJSON(url, function(result) {
 
                 $.each(result, function(i, field) {
@@ -1044,7 +1033,7 @@
         }
 
         function add_zone() {
-            var url = "http://192.168.0.118/php/add_zone.php";
+            var url = "http://192.168.1.199/php/add_zone.php";
             $.getJSON(url, function(result) {
 
                 $.each(result, function(i, field) {
@@ -1054,29 +1043,14 @@
 
                     if (id_zone_globale == id_zone) {
                         map.removeLayer(geojson_zone);
-                        var style_zone = new ol.style.Style({
-                            fill: new ol.style.Fill({
-                                color: '#1abb9c54'
-                            }),
-                            stroke: new ol.style.Stroke({
-                                color: '#1ABB9C',
-                                width: 2
-                            }),
-                            image: new ol.style.Circle({
-                                radius: 7,
-                                fill: new ol.style.Fill({
-                                    color: '#1ABB9C'
-                                })
-                            })
-                        });
+
                         var geojson_zone = new ol.layer.Vector({
                             title: nom_zone,
                             timeInfo: null,
                             isSelectable: true,
                             source: new ol.source.Vector({
                                 features: new ol.format.GeoJSON().readFeatures(etendue)
-                            }),
-                            style: style_zone,
+                            })
                         });
                         map.addLayer(geojson_zone);
 
@@ -1099,7 +1073,7 @@
             // Liste déroulante qui va contenir les projets d'agent
             //       alert("test get projet");
             $("#modal_body_projet").html("<option selected disabled value=''>Sélectionnez un projet </option> ");
-            var url = "http://192.168.0.118/php/get_projects.php";
+            var url = "http://192.168.1.199/php/get_projects.php";
             $.getJSON(url, function(result) {
 
                 $.each(result, function(i, field) {
@@ -1150,7 +1124,7 @@
                 animation: false,
                 customClass: 'animated zoomIn'
             });
-            var url = "http://192.168.0.118/php/get_forms.php";
+            var url = "http://192.168.1.199/php/get_forms.php";
             $.getJSON(url, function(result) {
 
                 $.each(result, function(i, field) {
